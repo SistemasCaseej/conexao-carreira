@@ -1,8 +1,8 @@
 "use client"
 
 // Este código é um componente funcional do React, chamado 'Home', que busca e exibe uma lista de usuários.
-import {Accordion, AccordionContent, AccordionTrigger, AccordionItem} from "../components/ui/accordion";
-import {useEffect, useState} from "react";
+import { Accordion, AccordionContent, AccordionTrigger, AccordionItem } from "../components/ui/accordion";
+import { useEffect, useState } from "react";
 
 export default function Home() {
 
@@ -19,15 +19,15 @@ export default function Home() {
         loadUsers();
     }, []);
 
-  return (
-      <Accordion type="single" collapsible>
-          {users.map((user, index) => (
-              <AccordionItem key={index} value={String(index)}>
-                  <AccordionTrigger>Membro {index}</AccordionTrigger>
+    return (
+        <Accordion type="single" collapsible>
+            {users.map((user, index) => (
+                <AccordionItem key={index} value={String(index)}>
+                    <AccordionTrigger>Membro {index}</AccordionTrigger>
 
-                  <AccordionContent>{user}</AccordionContent>
-              </AccordionItem>
-          ))}
-      </Accordion>
-  );
+                    <AccordionContent>{user} Teste</AccordionContent>
+                </AccordionItem>
+            ))}
+        </Accordion>
+    );
 }
