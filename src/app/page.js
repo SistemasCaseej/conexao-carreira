@@ -24,6 +24,7 @@ export default function Home() {
           {users.map((user, index) => (
               <AccordionItem key={index} value={String(index)}>
                   <AccordionTrigger>Membro {index}</AccordionTrigger>
+
                   <AccordionContent>{user}</AccordionContent>
               </AccordionItem>
           ))}
