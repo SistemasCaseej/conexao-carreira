@@ -6,7 +6,7 @@
 export async function getAll() {
     //Aqui deverá conter a lógica para recuperar todos os usuário do firebase
 
-     // Devemos tirar isso depois
-    return ["Bruno", "Rafael", "Maria", "Nathan", "Vinicius", "Victor"];
+    // Devemos tirar isso depois
+    return ["Bruno", "Rafael", "Maria", "Nathan", "Vinnicius", "Victor"];
 }
 
