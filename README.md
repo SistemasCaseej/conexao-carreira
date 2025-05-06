@@ -22,6 +22,11 @@ Este boilerplate fornece uma base robusta para projetos Next.js com UI moderna, 
 
 ### Execute o servidor de desenvolvimento:
 
+
+```bash
+  npm install
+```
+
 ```bash
   npm run dev
 ```
