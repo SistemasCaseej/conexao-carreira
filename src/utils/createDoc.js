@@ -7,7 +7,7 @@ export async function createJob(){
     try {
         const docRef = await addDoc(collection(db, "empregos"), {
             empresa: "Weathford",
-            country: "EUA"
+            country: "Australia"
         });
         console.log("Document written with ID: ", docRef.id);
 

@@ -12,12 +12,24 @@ export default function Home() {
 
     useEffect(() => {
         // Função assíncrona para buscar os dados dos usuários da API
+
         async function loadUsers() {
             const response = await fetch("api/users");// Essa rota é referente ao arquivo route.js
             const data = await response.json();
             setUsers(data);
         }
         loadUsers();
+    }, []);
+
+
+        useEffect(() => {
+        // Função assíncrona para buscar os dados dos usuários da API
+
+        async function createDoc() {
+            const docRef = await createJob();
+            console.log("Document written with ID: ", docRef);
+        }
+        createDoc();
     }, []);
 
 
