@@ -15,3 +15,8 @@ export async function GET(req) {
 }
 
 
+export async function POST(req) {
+
+    console.log(req.body)
+}
+

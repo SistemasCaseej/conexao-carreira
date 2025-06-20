@@ -132,7 +132,6 @@ export function AppSidebar() {
                 <NavMain items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
-                <ModeToggle/>
                 <NavUser user={data.user} />
             </SidebarFooter>
         </Sidebar>
