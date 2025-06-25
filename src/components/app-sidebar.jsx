@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sidebar"
 import {NavUser} from "@/components/nav-user";
 import {NavMain} from "@/components/nav-main";
-import {BookOpen, Star, BriefcaseBusiness, Home, Search} from "lucide-react";
+import {BookOpen, Star, BriefcaseBusiness, Home, Search, Settings} from "lucide-react";
 import {ModeToggle} from "@/components/mode-toggle";
 
 const data = {
@@ -20,7 +20,7 @@ const data = {
     navMain: [
         {
             title: "Home",
-            url: "#",
+            url: "/dashboard",
             icon: Home,
             isActive: true,
             items: [
@@ -103,6 +103,17 @@ const data = {
                 },
             ],
         },
+        {
+            title: "Gerenciamento",
+            url: "",
+            icon: Settings,
+            items: [
+                {
+                    title: "Aprovação de usuários",
+                    url: "/admin/candidates",
+                }
+            ],
+        },
 
     ],
 }
@@ -115,7 +126,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <a href="#">
+                            <a href="/dashboard">
                                 <div className="bg-sidebar-primary dark text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                                     <BriefcaseBusiness className="size-4" />
                                 </div>
