@@ -13,14 +13,20 @@ export async function getAll() {
     return ["Bruno", "Rafael", "Maria", "Nathan", "Vinnicius", "Victor"];
 }
 
-export async function createUser(email, password) {
+export async function createUser(name, email, cpf, phoneNumber, linkedIn, city , password, confirmPassword) {
 
     try {
         const pendingUsersRef = collection(db, "pending_users");
 
         const docRef = await addDoc(pendingUsersRef, {
+            name,
             email,
-            password
+            cpf,
+            phoneNumber,
+            linkedIn,
+            city,
+            password,
+            confirmPassword
         })
 
         return docRef.id
