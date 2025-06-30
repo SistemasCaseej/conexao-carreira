@@ -6,7 +6,7 @@ export default function Layout({ children }) {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <main>
+            <main className="flex-1">
                 <SidebarTrigger className="absolute"/>
                 {children}
             </main>

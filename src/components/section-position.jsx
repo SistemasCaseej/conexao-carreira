@@ -23,10 +23,6 @@ export default function CardJobs() {
             </section>
 
             <DropdownMenuSeparator/>
-
-
-
-
         </Card>
     )
 }

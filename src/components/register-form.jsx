@@ -34,8 +34,6 @@ export function RegisterForm() {
                 body: JSON.stringify(userData),
             })
 
-            const result = await res.json()
-
         } catch (err) {
             console.error(err)
         }
@@ -113,7 +111,7 @@ export function RegisterForm() {
                         </div>
                     </div>
                     <div className="mt-4 w-full flex justify-end">
-                        <Button className="rounded-sm cursor-pointer w-[120px]">Cadastrar</Button>
+                        <Button className="rounded-sm cursor-pointer w-[120px]" onClick={handleSubmit}>Cadastrar</Button>
 
                     </div>
                 </div>

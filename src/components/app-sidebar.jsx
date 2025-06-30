@@ -109,8 +109,16 @@ const data = {
             icon: Settings,
             items: [
                 {
+                    title: "Todos os usuários",
+                    url: "/admin/users",
+                },
+                {
                     title: "Aprovação de usuários",
                     url: "/admin/candidates",
+                },
+                {
+                    title: "Empresas",
+                    url: "/admin/empresas",
                 }
             ],
         },

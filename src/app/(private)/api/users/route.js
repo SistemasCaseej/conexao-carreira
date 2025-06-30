@@ -1,14 +1,13 @@
 //O controlador(Controller) é a parte do sistema que recebe as entradas do usuário (geralmente ações ou comandos)
 
 import { NextResponse } from 'next/server'
-import { getAllUsers, createUser, createUserSchema } from "@/services/userService";
+import {createUser, createUserSchema, getAllPendingUsers} from "@/services/userService";
 
 
 // Rota GET para listar todos os usuários
-export async function GET(req) {
+export async function GET() {
 
-    // Chama o controller para obter todos os usuários
-    const users = await getAllUsers();
+    const users = await getAllPendingUsers();
 
     // Retorna a lista de usuários no formato JSON
     return NextResponse.json(users)
@@ -17,9 +16,9 @@ export async function GET(req) {
 export async function POST(req) {
     try {
         const body = await req.json();
-        const {email, password} = body;
+        const {name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword} = body;
 
-        const validation = createUserSchema.safeParse({email, password});
+        const validation = createUserSchema.safeParse({name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword});
 
         if (!validation.success) {
             const formattedErrors = validation.error.format();
@@ -33,7 +32,7 @@ export async function POST(req) {
             );
         }
 
-        const userId = await createUser(email, password);
+        const userId = await createUser(name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword);
 
         return NextResponse.json(
             {
