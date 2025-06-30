@@ -1,16 +1,20 @@
 //O repositório contém funções que interagem diretamente com o banco de dados.
 
-//Devemos conectar ao banco de dados aqui futuramente - FireBase
+import {addDoc, collection, getDocs} from "firebase/firestore";
+import {db} from "@/firebase/config"
 
-//Exemplo
-import {addDoc, collection} from "firebase/firestore";
-import { db } from "@/firebase/config"
+export async function getAllPendingUsers() {
 
-export async function getAll() {
-    //Aqui deverá conter a lógica para recuperar todos os usuário do firebase
+    const querySnapshot = await getDocs(collection (db, "pending_users"));
 
-    // Devemos tirar isso depois
-    return ["Bruno", "Rafael", "Maria", "Nathan", "Vinnicius", "Victor"];
+    return querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        const {password, confirmPassword, ...filteredData} = data;
+        return {
+            id: doc.id,
+            ...filteredData
+        };
+    });
 }
 
 export async function createUser(name, email, cpf, phoneNumber, linkedIn, city , password, confirmPassword) {

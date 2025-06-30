@@ -25,7 +25,6 @@ export function RegisterForm() {
     }
 
     async function handleSubmit(e) {
-        console.log(userData);
         e.preventDefault();
 
         try {
@@ -34,8 +33,6 @@ export function RegisterForm() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userData),
             })
-
-            const result = await res.json()
 
         } catch (err) {
             console.error(err)

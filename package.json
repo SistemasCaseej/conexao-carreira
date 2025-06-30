@@ -20,7 +20,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "firebase": "firebase emulators:start"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",

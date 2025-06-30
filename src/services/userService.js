@@ -5,10 +5,6 @@ import * as userRepository from "../repositories/userRepository";
 import { z } from "zod";
 import {NextResponse} from "next/server";
 
-//Exemplo - Função para recuperar todos os usuários
-export async function getAllUsers(){
-    return await userRepository.getAll()
-}
 
 //User
 
@@ -34,6 +30,8 @@ export const createUserSchema = z.object({
         .nonempty("A senha é obrigatório")
 })
 
+
+//Função para criar um possível usuário do sistema
 export async function createUser(name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword){
 
     try {
@@ -43,4 +41,9 @@ export async function createUser(name, email, cpf, phoneNumber, linkedIn, city, 
         throw new Error("Erro ao criar usuário")
     }
 
+}
+
+//Função para pegar todos os usuários que estão aguardando aprovação
+export async function getAllPendingUsers(){
+    return await userRepository.getAllPendingUsers()
 }

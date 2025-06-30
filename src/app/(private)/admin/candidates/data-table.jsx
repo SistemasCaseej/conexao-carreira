@@ -7,7 +7,6 @@ import {
 
 import {
     flexRender,
-    SortingState,
     getCoreRowModel,
     useReactTable,
     getSortedRowModel,
@@ -40,8 +39,8 @@ export function DataTable({ columns, data }) {
     });
 
     return (
-        <div>
-            <div className="rounded-sm border">
+        <div className="px-4 lg:px-6">
+            <div className="rounded-xl border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

@@ -22,60 +22,75 @@ export const paymentSchema = z.object({
 })
 
 // Colunas da tabela
-export const columns = [
-
-    {
-        accessorKey: "nome",
-        header: "Nome",
-    },
-    {
-        accessorKey: "cpf",
-        header: "CPF",
-    },
-    {
-        accessorKey: "email",
-        header: ({ column }) => {
-            return (
+export const getColumns = ({ onApprove, onReject }) => {
+    return [
+        {
+            accessorKey: "name",
+            header: "Nome",
+        },
+        {
+            accessorKey: "cpf",
+            header: "CPF",
+        },
+        {
+            accessorKey: "email",
+            header: ({ column }) => (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
                 >
                     Email
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
-            )
+            ),
         },
-    },
-    {
-        accessorKey: "status",
-        header: "Status",
-    },
-    {
-        id: "actions",
-        cell: ({ row }) => {
-            const payment = row.original
+        {
+            accessorKey: "linkedIn",
+            header: "LinkedIn",
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => {
+                const user = row.original
 
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
-                        >
-                            Copy payment ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Aprovar</DropdownMenuItem>
-                        <DropdownMenuItem>Recusar</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            )
+                return (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Abrir menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Ações</DropdownMenuLabel>
+
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    navigator.clipboard
+                                        .writeText(user.id)
+                                        .then(() =>
+                                            console.log("ID copiado:", user.id)
+                                        )
+                                }
+                            >
+                                Copiar ID
+                            </DropdownMenuItem>
+
+                            <DropdownMenuSeparator />
+
+                            <DropdownMenuItem onClick={() => onApprove(user.id)}>
+                                Aprovar
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem onClick={() => onReject(user.id)}>
+                                Recusar
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                )
+            },
         },
-    },
-]
+    ]
+}

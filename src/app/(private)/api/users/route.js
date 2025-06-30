@@ -1,14 +1,13 @@
 //O controlador(Controller) é a parte do sistema que recebe as entradas do usuário (geralmente ações ou comandos)
 
 import { NextResponse } from 'next/server'
-import { getAllUsers, createUser, createUserSchema } from "@/services/userService";
+import {createUser, createUserSchema, getAllPendingUsers} from "@/services/userService";
 
 
 // Rota GET para listar todos os usuários
-export async function GET(req) {
+export async function GET() {
 
-    // Chama o controller para obter todos os usuários
-    const users = await getAllUsers();
+    const users = await getAllPendingUsers();
 
     // Retorna a lista de usuários no formato JSON
     return NextResponse.json(users)
