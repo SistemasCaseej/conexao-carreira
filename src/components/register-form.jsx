@@ -9,6 +9,7 @@ import {useState} from "react";
 
 export function RegisterForm() {
 
+    const [formErrors, setFormErrors] = useState({});
     const [userData, setUserData] = useState({
         name: "",
         email: "",
@@ -34,6 +35,15 @@ export function RegisterForm() {
                 body: JSON.stringify(userData),
             })
 
+            const responseData = await res.json();
+
+            if(!res.ok) {
+                setFormErrors(responseData.errors);
+
+                setTimeout(() => {
+                    setFormErrors({});
+                }, 10000);
+            }
         } catch (err) {
             console.error(err)
         }
@@ -52,40 +62,71 @@ export function RegisterForm() {
                         <div className="w-[45%]">
                             <Label htmlFor="name">Nome</Label>
                             <Input id="name" type="text" name="name" className="mt-2 rounded-sm" value={userData.name} onChange={handleChange} placeholder="Digite seu nome completo" required />
+                            {formErrors?.name?._errors && (
+                                <p className="text-red-500 text-sm mt-1">{formErrors.name._errors[0]}</p>
+                            )}
                         </div>
                         <div className="w-[45%]">
                             <Label htmlFor="email">Email</Label>
                             <Input id="email" type="email" name="email" className="mt-2 rounded-sm" value={userData.email} onChange={handleChange} placeholder="Digite seu email" required />
+                            {formErrors?.email?._errors && (
+                                <p className="text-red-500 text-sm mt-1">{formErrors.email._errors[0]}</p>
+
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap justify-between items-center gap-2 mt-4">
                         <div className="w-[45%]">
                             <Label htmlFor="cpf">CPF</Label>
                             <Input id="cpf" type="text" name="cpf" className="mt-2 rounded-sm" value={userData.cpf} onChange={handleChange} placeholder="Informe o seu CPF" required />
+                            {formErrors?.cpf?._errors && (
+                                <p className="text-red-500 text-sm mt-1">{formErrors.cpf._errors[0]}</p>
+
+                            )}
                         </div>
                         <div className="w-[45%]">
                             <Label htmlFor="phoneNumber">Telefone</Label>
                             <Input id="phoneNumber" type="tel" name="phoneNumber" className="mt-2 rounded-sm" value={userData.phoneNumber} onChange={handleChange} placeholder="Informe o seu número" required />
+                            {formErrors?.phoneNumber?._errors && (
+                                <p className="text-red-500 text-sm mt-1">{formErrors.phoneNumber._errors[0]}</p>
+
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap justify-between items-center gap-2 mt-4">
                         <div className="w-[45%]">
                             <Label htmlFor="linkedIn">LinkedIn</Label>
                             <Input id="linkedIn" type="text" name="linkedIn" className="mt-2 rounded-sm" value={userData.linkedIn} onChange={handleChange} placeholder="Informe o seu LinkedIn" required />
+                            {formErrors?.linkedIn?._errors && (
+                                <p className="text-red-500 text-sm mt-1">{formErrors.linkedIn._errors[0]}</p>
+
+                            )}
                         </div>
                         <div className="w-[45%]">
                             <Label htmlFor="city">Cidade</Label>
                             <Input id="city" type="text" name="city" className="mt-2 rounded-sm" value={userData.city} onChange={handleChange} placeholder="Informe a sua cidade" required />
+                            {formErrors?.city?._errors && (
+                                <p className="text-red-500 text-sm mt-1">{formErrors.city._errors[0]}</p>
+
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap justify-between items-center gap-2 mt-4">
                         <div className="w-[45%]">
                             <Label htmlFor="password">Senha</Label>
                             <Input id="password" type="password" name="password" className="mt-2 rounded-sm" value={userData.password} onChange={handleChange} placeholder="Digite uma senha segura" required />
+                            {formErrors?.password?._errors && (
+                                <p className="text-red-500 text-sm mt-1">{formErrors.password._errors[0]}</p>
+
+                            )}
                         </div>
                         <div className="w-[45%]">
                             <Label htmlFor="confirmPassword">Confirmar senha</Label>
                             <Input id="confirmPassword" type="password" name="confirmPassword" className="mt-2 rounded-sm" value={userData.confirmPassword} onChange={handleChange} placeholder="Confirme a sua senha" required />
+                            {formErrors?.confirmPassword?._errors && (
+                                <p className="text-red-500 text-sm mt-1">{formErrors.confirmPassword._errors[0]}</p>
+
+                            )}
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap justify-between items-center gap-2 mt-4">

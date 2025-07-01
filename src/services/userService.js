@@ -10,7 +10,7 @@ import {NextResponse} from "next/server";
 
 export const createUserSchema = z.object({
     name: z.string()
-        .nonempty("O nome é obrigatório"),
+        .nonempty("O nome é obrigatório").max(4, "Nome muito grande"),
     email: z.string()
         .email("Email inválido")
         .nonempty("O email é obrigatório"),
@@ -28,7 +28,10 @@ export const createUserSchema = z.object({
     confirmPassword: z.string()
         .min(6, "Senha deve ter no mínimo 6 caracteres")
         .nonempty("A senha é obrigatório")
-})
+}).refine(data => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"], // o erro vai aparecer nesse campo
+});
 
 
 //Função para criar um possível usuário do sistema
