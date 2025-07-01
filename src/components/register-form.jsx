@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import Form from "next/form";
 import {useState} from "react";
+import {withMask} from "use-mask-input";
 
 export function RegisterForm() {
 
@@ -43,7 +44,19 @@ export function RegisterForm() {
                 setTimeout(() => {
                     setFormErrors({});
                 }, 10000);
+            }else {
+                setUserData({
+                    name: "",
+                    email: "",
+                    cpf: "",
+                    phoneNumber: "",
+                    linkedIn: "",
+                    city: "",
+                    password: "",
+                    confirmPassword: "",
+                });
             }
+
         } catch (err) {
             console.error(err)
         }
@@ -56,19 +69,19 @@ export function RegisterForm() {
                 <p className="text-gray-500 text-sm text-balance dark:text-gray-400">Preencha as informações abaixo para a realização do cadastro</p>
             </div>
 
-            <Form onSubmit={handleSubmit} className="flex flex-col gap-6 border-1 px-6 py-4 w-full mt-10">
+            <Form onSubmit={handleSubmit} className="flex flex-wrap flex-col gap-6 border-1 px-6 py-4 w-full mt-10">
                 <div className="flex flex-col">
                     <div className="flex flex-row flex-wrap justify-between items-center gap-2">
-                        <div className="w-[45%]">
+                        <div className="flex-1 min-w-[280px]">
                             <Label htmlFor="name">Nome</Label>
-                            <Input id="name" type="text" name="name" className="mt-2 rounded-sm" value={userData.name} onChange={handleChange} placeholder="Digite seu nome completo" required />
+                            <Input id="name" maxLength={40}  type="text" name="name" className="mt-2 rounded-sm" value={userData.name} onChange={handleChange} placeholder="Digite seu nome completo" required />
                             {formErrors?.name?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.name._errors[0]}</p>
                             )}
                         </div>
-                        <div className="w-[45%]">
+                        <div className="flex-1 min-w-[280px]">
                             <Label htmlFor="email">Email</Label>
-                            <Input id="email" type="email" name="email" className="mt-2 rounded-sm" value={userData.email} onChange={handleChange} placeholder="Digite seu email" required />
+                            <Input id="email" maxLength={80} type="email" name="email" className="mt-2 rounded-sm" value={userData.email} onChange={handleChange} placeholder="Digite seu email" required />
                             {formErrors?.email?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.email._errors[0]}</p>
 
@@ -76,17 +89,17 @@ export function RegisterForm() {
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap justify-between items-center gap-2 mt-4">
-                        <div className="w-[45%]">
+                        <div className="flex-1 min-w-[280px]">
                             <Label htmlFor="cpf">CPF</Label>
-                            <Input id="cpf" type="text" name="cpf" className="mt-2 rounded-sm" value={userData.cpf} onChange={handleChange} placeholder="Informe o seu CPF" required />
+                            <Input ref={withMask('cpf')} id="cpf" type="text" name="cpf" className="mt-2 rounded-sm" value={userData.cpf} onChange={handleChange} placeholder="Informe o seu CPF" required />
                             {formErrors?.cpf?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.cpf._errors[0]}</p>
 
                             )}
                         </div>
-                        <div className="w-[45%]">
+                        <div className="flex-1 min-w-[280px]">
                             <Label htmlFor="phoneNumber">Telefone</Label>
-                            <Input id="phoneNumber" type="tel" name="phoneNumber" className="mt-2 rounded-sm" value={userData.phoneNumber} onChange={handleChange} placeholder="Informe o seu número" required />
+                            <Input id="phoneNumber" ref={withMask('(99) 99999-9999')}  maxLength={20} type="tel" name="phoneNumber" className="mt-2 rounded-sm" value={userData.phoneNumber} onChange={handleChange} placeholder="(00) 00000-0000" required />
                             {formErrors?.phoneNumber?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.phoneNumber._errors[0]}</p>
 
@@ -94,17 +107,17 @@ export function RegisterForm() {
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap justify-between items-center gap-2 mt-4">
-                        <div className="w-[45%]">
+                        <div className="flex-1 min-w-[280px]">
                             <Label htmlFor="linkedIn">LinkedIn</Label>
-                            <Input id="linkedIn" type="text" name="linkedIn" className="mt-2 rounded-sm" value={userData.linkedIn} onChange={handleChange} placeholder="Informe o seu LinkedIn" required />
+                            <Input id="linkedIn" type="text" name="linkedIn" className="mt-2 rounded-sm" value={userData.linkedIn} onChange={handleChange} placeholder="https://www.linkedin.com/company/case-empresa-j%C3%BAnior/" />
                             {formErrors?.linkedIn?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.linkedIn._errors[0]}</p>
 
                             )}
                         </div>
-                        <div className="w-[45%]">
+                        <div className="flex-1 min-w-[280px]">
                             <Label htmlFor="city">Cidade</Label>
-                            <Input id="city" type="text" name="city" className="mt-2 rounded-sm" value={userData.city} onChange={handleChange} placeholder="Informe a sua cidade" required />
+                            <Input id="city" type="text" name="city" maxLength={30} className="mt-2 rounded-sm" value={userData.city} onChange={handleChange} placeholder="Informe a sua cidade" required />
                             {formErrors?.city?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.city._errors[0]}</p>
 
@@ -112,17 +125,17 @@ export function RegisterForm() {
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap justify-between items-center gap-2 mt-4">
-                        <div className="w-[45%]">
+                        <div className="flex-1 min-w-[280px]">
                             <Label htmlFor="password">Senha</Label>
-                            <Input id="password" type="password" name="password" className="mt-2 rounded-sm" value={userData.password} onChange={handleChange} placeholder="Digite uma senha segura" required />
+                            <Input id="password" type="password" maxLength={20} minLength={6} name="password" className="mt-2 rounded-sm" value={userData.password} onChange={handleChange} placeholder="Digite uma senha segura" required />
                             {formErrors?.password?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.password._errors[0]}</p>
 
                             )}
                         </div>
-                        <div className="w-[45%]">
+                        <div className="flex-1 min-w-[280px]">
                             <Label htmlFor="confirmPassword">Confirmar senha</Label>
-                            <Input id="confirmPassword" type="password" name="confirmPassword" className="mt-2 rounded-sm" value={userData.confirmPassword} onChange={handleChange} placeholder="Confirme a sua senha" required />
+                            <Input id="confirmPassword" type="password" maxLength={20} minLength={6} name="confirmPassword" className="mt-2 rounded-sm" value={userData.confirmPassword} onChange={handleChange} placeholder="Confirme a sua senha" required />
                             {formErrors?.confirmPassword?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.confirmPassword._errors[0]}</p>
 
