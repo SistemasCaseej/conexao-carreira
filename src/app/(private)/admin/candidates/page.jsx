@@ -1,6 +1,6 @@
 import {DataTable} from "@/app/(private)/admin/candidates/data-table";
 import {SectionCards} from "@/components/section-cards";
-import {getAllPendingUsers} from "@/components/PendingUsersList";
+import {getAllPendingUsers} from "@/utils/users/PendingUsersList";
 import ClientTable from "@/components/ClientTable";
 
 

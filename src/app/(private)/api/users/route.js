@@ -1,7 +1,8 @@
 //O controlador(Controller) é a parte do sistema que recebe as entradas do usuário (geralmente ações ou comandos)
 
 import { NextResponse } from 'next/server'
-import {createUser, createUserSchema, getAllPendingUsers} from "@/services/userService";
+import {createUser, getAllPendingUsers} from "@/services/userService";
+import {createUserSchema} from "@/dto/users/userDto";
 
 
 // Rota GET para listar todos os usuários
@@ -16,9 +17,8 @@ export async function GET() {
 export async function POST(req) {
     try {
         const body = await req.json();
-        const {name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword} = body;
 
-        const validation = createUserSchema.safeParse({name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword});
+        const validation = createUserSchema.safeParse(body);
 
         if (!validation.success) {
             const formattedErrors = validation.error.format();
@@ -32,7 +32,18 @@ export async function POST(req) {
             );
         }
 
-        const userId = await createUser(name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword);
+        const userDto = validation.data;
+
+        const userId = await createUser(
+            userDto.name,
+            userDto.email,
+            userDto.cpf,
+            userDto.phoneNumber,
+            userDto.linkedIn,
+            userDto.city,
+            userDto.password,
+            userDto.confirmPassword,
+        );
 
         return NextResponse.json(
             {
