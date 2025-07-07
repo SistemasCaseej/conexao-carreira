@@ -109,17 +109,17 @@ const data = {
             icon: Settings,
             items: [
                 {
-                    title: "Todos os usuários",
+                    title: "Usuários aprovados",
                     url: "/admin/users",
                 },
                 {
-                    title: "Aprovação de usuários",
+                    title: "Candidatos",
                     url: "/admin/candidates",
                 },
                 {
                     title: "Empresas",
                     url: "/admin/empresas",
-                }
+                },
             ],
         },
 

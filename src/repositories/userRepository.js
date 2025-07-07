@@ -1,26 +1,26 @@
 //O repositório contém funções que interagem diretamente com o banco de dados.
 
-import {addDoc, collection, getDocs} from "firebase/firestore";
+import {addDoc, collection, getDocs, where, query} from "firebase/firestore";
 import {db} from "@/firebase/config"
 
 export async function getAllPendingUsers() {
 
-    const querySnapshot = await getDocs(collection (db, "pending_users"));
+    const usersRef = collection(db, "users");
 
-    return querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        const {password, confirmPassword, ...filteredData} = data;
-        return {
-            id: doc.id,
-            ...filteredData
-        };
-    });
+    const q = query(usersRef, where ("status", "==", "Pendente"));
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
 }
 
-export async function createUser(name, email, cpf, phoneNumber, linkedIn, city , password, confirmPassword) {
+export async function createUser(name, email, cpf, phoneNumber, linkedIn, city) {
 
     try {
-        const pendingUsersRef = collection(db, "pending_users");
+        const pendingUsersRef = collection(db, "users");
 
         const docRef = await addDoc(pendingUsersRef, {
             name,
@@ -29,8 +29,8 @@ export async function createUser(name, email, cpf, phoneNumber, linkedIn, city ,
             phoneNumber,
             linkedIn,
             city,
-            password,
-            confirmPassword
+            status : "Pendente",
+            role : "Estudante"
         })
 
         return docRef.id
