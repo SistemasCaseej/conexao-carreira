@@ -24,3 +24,7 @@ export async function createUser(name, email, cpf, phoneNumber, linkedIn, city, 
 export async function getAllPendingUsers(){
     return await userRepository.getAllPendingUsers()
 }
+
+export async function getAllApprovedUsers(id){
+    return await userRepository.getAllApprovedUsers();
+}

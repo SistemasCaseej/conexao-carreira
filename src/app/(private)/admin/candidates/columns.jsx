@@ -51,6 +51,10 @@ export const getColumns = ({ onApprove, onReject }) => {
             header: "LinkedIn",
         },
         {
+            accessorKey: "status",
+            header: "Status",
+        },
+        {
             id: "actions",
             cell: ({ row }) => {
                 const user = row.original
@@ -80,7 +84,7 @@ export const getColumns = ({ onApprove, onReject }) => {
 
                             <DropdownMenuSeparator />
 
-                            <DropdownMenuItem onClick={() => onApprove(user.id)}>
+                            <DropdownMenuItem onClick={() => onApprove(user.id, user.email)}>
                                 Aprovar
                             </DropdownMenuItem>
 
