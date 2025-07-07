@@ -17,6 +17,23 @@ export async function getAllPendingUsers() {
     }));
 }
 
+export async function getAllApprovedUsers() {
+
+    const usersRef = collection(db, "users");
+
+    const q = query(usersRef, where ("status", "==", "Aprovado"));
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+}
+
+
+
+
 export async function createUser(name, email, cpf, phoneNumber, linkedIn, city) {
 
     try {
