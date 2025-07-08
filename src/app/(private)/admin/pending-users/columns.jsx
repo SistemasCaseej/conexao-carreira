@@ -22,7 +22,7 @@ export const paymentSchema = z.object({
 })
 
 // Colunas da tabela
-export const getColumns = ({ onApprove, onReject }) => {
+export const getColumns = ({ onApprove, onReject, actions }) => {
     return [
         {
             accessorKey: "name",
@@ -58,6 +58,8 @@ export const getColumns = ({ onApprove, onReject }) => {
             id: "actions",
             cell: ({ row }) => {
                 const user = row.original
+
+                if (!actions) return null;
 
                 return (
                     <DropdownMenu>

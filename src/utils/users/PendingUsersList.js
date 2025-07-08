@@ -2,7 +2,7 @@ export async function getAllPendingUsers() {
     const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
     try {
-        const response = await fetch(`${baseUrl}/api/users`, {
+        const response = await fetch(`${baseUrl}/api/users/pending`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

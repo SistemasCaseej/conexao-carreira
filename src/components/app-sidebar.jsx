@@ -110,15 +110,15 @@ const data = {
             items: [
                 {
                     title: "Usuários aprovados",
-                    url: "/admin/users",
+                    url: "/admin/approved-users",
                 },
                 {
-                    title: "Candidatos",
-                    url: "/admin/candidates",
+                    title: "Usuários pendentes",
+                    url: "/admin/pending-users",
                 },
                 {
                     title: "Empresas",
-                    url: "/admin/empresas",
+                    url: "/admin/cp",
                 },
             ],
         },
