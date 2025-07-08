@@ -25,6 +25,6 @@ export async function getAllPendingUsers(){
     return await userRepository.getAllPendingUsers()
 }
 
-export async function getAllApprovedUsers(id){
+export async function getAllApprovedUsers(){
     return await userRepository.getAllApprovedUsers();
 }

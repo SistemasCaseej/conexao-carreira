@@ -1,10 +1,10 @@
 "use client"
 
-import {DataTable} from "@/app/(private)/admin/candidates/data-table";
-import {getColumns} from "@/app/(private)/admin/candidates/columns";
+import {DataTable} from "@/app/(private)/admin/pending-users/data-table";
+import {getColumns} from "@/app/(private)/admin/pending-users/columns";
 import {approveUser, rejectUser} from "@/app/(public)/candidate-registration/actions/users";
 
-export default function ClientTable({data}){
+export default function ClientTable({data, actions}){
     const handleApprove = (id, email) => {
         approveUser(id, email)
     }
@@ -13,7 +13,7 @@ export default function ClientTable({data}){
         rejectUser(id);
     }
 
-    const columns = getColumns({ onApprove: handleApprove, onReject: handleReject })
+    const columns = getColumns({ onApprove: handleApprove, onReject: handleReject, actions: actions });
 
     return <DataTable columns={columns} data={data}/>
 }
