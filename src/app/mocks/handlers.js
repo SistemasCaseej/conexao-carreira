@@ -7,7 +7,7 @@ const mockedUsers = [
 ];
 
 export const handlers = [
-    http.get('http://localhost:3000/api/users/pending', (req, res, ctx) => {
+    http.get('', (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json(mockedUsers)
