@@ -1,4 +1,4 @@
-import CardJobs from "@/components/section-position";
+import CardJobs from "@/components/CardJobs";
 import {SidebarRight} from "@/components/sidebar-right";
 
 export default function Dashboard() {
