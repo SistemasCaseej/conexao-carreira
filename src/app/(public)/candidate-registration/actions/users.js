@@ -2,7 +2,7 @@
 
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { auth, db} from "@/firebase/config"
-import { createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import {generateSecurePassword} from "@/utils/generatePassword";
 
 
