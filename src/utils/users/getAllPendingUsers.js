@@ -7,7 +7,6 @@ export async function getAllPendingUsers() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            // cache: 'no-store' // <- descomente se estiver usando Next.js SSR e quiser evitar cache
         });
 
         if (!response.ok) {
