@@ -4,7 +4,11 @@ module.exports = {
         "./src/**/*.{js,jsx,ts,tsx,html}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily : {
+                epilogue: ['Epilogue'],
+            }
+        },
         screens : {
             xs: "600px",
         }
