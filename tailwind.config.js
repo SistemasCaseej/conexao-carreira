@@ -6,7 +6,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily : {
-                epilogue: ['Epilogue'],
+                epilogue: ['"Epilogue"', "sans-serif"],
             }
         },
         screens : {
