@@ -2,9 +2,6 @@
 //O serviço implementa a lógica de negócios. Ele interage com o repositório para buscar, criar ou modificar dados.
 
 import * as userRepository from "../repositories/userRepository";
-import { z } from "zod";
-import {NextResponse} from "next/server";
-
 
 //User
 
