@@ -1,5 +1,6 @@
 import CardJobs from "@/components/CardJobs";
 import {SidebarRight} from "@/components/sidebar-right";
+import NavigationBar from "@/components/NavigationBar";
 
 export default function Dashboard() {
     return (
