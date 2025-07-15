@@ -8,8 +8,7 @@ import {
 } from "@/components/ui/sidebar"
 import {NavUser} from "@/components/nav-user";
 import {NavMain} from "@/components/nav-main";
-import {BookOpen, Star, BriefcaseBusiness, Home, Search, Settings} from "lucide-react";
-import {ModeToggle} from "@/components/mode-toggle";
+import {BookOpen, Star, BriefcaseBusiness, Home, Search, Settings, Users, Building2} from "lucide-react";
 
 const data = {
     user: {
@@ -104,9 +103,9 @@ const data = {
             ],
         },
         {
-            title: "Gerenciamento",
+            title: "Usuários",
             url: "",
-            icon: Settings,
+            icon: Users,
             items: [
                 {
                     title: "Usuários aprovados",
@@ -117,11 +116,50 @@ const data = {
                     url: "/admin/pending-users",
                 },
                 {
-                    title: "Empresas",
+                    title: "Todos os usuários",
                     url: "/admin/cp",
                 },
             ],
         },
+        {
+            title: "Empresa",
+            url: "",
+            icon: Building2,
+            items: [
+                {
+                    title: "Dados da Empresa",
+                    url: "admin/"
+                },
+                {
+                    title: "Gerenciar Empresas",
+                    url: "/admin/manage-companies",
+                },
+                {
+                    title: "Gerenciar Usuários",
+                    url: "/admin/cp",
+                },
+            ],
+        },
+        {
+            title: "Vagas",
+            url: "",
+            icon: Building2,
+            items: [
+                {
+                    title: "Cadastrar Nova Vaga",
+                    url: "admin/"
+                },
+                {
+                    title: "Vagas Publicadas",
+                    url: "/admin/",
+                },
+                {
+                    title: "Candidaturas Recebidas",
+                    url: "/admin/cp",
+                },
+            ],
+        },
+
 
     ],
 }

@@ -32,8 +32,6 @@ export async function getAllApprovedUsers() {
 }
 
 
-
-
 export async function createUser(name, email, cpf, phoneNumber, linkedIn, city) {
 
     try {
