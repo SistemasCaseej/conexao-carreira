@@ -7,16 +7,16 @@ export async function createCompanyRepository(address, area, city, cnpj, descrip
         const companyRef = await collection(db, "companies");
 
         const docRef = await addDoc(companyRef, {
-            address,
-            area,
+            address: address ?? null,
+            area: area ?? null,
             city,
             cnpj,
             description,
             email,
-            logoUrl,
+            logoUrl: logoUrl ?? null,
             name,
-            phone,
-            site
+            phone: phone ?? null,
+            site : site ?? null,
         });
 
         return docRef.id;
