@@ -2,7 +2,7 @@
 
 import {DataTable} from "@/app/(private)/admin/pending-users/data-table";
 import {getColumns} from "@/app/(private)/admin/pending-users/columns";
-import {approveUser, rejectUser} from "@/app/(public)/candidate-registration/actions/users";
+import {approveUser, rejectUser} from "@/app/actions/users";
 
 export default function ClientTable({data, actions}){
     const handleApprove = (id, email) => {

@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/config";
-import { redirect } from "next/navigation";
 import { SigninFormSchema } from "@/app/lib/definitions";
+import {createSession} from "@/app/lib/session";
 
 export async function signin(state, formData) {
     const validatedFields = SigninFormSchema.safeParse({
@@ -23,18 +23,15 @@ export async function signin(state, formData) {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        console.log(user);
-        redirect("/dashboard");
+        await createSession(user.uid);
+
+        return {
+            success: true,
+            userId: user.uid
+        }
+
     } catch (error) {
         let errorMessage = "Erro ao fazer login. Tente novamente.";
-
-        if (error.code === "auth/user-not-found") {
-            errorMessage = "Usuário não encontrado.";
-        } else if (error.code === "auth/wrong-password") {
-            errorMessage = "Senha incorreta.";
-        } else if (error.code === "auth/invalid-email") {
-            errorMessage = "E-mail inválido.";
-        }
 
         return {
             errors: {
