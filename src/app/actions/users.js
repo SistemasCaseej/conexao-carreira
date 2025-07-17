@@ -2,7 +2,7 @@
 
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { auth, db} from "@/firebase/config"
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import {generateSecurePassword} from "@/utils/generatePassword";
 
 
@@ -19,7 +19,7 @@ export async function approveUser(userId, email) {
             approvedAt : new Date().toISOString(),
         })
 
-       // await sendPasswordResetEmail(auth, email);
+       await sendPasswordResetEmail(auth, email);
 
         const user = userCredential.user;
 

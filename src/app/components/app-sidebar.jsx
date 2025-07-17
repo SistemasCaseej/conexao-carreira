@@ -1,14 +1,9 @@
 "use client"
 
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,
-} from "@/components/ui/sidebar"
-import {NavUser} from "@/components/nav-user";
-import {NavMain} from "@/components/nav-main";
-import {BookOpen, Star, BriefcaseBusiness, Home, Search, Settings, Users, Building2} from "lucide-react";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar} from "@/components/ui/sidebar"
+import { NavUser } from "@/components/nav-user";
+import { NavMain } from "@/components/nav-main";
+import { BookOpen, Star, BriefcaseBusiness, Home, Search, Users, Building2 } from "lucide-react";
 
 const data = {
     user: {
@@ -165,7 +160,9 @@ const data = {
 }
 
 export function AppSidebar() {
+
     const { openMobile} = useSidebar()
+
     return (
         <Sidebar open={openMobile} className="sidebar">
             <SidebarHeader>
@@ -189,7 +186,7 @@ export function AppSidebar() {
                 <NavMain items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={data.user} />
+               <NavUser user={data.user}/>
             </SidebarFooter>
         </Sidebar>
     )

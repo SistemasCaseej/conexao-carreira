@@ -124,3 +124,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.firebase-emulator-warning {
+  display: none;
+}
