@@ -6,17 +6,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import {signin} from "@/app/actions/auth/auth";
-import { useActionState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import {useActionState, useState} from "react";
 
 export function LoginForm({className, ...props}) {
-    const router = useRouter();
     const [state, action, pending] = useActionState(signin, undefined)
-
-    useEffect(() => {
-        if (!state?.success) return;
-        router.push("/dashboard");
-    }, [router, state?.success]);
+    const [error, setError] = useState(null);
 
     return (
       <form action={action} className={cn("flex flex-col gap-6", className)} {...props}>
@@ -51,6 +45,7 @@ export function LoginForm({className, ...props}) {
             <Button disabled={pending} type="submit" className="w-full cursor-pointer border-none rounded-none">
               Entrar
             </Button>
+              {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
             <div
               className="relative text-center text-sm after:absolute dark:after:border-gray-800">
             </div>

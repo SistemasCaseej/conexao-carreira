@@ -3,7 +3,8 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { SigninFormSchema } from "@/app/lib/definitions";
-import {createSession} from "@/app/lib/session";
+import {createSession} from "@/app/actions/auth/session";
+import { redirect } from 'next/navigation'
 
 export async function signin(state, formData) {
     const validatedFields = SigninFormSchema.safeParse({
@@ -25,18 +26,17 @@ export async function signin(state, formData) {
 
         await createSession(user.uid);
 
-        return {
-            success: true,
-            userId: user.uid
-        }
-
     } catch (error) {
-        let errorMessage = "Erro ao fazer login. Tente novamente.";
+        const defaultMessage = "Ocorreu um erro. Tente novamente.";
+        const errorMessage =
+            error?.message || error?.response?.data?.message || defaultMessage;
 
         return {
             errors: {
                 email: [errorMessage],
             },
         };
+    }finally {
+        redirect("http://localhost:3000/dashboard");
     }
 }
