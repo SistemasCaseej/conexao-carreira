@@ -4,7 +4,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { SigninFormSchema } from "@/app/lib/definitions";
 import {createSession} from "@/app/actions/auth/session";
-import { redirect } from 'next/navigation'
 
 export async function signin(state, formData) {
     const validatedFields = SigninFormSchema.safeParse({
@@ -26,17 +25,30 @@ export async function signin(state, formData) {
 
         await createSession(user.uid);
 
-    } catch (error) {
-        const defaultMessage = "Ocorreu um erro. Tente novamente.";
-        const errorMessage =
-            error?.message || error?.response?.data?.message || defaultMessage;
+        return { success: true };
 
-        return {
-            errors: {
-                email: [errorMessage],
-            },
-        };
-    }finally {
-        redirect("http://localhost:3000/dashboard");
+    } catch (error) {
+        const errors = {};
+
+        switch (error.code) {
+            case "auth/user-not-found":
+                errors.email = ["Usuário não encontrado"];
+                break;
+            case "auth/wrong-password":
+                errors.password = ["Senha incorreta. Tente novamente."];
+                break;
+            case "auth/invalid-email":
+                errors.email = ["E-mail inválido. Verifique o formato."];
+                break;
+            case "auth/too-many-requests":
+                errors.email = ["Muitas tentativas. Tente novamente mais tarde."];
+                break;
+            default:
+                errors.email = ["Erro inesperado. Tente novamente."];
+                break;
+        }
+
+        return { success: false, errors };
+
     }
 }
