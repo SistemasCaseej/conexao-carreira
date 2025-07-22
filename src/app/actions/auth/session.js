@@ -30,7 +30,7 @@ export async function createSession(userId) {
     const session = await encrypt({ userId, expiresAt })
     const cookieStore = await cookies()
 
-    await CreateTableSession(userId, expiresAt);
+    const tableSession = await CreateTableSession(userId, expiresAt);
 
     cookieStore.set('session', session, {
         httpOnly: true,
@@ -39,4 +39,6 @@ export async function createSession(userId) {
         sameSite: 'lax',
         path: '/',
     })
+
+    return tableSession;
 }
