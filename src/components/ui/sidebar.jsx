@@ -221,11 +221,7 @@ function Sidebar({
   );
 }
 
-function SidebarTrigger({
-  className,
-  onClick,
-  ...props
-}) {
+function SidebarTrigger({className, onClick, ...props}) {
   const { toggleSidebar } = useSidebar()
 
   return (

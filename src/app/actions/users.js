@@ -17,6 +17,7 @@ export async function approveUser(userId, email) {
         await updateDoc(userRef, {
             status: "Aprovado",
             approvedAt : new Date().toISOString(),
+            userId: userCredential.user.uid,
         })
 
        await sendPasswordResetEmail(auth, email);

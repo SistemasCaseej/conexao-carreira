@@ -159,7 +159,7 @@ const data = {
     ],
 }
 
-export function AppSidebar() {
+export function AppSidebar({user}) {
 
     const { openMobile} = useSidebar()
 
@@ -186,7 +186,7 @@ export function AppSidebar() {
                 <NavMain items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
-               <NavUser user={data.user}/>
+               <NavUser user2={data.user} user={user}/>
             </SidebarFooter>
         </Sidebar>
     )
