@@ -25,3 +25,7 @@ export async function getAllPendingUsers(){
 export async function getAllApprovedUsers(){
     return await userRepository.getAllApprovedUsers();
 }
+
+export async function getUserInfoSession(session){
+    return await userRepository.getUserInfoSession(session);
+}
