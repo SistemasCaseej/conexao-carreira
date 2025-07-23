@@ -12,6 +12,7 @@ export async function getAllPendingUsers() {
     const querySnapshot = await getDocs(q);
 
     return querySnapshot.docs.map((doc) => ({
+
         id: doc.id,
         ...doc.data(),
     }));
@@ -55,3 +56,20 @@ export async function createUser(name, email, cpf, phoneNumber, linkedIn, city) 
     }
 }
 
+export async function getUserInfoSession(session) {
+    const userRef = collection(db, "users");
+    const queryUser = query(userRef, where ("userId", "==", session.userId));
+
+    const querySnapshot = await getDocs(queryUser);
+
+    if(querySnapshot.empty){
+        return null;
+    }
+
+    const userDoc = querySnapshot.docs[0];
+
+    return {
+        userId: userDoc.id,
+        ...userDoc.data()
+    }
+}

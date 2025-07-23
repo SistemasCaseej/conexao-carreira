@@ -1,7 +1,7 @@
 import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
-import {cookies} from "next/headers";
-import {CreateTableSession} from "@/repositories/auth/createTableSession";
+import { cookies } from "next/headers";
+import {CreateTableSession, deleteUserSession} from "@/repositories/auth/createTableSession";
 
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -41,4 +41,11 @@ export async function createSession(userId) {
     })
 
     return tableSession;
+}
+
+export async function deleteCookieSession(userId) {
+    const cookieStore = await cookies()
+    cookieStore.delete('session')
+
+    await deleteUserSession(userId)
 }
