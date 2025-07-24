@@ -5,12 +5,40 @@ import {NextResponse} from "next/server";
 /**
  * @swagger
  * /api/users/approved:
- *
  *   get:
- *     description: Returns the approved users
+ *     tags:
+ *       - Users
+ *     summary: Obtém uma lista de usuários aprovados
+ *     description: Retorna um array de usuários que foram aprovados no sistema.
  *     responses:
  *       200:
- *         description: Hello World!
+ *         description: Um array JSON contendo os usuários aprovados.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     example: "FNCMag7lkdF6ewjmxq"
+ *                   name:
+ *                     type: string
+ *                     example: "José Silva"
+ *                   email:
+ *                     type: string
+ *                     example: "jose@gmail.com"
+ *                   role:
+ *                      type: string
+ *                      example: "Estudante"
+ *                   status:
+ *                     type: string
+ *                     example: "Aprovado"
+ *       401:
+ *         description: Unauthorized - Authentication required
+ *       500:
+ *         description: Internal server error
  */
 export async function GET() {
 
