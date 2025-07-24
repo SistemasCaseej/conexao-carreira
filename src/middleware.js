@@ -13,34 +13,34 @@ import { NextResponse, NextRequest } from 'next/server';
 
 export function middleware(request) {
 
-        const path = request.nextUrl.pathname;
-        const publicRoute = publicRoutes.find(route => route.path === path);
-
-        const authToken = request.cookies.get('session');
-
-     if(!authToken && publicRoute){
-         return NextResponse.next();
-     }
-
-    if(!authToken && !publicRoute){
-         const redirectUrl = request.nextUrl.clone()
-
-         redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
-
-         return NextResponse.redirect(redirectUrl);
-     }
-
-     if(authToken && publicRoute && publicRoute.whenAuthenticated === 'redirect'){
-
-         const redirectUrl = request.nextUrl.clone()
-         redirectUrl.pathname = '/dashboard';
-
-         return NextResponse.redirect(redirectUrl);
-     }
-
-     if(authToken && !publicRoute){
-         return NextResponse.next()
-     }
+    //     const path = request.nextUrl.pathname;
+    //     const publicRoute = publicRoutes.find(route => route.path === path);
+    //
+    //     const authToken = request.cookies.get('session');
+    //
+    //  if(!authToken && publicRoute){
+    //      return NextResponse.next();
+    //  }
+    //
+    // if(!authToken && !publicRoute){
+    //      const redirectUrl = request.nextUrl.clone()
+    //
+    //      redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
+    //
+    //      return NextResponse.redirect(redirectUrl);
+    //  }
+    //
+    //  if(authToken && publicRoute && publicRoute.whenAuthenticated === 'redirect'){
+    //
+    //      const redirectUrl = request.nextUrl.clone()
+    //      redirectUrl.pathname = '/dashboard';
+    //
+    //      return NextResponse.redirect(redirectUrl);
+    //  }
+    //
+    //  if(authToken && !publicRoute){
+    //      return NextResponse.next()
+    //  }
 
      return NextResponse.next()
  }
