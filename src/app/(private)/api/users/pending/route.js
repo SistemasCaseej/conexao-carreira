@@ -5,15 +5,32 @@ import {createUser, getAllPendingUsers} from "@/services/userService";
 import {createUserSchema} from "@/dto/users/userDto";
 
 
-// Rota GET para listar todos os usuários
+/**
+ * @swagger
+ * /api/users/pending:
+ *   get:
+ *     description: Returns All the users pending
+ *     responses:
+ *       200:
+ *         description: Hello World!
+ */
 export async function GET() {
 
     const users = await getAllPendingUsers();
 
-    // Retorna a lista de usuários no formato JSON
     return NextResponse.json(users)
 }
 
+
+/**
+ * @swagger
+ * /api/users/pending:
+ *   post:
+ *     description: Create a new user pending
+ *     responses:
+ *       200:
+ *         description: Hello World!
+ */
 export async function POST(req) {
     try {
         const body = await req.json();
