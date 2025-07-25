@@ -1,7 +1,7 @@
 import {addDoc, collection} from "firebase/firestore";
 import {db} from "@/firebase/config";
 
-export async function createCompanyRepository(address, area, city, cnpj, description, email, logoUrl, name, phone, site) {
+export async function createCompanyRepository(address, area, city, cnpj, description, logoUrl, name, phone, site) {
 
     try{
         const companyRef = await collection(db, "companies");
@@ -11,8 +11,7 @@ export async function createCompanyRepository(address, area, city, cnpj, descrip
             area: area ?? null,
             city,
             cnpj,
-            description,
-            email,
+            description : description ?? null,
             logoUrl: logoUrl ?? null,
             name,
             phone: phone ?? null,

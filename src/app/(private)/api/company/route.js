@@ -29,7 +29,6 @@ export async function POST(req){
                 companyDto.city,
                 companyDto.cnpj,
                 companyDto.description,
-                companyDto.email,
                 companyDto.logoUrl,
                 companyDto.name,
                 companyDto.phone,
