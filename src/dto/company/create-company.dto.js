@@ -25,8 +25,6 @@ export const createCompanySchema = z.object({
         }, 'CNPJ deve estar no formato 00.000.000/0000-00.'),
     description: z.string()
         .max("80", "Informe uma descrição com até 100 caracteres"),
-    email: z.string()
-        .email(),
     logoUrl: z.string()
         .url()
         .optional(),

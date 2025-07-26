@@ -29,7 +29,6 @@ export async function POST(req){
                 companyDto.city,
                 companyDto.cnpj,
                 companyDto.description,
-                companyDto.email,
                 companyDto.logoUrl,
                 companyDto.name,
                 companyDto.phone,
@@ -45,6 +44,15 @@ export async function POST(req){
             {status: 201}
         );
     }catch(err){
+            console.error("Erro ao criar empresa:", err);
 
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Erro interno no servidor. Tente novamente mais tarde.",
+                    error: err instanceof Error ? err.message : String(err),
+                },
+                { status: 500 }
+            );
     }
 }
