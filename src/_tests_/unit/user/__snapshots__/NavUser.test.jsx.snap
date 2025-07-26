@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`NavUser Component Matches Snapshot 1`] = `
+<div>
+  <div
+    data-testid="SidebarMenu"
+  >
+    <div
+      data-testid="SidebarMenuItem"
+    >
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        data-slot="dropdown-menu-trigger"
+        data-state="closed"
+        data-testid="SidebarMenuButton"
+        id="radix-:r4:"
+        type="button"
+      >
+        <span
+          class="relative flex size-8 shrink-0 overflow-hidden h-8 w-8 rounded-lg"
+          data-slot="avatar"
+        >
+          <span
+            class="bg-muted flex size-full items-center justify-center rounded-lg"
+            data-slot="avatar-fallback"
+          >
+            CN
+          </span>
+        </span>
+        <div
+          class="grid flex-1 text-left text-sm leading-tight"
+        >
+          <span
+            class="truncate font-medium"
+          >
+            José Vitor
+          </span>
+          <span
+            class="truncate text-xs"
+          >
+            jose@example.com
+          </span>
+        </div>
+        <svg
+          class="lucide lucide-chevrons-up-down ml-auto size-4"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m7 15 5 5 5-5"
+          />
+          <path
+            d="m7 9 5-5 5 5"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NavUser Component Matches snapshot 1`] = `
+<div>
+  <div
+    data-testid="SidebarMenu"
+  >
+    <div
+      data-testid="SidebarMenuItem"
+    >
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        data-slot="dropdown-menu-trigger"
+        data-state="closed"
+        data-testid="SidebarMenuButton"
+        id="radix-:r0:"
+        type="button"
+      >
+        <span
+          class="relative flex size-8 shrink-0 overflow-hidden h-8 w-8 rounded-lg"
+          data-slot="avatar"
+        >
+          <span
+            class="bg-muted flex size-full items-center justify-center rounded-lg"
+            data-slot="avatar-fallback"
+          >
+            CN
+          </span>
+        </span>
+        <div
+          class="grid flex-1 text-left text-sm leading-tight"
+        >
+          <span
+            class="truncate font-medium"
+          >
+            José Vitor
+          </span>
+          <span
+            class="truncate text-xs"
+          >
+            jose@example.com
+          </span>
+        </div>
+        <svg
+          class="lucide lucide-chevrons-up-down ml-auto size-4"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m7 15 5 5 5-5"
+          />
+          <path
+            d="m7 9 5-5 5 5"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
