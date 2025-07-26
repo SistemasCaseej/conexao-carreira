@@ -3,6 +3,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/app/components/app-sidebar"
 import {AuthProvider} from "@/app/context/AuthContext";
 import {getUser} from "@/dal/user/dal";
+import {Toaster} from "sonner";
 
 export default async function Layout({children}) {
 
@@ -14,6 +15,7 @@ export default async function Layout({children}) {
                 <AppSidebar user={user} />
                 <main className="flex-1">
                     <SidebarTrigger className="absolute"/>
+                    <Toaster />
                     {children}
                 </main>
             </SidebarProvider>

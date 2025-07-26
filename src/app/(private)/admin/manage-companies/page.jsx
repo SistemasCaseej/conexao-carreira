@@ -6,10 +6,30 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 import { Button } from "@/components/ui/button";
-import { createCompany } from "@/app/actions/companies/actions";
+import {createCompany} from "@/app/actions/companies/actions";
+import {useActionState, useEffect, useState} from "react";
+import {toast} from "sonner";
+import {Toast} from "radix-ui";
+
+const initialState = {
+    success: false,
+    message: '',
+    data: ''
+};
 
 
 export default function ManageCompanies() {
+    const [state, formAction] = useActionState(createCompany, initialState);
+    const [open, setOpen] = useState(false);
+
+
+    useEffect(() => {
+        if(state.success){
+            toast.success("Company created successfully!");
+            setOpen(false);
+        }
+    }, [state.success])
+
     return (
         <section className="py-12 px-8">
             <h1 className="text-2xl font-semibold mb-5">Empresas Cadastradas</h1>
@@ -20,54 +40,52 @@ export default function ManageCompanies() {
                             <CirclePlus className="cursor-pointer"/>
                         </DialogTrigger>
                         <DialogContent className="sm:min-w-[670px]">
-                            <form action={createCompany}>
-                            <DialogHeader>
-                                <DialogTitle>Cadastrar Empresa</DialogTitle>
-                                <DialogDescription>
-                                    Inclua a adição da empresa. Clique em salvar quando terminar.
-                                </DialogDescription>
-                            </DialogHeader>
-                            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div className="grid gap-3">
-                                    <Label htmlFor="name-1">Nome *</Label>
-                                    <Input type="text" id="name-1" name="name" placeholder="CASEEJ" maxLength="50"/>
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="cnpj-1">CNPJ *</Label>
-                                    <Input type="text" id="cnpj-1" name="cnpj" maxLength="20" placeholder="Informe o seu CNPJ"/>
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="cidade-1">Cidade *</Label>
-                                    <Input id="cidade-1" maxLength="20" name="cidade" placeholder="Macaé"/>
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="site-1">Site</Label>
-                                    <Input type="url" id="site-1" name="site-1" placeholder="https://example.com" maxLength="70"/>
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="telefone-1">Telefone</Label>
-                                    <Input type="tel" id="telefone-1" name="telefone-1" placeholder="(00) 00000-0000" maxLength="20"/>
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="endereco-1">Endereço</Label>
-                                    <Input type="text" id="endereco-1" name="endereco-1" placeholder="Rua Exemplo" maxLength="100"/>
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="area-1">Área de Atuação</Label>
-                                    <Input type="text" id="area-1" name="area-1" placeholder="Tecnologia" maxLength="50"/>
-                                </div>
-                                <div className="grid gap-3">
-                                    <Label htmlFor="area-1">Descrição</Label>
-                                    <textarea className="border border-gray-300 rounded p-2 w-full" maxLength="150"></textarea>
-                                </div>
-                            </div>
-                            <DialogFooter>
-                                <DialogClose asChild>
-                                    <Button className="cursor-pointer" variant="outline">Cancelar</Button>
-                                </DialogClose>
-                                <Button className="cursor-pointer" type="submit">Salvar</Button>
-                            </DialogFooter>
-                        </form>
+                                <form action={formAction}>
+                                    <DialogHeader>
+                                        <DialogTitle>Cadastrar Empresa</DialogTitle>
+                                        <DialogDescription>Inclua a adição da empresa. Clique em salvar quando terminar.</DialogDescription>
+                                    </DialogHeader>
+                                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="name">Nome *</Label>
+                                            <Input type="text" id="name" name="name" placeholder="CASEEJ" maxLength="50" required />
+                                        </div>
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="cnpj">CNPJ *</Label>
+                                            <Input type="text" id="cnpj" name="cnpj" maxLength="20" placeholder="Informe o seu CNPJ" required/>
+                                        </div>
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="city">Cidade *</Label>
+                                            <Input id="city" maxLength="20" name="city" placeholder="Macaé" required/>
+                                        </div>
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="site">Site</Label>
+                                            <Input type="url" id="site" name="site" placeholder="https://example.com" maxLength="70"/>
+                                        </div>
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="phone">Telefone</Label>
+                                            <Input type="tel" id="phone" name="phone" placeholder="(00) 00000-0000" maxLength="20"/>
+                                        </div>
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="address">Endereço</Label>
+                                            <Input type="text" id="address" name="address" placeholder="Rua Exemplo" maxLength="100"/>
+                                        </div>
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="area">Área de Atuação</Label>
+                                            <Input type="text" id="area" name="area" placeholder="Tecnologia" maxLength="50"/>
+                                        </div>
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="description">Descrição</Label>
+                                            <Input type="text" id="description" name="description" maxLength="300" placeholder="Empresa...."></Input>
+                                        </div>
+                                    </div>
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                            <Button className="cursor-pointer" variant="outline">Cancelar</Button>
+                                        </DialogClose>
+                                        <Button className="cursor-pointer" type="submit">Salvar</Button>
+                                    </DialogFooter>
+                                </form>
                     </DialogContent>
                 </Dialog>
             </div>
