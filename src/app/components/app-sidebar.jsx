@@ -1,7 +1,7 @@
 "use client"
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar} from "@/components/ui/sidebar"
-import { NavUser } from "@/components/nav-user";
+import { NavUser } from "@/components/NavUser";
 import { NavMain } from "@/components/nav-main";
 import { BookOpen, Star, BriefcaseBusiness, Home, Search, Users, Building2 } from "lucide-react";
 
