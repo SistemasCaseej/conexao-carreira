@@ -5,7 +5,7 @@ import { deleteCookieSession } from "@/app/actions/auth/session";
 
 /**
  * @swagger
- * /api/session:
+ * /api_users.test.jsx/session:
  *   get:
  *     description: Pega o usuário autenticado é necessário informar um cookie
  *     responses:
@@ -21,7 +21,7 @@ export async function GET() {
 
 /**
  * @swagger
- * /api/session:
+ * /api_users.test.jsx/session:
  *   get:
  *     tags:
  *       - Session

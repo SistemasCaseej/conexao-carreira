@@ -54,8 +54,8 @@ export function middleware(request) {
           * - /favicon.ico
           * - /sitemap.xml
           * - /robots.txt
-          * - /api (você pode decidir se quer interceptar a API ou não)
+          * - /api_users.test.jsx (você pode decidir se quer interceptar a API ou não)
           */
-         '/((?!_next|favicon.ico|sitemap.xml|robots.txt|api).*)',
+         '/((?!_next|favicon.ico|sitemap.xml|robots.txt|api_users.test.jsx).*)',
      ],
 }

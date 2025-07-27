@@ -4,7 +4,7 @@ import {NextResponse} from "next/server";
 
 /**
  * @swagger
- * /api/users/approved:
+ * /api_users.test.jsx/users/approved:
  *   get:
  *     tags:
  *       - Users
