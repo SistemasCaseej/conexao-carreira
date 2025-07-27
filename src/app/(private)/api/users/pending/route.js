@@ -7,7 +7,7 @@ import {createUserSchema} from "@/dto/users/userDto";
 
 /**
  * @swagger
- * /api/users/pending:
+ * /api_users.test.jsx/users/pending:
  *   get:
  *     tags:
  *       - Users
@@ -50,7 +50,7 @@ export async function GET() {
 
 /**
  * @swagger
- * /api/users/pending:
+ * /api_users.test.jsx/users/pending:
  *   post:
  *     tags:
  *       - Users
@@ -150,14 +150,14 @@ export async function POST(req) {
 
         if (!validation.success) {
             const formattedErrors = validation.error.format();
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: "Dados inválidos",
-                    errors: formattedErrors,
-                },
-                {status: 400}
-            );
+                return NextResponse.json(
+                    {
+                        success: false,
+                        message: "Dados inválidos",
+                        errors: formattedErrors,
+                    },
+                    {status: 400}
+                );
         }
 
         const userDto = validation.data;

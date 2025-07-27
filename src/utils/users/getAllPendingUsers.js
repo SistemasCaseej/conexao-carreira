@@ -2,7 +2,7 @@ export async function getAllPendingUsers() {
     const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
     try {
-        const response = await fetch(`${baseUrl}/api/users/pending`, {
+        const response = await fetch(`/api/users/pending`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export async function getAllPendingUsers() {
 
         const text = await response.text();
         if (!text) {
-            console.warn("Resposta vazia da API /api/users");
+            console.warn("Resposta vazia da API /api_users.test.jsx/users");
             return [];
         }
 
