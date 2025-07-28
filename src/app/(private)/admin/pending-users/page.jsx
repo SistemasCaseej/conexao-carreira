@@ -1,5 +1,5 @@
 import {SectionCards} from "@/components/section-cards";
-import {getAllPendingUsers} from "@/utils/users/getAllPendingUsers";
+import {getAllPendingUsers} from "@/services/userService";
 import ClientTable from "@/components/ClientTable";
 
 

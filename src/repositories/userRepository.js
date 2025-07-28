@@ -33,7 +33,7 @@ export async function getAllApprovedUsers() {
 }
 
 
-export async function createUser(name, email, cpf, phoneNumber, linkedIn, city) {
+export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn, city) {
 
     try {
         const pendingUsersRef = collection(db, "users");
@@ -71,5 +71,42 @@ export async function getUserInfoSession(session) {
     return {
         userId: userDoc.id,
         ...userDoc.data()
+    }
+}
+
+export async function hasExistingEmail(email) {
+
+    try{
+        const userRef = collection(db, "users");
+
+        const queryUser = query(userRef, where ("email", "==", email));
+
+        const querySnapshot = await getDocs(queryUser);
+
+        return !querySnapshot.empty;
+
+
+    }catch (error) {
+        console.error("❌ Erro ao buscar email do usuário:", error);
+
+        throw new Error("Erro ao buscar usuário no Firestore.");
+    }
+}
+
+export async function cpfAlreadyExists(cpf){
+
+    try {
+        const userRef = collection(db, "users");
+
+        const queryUser = query(userRef, where ("cpf", "==", cpf));
+
+        const querySnapshot = await getDocs(queryUser);
+
+        return !querySnapshot.empty;
+
+    }catch (error) {
+        console.error("Erro ao buscar CPF do usuário:", error);
+
+        throw new Error("Erro ao buscar usuário no Firestore.");
     }
 }
