@@ -1,11 +1,6 @@
-import {GET, POST} from "@/app/(private)/api/users/pending/route";
-
+import { POST } from "@/app/(private)/api/users/pending/route";
 
 describe('Pending Users', () => {
-
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
 
     it('Should create a new pending user', async () => {
         const newUserRequest = {
@@ -16,8 +11,6 @@ describe('Pending Users', () => {
                 phoneNumber: "85999999999",
                 linkedIn: "https://linkedin.com/in/josevitor",
                 city: "Fortaleza",
-                password: "12345678",
-                confirmPassword: "12345678",
             }),
         };
 
@@ -61,8 +54,6 @@ describe('Pending Users', () => {
                 phoneNumber: "85999999999",
                 linkedIn: "https://linkedin.com/in/josevitor",
                 city: "Fortaleza",
-                password: "12345678",
-                confirmPassword: "12345678",
             }),
         };
 
@@ -74,36 +65,58 @@ describe('Pending Users', () => {
         expect(json.message).toMatch("Dados inválidos");
     });
 
-    it('Should return one pending user', async () => {
+    it('should return 409 if email is already used', async () => {
 
         const newUserRequest = {
             json: async () => ({
-                name: "Maria",
-                email: "maria@example.com",
-                cpf: "123.422.789-00",
+                name: "José Vitor",
+                email: "email@exists.com",
+                cpf: "123.456.789-00",
                 phoneNumber: "85999999999",
                 linkedIn: "https://linkedin.com/in/josevitor",
                 city: "Fortaleza",
-                password: "12345678",
-                confirmPassword: "12345678",
             }),
         };
 
-        const postResponse = await POST(newUserRequest);
-        expect(postResponse.status).toBe(201);
+        await POST(newUserRequest);
 
-        const response = await GET();
-        const users = await response.json();
+        const response = await POST(newUserRequest);
+        const json = await response.json();
 
-        expect(response.status).toBe(200);
-        expect(Array.isArray(users)).toBe(true);
-        expect(users).toHaveLength(1);
+        expect(response.status).toBe(409);
+        expect(json).toEqual({
+            success: false,
+            message: "E-mail já está em uso",
+        });
 
-        expect(users[0]).toEqual(
-            expect.objectContaining({
-                name: "Maria",
-                email: "maria@example.com"
-            })
-        )
-    })
+
+    });
+
+    it('should return 409 if CPF is already used', async () => {
+
+        const newUserRequest = {
+            json: async () => ({
+                name: "José Vitor",
+                email: "new@email.com",
+                cpf: "123.456.789-00",
+                phoneNumber: "85999999999",
+                linkedIn: "https://linkedin.com/in/josevitor",
+                city: "Fortaleza",
+            }),
+        };
+
+        await POST(newUserRequest);
+
+        const response = await POST(newUserRequest);
+        const json = await response.json();
+
+        expect(response.status).toBe(409);
+        expect(json).toEqual({
+            success: false,
+            message: "CPF já está em uso",
+        });
+
+
+    });
+
 });

@@ -7,7 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar} from "@/components/ui/sidebar"
 import { useRouter } from "next/navigation";
 
-function NavUser({user2, user}) {
+export function NavUser({user2, user}) {
     const { isMobile } = useSidebar()
     const router = useRouter();
 

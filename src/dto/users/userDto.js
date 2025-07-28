@@ -23,16 +23,5 @@ export const createUserSchema = z.object({
     city: z.string()
         .nonempty("A cidade não pode ser vazio")
         .max(30),
-    password: z.string()
-        .min(6, "Senha deve ter no mínimo 6 caracteres")
-        .max(20)
-        .nonempty("A senha é obrigatório"),
-    confirmPassword: z.string()
-        .min(6, "Senha deve ter no mínimo 6 caracteres")
-        .max(20)
-        .nonempty("A senha é obrigatório")
-}).refine(data => data.password === data.confirmPassword, {
-    message: "As senhas não coincidem",
-    path: ["confirmPassword"],
-});
+})
 

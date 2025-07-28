@@ -6,15 +6,8 @@ import * as userRepository from "../repositories/userRepository";
 //User
 
 //Função para criar um possível usuário do sistema
-export async function createUser(name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword){
-
-    try {
-        return await userRepository.createUser(name, email, cpf, phoneNumber, linkedIn, city, password, confirmPassword);
-    }catch (error) {
-        console.log("Erro no service ao criar possível usuário")
-        throw new Error("Erro ao criar usuário")
-    }
-
+export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn, city){
+    return await userRepository.createPendingUser(name, email, cpf, phoneNumber, linkedIn, city);
 }
 
 //Função para pegar todos os usuários que estão aguardando aprovação
@@ -28,4 +21,14 @@ export async function getAllApprovedUsers(){
 
 export async function getUserInfoSession(session){
     return await userRepository.getUserInfoSession(session);
+}
+
+
+//Essa função verifica se o email cadastrado já está sendo utilizado por outro usuário
+export async function hasExistingEmail(email){
+    return await userRepository.hasExistingEmail(email)
+}
+
+export async function cpfAlreadyExists(cpf){
+    return await userRepository.cpfAlreadyExists(cpf);
 }

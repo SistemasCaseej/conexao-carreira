@@ -7,6 +7,7 @@ import Link from "next/link";
 import Form from "next/form";
 import {useState} from "react";
 import {withMask} from "use-mask-input";
+import {toast} from "sonner";
 
 export function RegisterForm() {
 
@@ -18,8 +19,6 @@ export function RegisterForm() {
         phoneNumber: "",
         linkedIn: "",
         city: "",
-        password: "",
-        confirmPassword: "",
     })
 
     function handleChange(e) {
@@ -40,10 +39,11 @@ export function RegisterForm() {
 
             if(!res.ok) {
                 setFormErrors(responseData.errors);
+                toast.error(responseData.message || "Erro ao enviar formulário.");
 
                 setTimeout(() => {
                     setFormErrors({});
-                }, 10000);
+                }, 5000);
             }else {
                 setUserData({
                     name: "",
@@ -52,8 +52,6 @@ export function RegisterForm() {
                     phoneNumber: "",
                     linkedIn: "",
                     city: "",
-                    password: "",
-                    confirmPassword: "",
                 });
             }
 
@@ -76,7 +74,7 @@ export function RegisterForm() {
                             <Label htmlFor="name">Nome</Label>
                             <Input id="name" maxLength={40}  type="text" name="name" className="mt-2 rounded-sm" value={userData.name} onChange={handleChange} placeholder="Digite seu nome completo" required />
                             {formErrors?.name?._errors && (
-                                <p className="text-red-500 text-sm mt-1">{formErrors.name._errors[0]}</p>
+                                <p className="text-red-500 text-sm mt-1 font-semibold">{formErrors.name._errors[0]}</p>
                             )}
                         </div>
                         <div className="flex-1 min-w-[280px]">
@@ -120,24 +118,6 @@ export function RegisterForm() {
                             <Input id="city" type="text" name="city" maxLength={30} className="mt-2 rounded-sm" value={userData.city} onChange={handleChange} placeholder="Informe a sua cidade" required />
                             {formErrors?.city?._errors && (
                                 <p className="text-red-500 text-sm mt-1">{formErrors.city._errors[0]}</p>
-
-                            )}
-                        </div>
-                    </div>
-                    <div className="flex flex-row flex-wrap justify-between items-center gap-2 mt-4">
-                        <div className="flex-1 min-w-[280px]">
-                            <Label htmlFor="password">Senha</Label>
-                            <Input id="password" type="password" maxLength={20} minLength={6} name="password" className="mt-2 rounded-sm" value={userData.password} onChange={handleChange} placeholder="Digite uma senha segura" required />
-                            {formErrors?.password?._errors && (
-                                <p className="text-red-500 text-sm mt-1">{formErrors.password._errors[0]}</p>
-
-                            )}
-                        </div>
-                        <div className="flex-1 min-w-[280px]">
-                            <Label htmlFor="confirmPassword">Confirmar senha</Label>
-                            <Input id="confirmPassword" type="password" maxLength={20} minLength={6} name="confirmPassword" className="mt-2 rounded-sm" value={userData.confirmPassword} onChange={handleChange} placeholder="Confirme a sua senha" required />
-                            {formErrors?.confirmPassword?._errors && (
-                                <p className="text-red-500 text-sm mt-1">{formErrors.confirmPassword._errors[0]}</p>
 
                             )}
                         </div>
