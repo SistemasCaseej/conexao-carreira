@@ -6,7 +6,7 @@ describe('Pending Users', () => {
         const newUserRequest = {
             json: async () => ({
                 name: "José Vitor",
-                email: "jose@example.com",
+                email: "create@pendinguser.com",
                 cpf: "123.456.789-00",
                 phoneNumber: "85999999999",
                 linkedIn: "https://linkedin.com/in/josevitor",
@@ -71,7 +71,7 @@ describe('Pending Users', () => {
             json: async () => ({
                 name: "José Vitor",
                 email: "email@exists.com",
-                cpf: "123.456.789-00",
+                cpf: "123.456.759-00",
                 phoneNumber: "85999999999",
                 linkedIn: "https://linkedin.com/in/josevitor",
                 city: "Fortaleza",
@@ -80,7 +80,18 @@ describe('Pending Users', () => {
 
         await POST(newUserRequest);
 
-        const response = await POST(newUserRequest);
+        const duplicateEmailRequest = {
+            json: async () => ({
+                name: "Outro Nome",
+                email: "email@exists.com",
+                cpf: "987.654.321-00",
+                phoneNumber: "85988888888",
+                linkedIn: "https://linkedin.com/in/outro",
+                city: "Fortaleza",
+            }),
+        };
+
+        const response = await POST(duplicateEmailRequest);
         const json = await response.json();
 
         expect(response.status).toBe(409);

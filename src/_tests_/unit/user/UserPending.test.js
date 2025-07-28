@@ -51,7 +51,6 @@ describe('Pending users', () => {
         expect(users.every(user => typeof user === 'object')).toBe(true);
     });
 
-
     it('Each user should have all expected properties', async () => {
         const mockData = [{
             name: 'José' , email: 'jvito@gmail.com' , cpf: '122222121', city: "Rio de Janeiro",
