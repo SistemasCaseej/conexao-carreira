@@ -10,7 +10,7 @@ import {signin} from "@/app/actions/auth/auth";
 import {useActionState, useEffect, useState} from "react";
 
 export function LoginForm({className, ...props}) {
-    const [state, action, pending] = useActionState(signin, undefined)
+    const [state, formAction, pending] = useActionState(signin, undefined)
     const [showError, setShowError] = useState(true)
     const router = useRouter();
 
@@ -32,7 +32,7 @@ export function LoginForm({className, ...props}) {
     }, [state, router]);
 
     return (
-      <form action={action} className={cn("flex flex-col gap-6", className)} {...props}>
+      <form action={formAction} className={cn("flex flex-col gap-6", className)} {...props}>
           <div className="flex flex-col items-center gap-2 text-center">
             <h1 className="text-2xl font-bold">Acesse a sua conta</h1>
             <p className="text-gray-500 text-sm text-balance dark:text-gray-400">Digite seu e-mail abaixo para acessar sua conta</p>
