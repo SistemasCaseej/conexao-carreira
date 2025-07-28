@@ -24,7 +24,6 @@ export async function approveUser(userId, email) {
 
         const user = userCredential.user;
 
-        console.log('Usuário criado com sucesso:', user);
     }catch (error) {
         console.error('Erro ao criar usuário:', error.code, error.message);
 

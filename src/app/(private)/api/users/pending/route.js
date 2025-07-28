@@ -20,8 +20,19 @@ export async function POST(req) {
 
         const validation = createUserSchema.safeParse(body);
 
-        const isCpfTaken = await cpfAlreadyExists(body.cpf);
+        if (!validation.success) {
+            const formattedErrors = validation.error.format();
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Dados inválidos",
+                    errors: formattedErrors,
+                },
+                {status: 400}
+            );
+        }
 
+        const isCpfTaken = await cpfAlreadyExists(body.cpf);
         const isEmailTaken = await hasExistingEmail(body.email);
 
         if (isEmailTaken || isCpfTaken) {
@@ -38,17 +49,6 @@ export async function POST(req) {
             );
         }
 
-        if (!validation.success) {
-            const formattedErrors = validation.error.format();
-                return NextResponse.json(
-                    {
-                        success: false,
-                        message: "Dados inválidos",
-                        errors: formattedErrors,
-                    },
-                    {status: 400}
-                );
-        }
 
         const userDto = validation.data;
 

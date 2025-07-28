@@ -15,9 +15,11 @@ export async function getAllPendingUsers(){
     return await userRepository.getAllPendingUsers()
 }
 
+//Função para pegar todos os usuários que estão aprovados
 export async function getAllApprovedUsers(){
     return await userRepository.getAllApprovedUsers();
 }
+
 
 export async function getUserInfoSession(session){
     return await userRepository.getUserInfoSession(session);
@@ -29,6 +31,7 @@ export async function hasExistingEmail(email){
     return await userRepository.hasExistingEmail(email)
 }
 
+//Essa função verifica se o cpf cadastrado já está sendo utilizado por outro usuário
 export async function cpfAlreadyExists(cpf){
     return await userRepository.cpfAlreadyExists(cpf);
 }
