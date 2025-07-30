@@ -37,7 +37,7 @@ describe('Pending Users', () => {
         expect(matchingUser).toBeDefined();
         expect(matchingUser.role).toBe("Candidate")
         expect(matchingUser.status).toBe("Pendente");
-    }); //GET
+    }); //GET e POST
 
     it('Should return 200 and a list of pending users', async () => {
         const userData = {
@@ -62,7 +62,7 @@ describe('Pending Users', () => {
 
         // Verifica se pelo menos um dos usuários retornados tem o mesmo e-mail do que foi criado
         const hasNewUser = data.find((user) => user.email === userData.email);
-    }); //GET
+    }); //GET e POST
 
     it('Should create a new pending user', async () => {
         const newUserRequest = {

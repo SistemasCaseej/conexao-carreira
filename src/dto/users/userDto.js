@@ -1,7 +1,7 @@
 //DTO - USER
 import {z} from "zod";
 
-export const createUserSchema = z.object({
+export const createPendingUserSchema = z.object({
     name: z.string()
         .nonempty("O nome é obrigatório")
         .max(40, "Por favor, digite um nome com até 40 caracteres."),
@@ -23,5 +23,14 @@ export const createUserSchema = z.object({
     city: z.string()
         .nonempty("A cidade não pode ser vazio")
         .max(30),
+})
+
+export const deleteApprovedUser = z.object({
+    cpf: z.string()
+        .nonempty("O cpf não pode ser vazio")
+        .transform((cpf) => cpf.replace(/[^\d]+/g, ''))
+        .refine((cpf) => cpf.length === 11, {
+            message : "O CPF deve conter 11 caracteres"
+        }),
 })
 

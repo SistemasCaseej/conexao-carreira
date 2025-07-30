@@ -12,7 +12,7 @@ describe('Pending users', () => {
         jest.clearAllMocks();
     });
 
-    it('Should return an Array', async () => {
+    it('Should return an array', async () => {
 
         const mockData = [{ id: 1, name: 'José' }];
 
@@ -56,7 +56,7 @@ describe('Pending users', () => {
     it('Each user should have all expected properties', async () => {
         const mockData = [{
             name: 'José' , email: 'jvito@gmail.com' , cpf: '122222121', city: "Rio de Janeiro",
-            phoneNumber: '1234567890', linkedIn: 'g1.com', role: "Estudante", status: "Pending"
+            phoneNumber: '1234567890', linkedIn: 'g1.com', role: "Candidate", status: "Pendente"
         }];
 
         (getAllPendingUsers).mockResolvedValue(mockData);

@@ -22,7 +22,7 @@ export const paymentSchema = z.object({
 })
 
 // Colunas da tabela
-export const getColumns = ({ onApprove, onReject, actions }) => {
+export const getColumns = ({ onApprove, onReject, actions, approve }) => {
     return [
         {
             accessorKey: "name",
@@ -71,27 +71,14 @@ export const getColumns = ({ onApprove, onReject, actions }) => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-
-                            <DropdownMenuItem
-                                onClick={() =>
-                                    navigator.clipboard
-                                        .writeText(user.id)
-                                        .then(() =>
-                                            console.log("ID copiado:", user.id)
-                                        )
-                                }
-                            >
-                                Copiar ID
-                            </DropdownMenuItem>
-
-                            <DropdownMenuSeparator />
-
-                            <DropdownMenuItem onClick={() => onApprove(user.id, user.email)}>
-                                Aprovar
-                            </DropdownMenuItem>
+                            {approve && (
+                                <DropdownMenuItem onClick={() => onApprove(user.id, user.email)}>
+                                    Aprovar
+                                </DropdownMenuItem>
+                            )}
 
                             <DropdownMenuItem onClick={() => onReject(user.id)}>
-                                Recusar
+                                Excluir
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

@@ -20,6 +20,13 @@ export async function getAllApprovedUsers(){
     return await userRepository.getAllApprovedUsers();
 }
 
+export async function approveUserById(userId, email) {
+    return await userRepository.approveUserById(userId, email);
+}
+
+export async function deleteUserById(userId){
+    return await userRepository.deleteUserById(userId)
+}
 
 export async function getUserInfoSession(session){
     return await userRepository.getUserInfoSession(session);

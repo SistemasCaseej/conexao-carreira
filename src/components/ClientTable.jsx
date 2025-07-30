@@ -1,19 +1,29 @@
 'use client'
 
 import { DataTable } from "@/app/(private)/admin/pending-users/data-table";
-import { getColumns } from "@/app/(private)/admin/pending-users/columns";
-import { approveUser, rejectUser } from "@/app/actions/users";
+import { getColumns } from "@/app/(private)/admin/pending-users/columns";;
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 
-export default function ClientTable({data, actions}){
+export default function ClientTable({data, actions, approve}){
 
     const router = useRouter();
 
-    const handleApprove = async (id, email) => {
+    const handleApprove = async (userId, email) => {
         try {
-            await approveUser(id, email);
+
+            const res = await fetch(`/api/users/approve`, {
+                method: "POST",
+                body: JSON.stringify({userId, email}),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Erro ao aprovar usuário");
+            }
+
             toast.success("Usuário aprovado com sucesso!!");
             router.refresh();
         } catch (error) {
@@ -21,19 +31,27 @@ export default function ClientTable({data, actions}){
         }
     }
 
-    const handleReject = async (id) => {
+    const handleDelete = async (id) => {
         try {
-            await rejectUser(id);
-            toast.error("Usuário rejeitado com sucesso", {
-                className: "bg-red-600 text-white",
+            const res = await fetch(`/api/users/${id}`, {
+                method: "DELETE",
             });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Erro ao deletar usuário");
+            }
+
+            toast.success(`Usuário deletado com sucesso`);
+
             router.refresh();
         } catch (error) {
             toast.error("Erro ao rejeitar usuário");
         }
     }
 
-    const columns = getColumns({ onApprove: handleApprove, onReject: handleReject, actions: actions });
+    const columns = getColumns({ onApprove: handleApprove, onReject: handleDelete, actions: actions , approve});
 
     return <DataTable columns={columns} data={data}/>
 }
