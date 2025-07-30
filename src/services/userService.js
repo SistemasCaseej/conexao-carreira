@@ -28,6 +28,10 @@ export async function deleteUserById(userId){
     return await userRepository.deleteUserById(userId)
 }
 
+export async function getUserByDocumentId(documentId){
+    return await userRepository.getUserByDocumentId(documentId);
+}
+
 export async function getUserInfoSession(session){
     return await userRepository.getUserInfoSession(session);
 }
