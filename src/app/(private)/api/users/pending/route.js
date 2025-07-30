@@ -2,7 +2,7 @@
 
 import { NextResponse } from 'next/server'
 import {cpfAlreadyExists, createPendingUser, getAllPendingUsers, hasExistingEmail} from "@/services/userService";
-import { createUserSchema } from "@/dto/users/userDto";
+import {createPendingUserSchema} from "@/dto/users/userDto";
 import {cpf} from "cpf-cnpj-validator";
 
 
@@ -13,12 +13,11 @@ export async function GET() {
     return NextResponse.json(users)
 }
 
-
 export async function POST(req) {
     try {
         const body = await req.json();
 
-        const validation = createUserSchema.safeParse(body);
+        const validation = createPendingUserSchema.safeParse(body);
 
         if (!validation.success) {
             const formattedErrors = validation.error.format();

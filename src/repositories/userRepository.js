@@ -1,7 +1,9 @@
 //O repositório contém funções que interagem diretamente com o banco de dados.
 
-import {addDoc, collection, getDocs, where, query} from "firebase/firestore";
-import {db} from "@/firebase/config"
+import {addDoc, collection, getDocs, where, query, doc, deleteDoc, getDoc, updateDoc} from "firebase/firestore";
+import {auth, db} from "@/firebase/config"
+import {generateSecurePassword} from "@/utils/generatePassword";
+import {createUserWithEmailAndPassword, sendPasswordResetEmail} from "firebase/auth";
 
 export async function getAllPendingUsers() {
 
@@ -97,6 +99,42 @@ export async function getAllApprovedUsers() {
         id: doc.id,
         ...doc.data(),
     }));
+}
+
+export async function deleteUserById(id) {
+
+    const docRef = doc(db, "users", id);
+
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+        throw new Error("Documento não encontrado.");
+    }
+
+    const data = docSnap.data();
+
+
+    await deleteDoc(docRef);
+    console.log("Usuário deletado com sucesso.");
+
+}
+
+export async function approveUserById(userId, email) {
+
+        const temporaryPassword = generateSecurePassword();
+
+        const userCredential = await createUserWithEmailAndPassword(auth, email, temporaryPassword);
+
+        const userRef = doc(db, "users", userId);
+        await updateDoc(userRef, {
+            status: "Aprovado",
+            approvedAt : new Date().toISOString(),
+            userId: userCredential.user.uid,
+        })
+
+        await sendPasswordResetEmail(auth, email);
+
+        const user = userCredential.user;
 }
 
 export async function getUserInfoSession(session) {

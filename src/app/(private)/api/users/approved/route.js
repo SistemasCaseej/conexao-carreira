@@ -1,5 +1,5 @@
-import {getAllApprovedUsers} from "@/services/userService";
-import {NextResponse} from "next/server";
+import { getAllApprovedUsers} from "@/services/userService";
+import { NextResponse} from "next/server";
 
 
 export async function GET() {
@@ -9,3 +9,4 @@ export async function GET() {
     // Retorna uma lista com os candidatos aprovados
      return NextResponse.json(users)
 }
+
