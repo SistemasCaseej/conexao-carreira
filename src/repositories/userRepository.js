@@ -1,6 +1,6 @@
 //O repositório contém funções que interagem diretamente com o banco de dados.
 
-import {addDoc, collection, getDocs, where, query, doc, deleteDoc, getDoc, updateDoc} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where} from "firebase/firestore";
 import {auth, db} from "@/firebase/config"
 import {generateSecurePassword} from "@/utils/generatePassword";
 import {createUserWithEmailAndPassword, sendPasswordResetEmail} from "firebase/auth";
@@ -153,4 +153,17 @@ export async function getUserInfoSession(session) {
         userId: userDoc.id,
         ...userDoc.data()
     }
+}
+
+export async function getUserByDocumentId(documentId) {
+
+    const docRef = doc(db, "users", documentId);
+
+    const docSnap = await getDoc(docRef);
+
+    if(!docSnap.exists()) {
+        throw new Error("Documento não encontrado")
+    }
+
+    return docSnap.data();
 }

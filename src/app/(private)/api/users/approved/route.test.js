@@ -1,4 +1,5 @@
 import { GET } from "@/app/(private)/api/users/approved/route";
+import {POST} from "@/app/(private)/api/users/pending/route";
 
 describe('Approved users', () => {
 
@@ -11,7 +12,4 @@ describe('Approved users', () => {
         expect(data).toEqual([]);
     })//GET
 
-    it('Should return 200 and a message "User deleted successfully"', async () => {
-
-    })
 })

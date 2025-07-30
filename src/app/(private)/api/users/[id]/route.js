@@ -1,6 +1,37 @@
 import { NextResponse } from "next/server";
-import { deleteUserById } from "@/services/userService";
+import {deleteUserById, getUserByDocumentId} from "@/services/userService";
 
+
+export async function GET(_request, {params}) {
+
+    const { id } = await params
+
+    if(!id){
+        return NextResponse.json(
+            { success: false, error: "No such document id" },
+            {status: 400 },
+        )
+    }
+
+    try{
+
+        const user = await getUserByDocumentId(id);
+
+
+        return NextResponse.json(
+            { success: true, message: "User found" , data: { user } },
+            { status: 200 },
+
+        );
+    }catch (error){
+        console.error("Failed find document:", error);
+
+        return NextResponse.json(
+            { success: false, error: "User not found" },
+            { status: 500 }
+        );
+    }
+}
 
 export async function DELETE(_request, {params}) {
 
