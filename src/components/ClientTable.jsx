@@ -1,12 +1,12 @@
 'use client'
 
 import { DataTable } from "@/app/(private)/admin/pending-users/data-table";
-import { getColumns } from "@/app/(private)/admin/pending-users/columns";;
+import { getColumns } from "@/app/(private)/admin/pending-users/columns";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 
-export default function ClientTable({data, actions, approve}){
+export default function ClientTable({data, actions, approve, customSection}){
 
     const router = useRouter();
 
@@ -53,5 +53,5 @@ export default function ClientTable({data, actions, approve}){
 
     const columns = getColumns({ onApprove: handleApprove, onReject: handleDelete, actions: actions , approve});
 
-    return <DataTable columns={columns} data={data}/>
+    return <DataTable columns={columns} data={data} customSection={customSection} />
 }

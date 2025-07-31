@@ -1,4 +1,4 @@
-import {RegisterForm} from "@/components/register-form";
+import {RegisterForm} from "@/components/RegisterForm";
 import { GalleryVerticalEnd } from "lucide-react"
 
 

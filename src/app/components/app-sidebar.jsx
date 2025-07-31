@@ -103,16 +103,16 @@ const data = {
             icon: Users,
             items: [
                 {
-                    title: "Usuários aprovados",
+                    title: "Usuários Aprovados",
                     url: "/admin/approved-users",
                 },
                 {
-                    title: "Usuários pendentes",
+                    title: "Usuários Pendentes",
                     url: "/admin/pending-users",
                 },
                 {
-                    title: "Todos os usuários",
-                    url: "/admin/cp",
+                    title: "Usuários Administradores",
+                    url: "/admin/admin-users",
                 },
             ],
         },
