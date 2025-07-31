@@ -4,14 +4,10 @@ import { z } from "zod"
 import { MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
+import {IconCircleCheckFilled, IconLoader} from "@tabler/icons-react";
+import { Badge } from "@/components/ui/badge"
+
 
 
 export const paymentSchema = z.object({
@@ -35,12 +31,7 @@ export const getColumns = ({ onApprove, onReject, actions, approve }) => {
         {
             accessorKey: "email",
             header: ({ column }) => (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === "asc")
-                    }
-                >
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
                     Email
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
@@ -53,6 +44,20 @@ export const getColumns = ({ onApprove, onReject, actions, approve }) => {
         {
             accessorKey: "status",
             header: "Status",
+            cell: ({ row }) => (
+                <Badge variant="outline" className="text-muted-foreground px-1.5">
+                    {row.original.status === "Aprovado" ? (
+                        <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
+                    ) : (
+                        <IconLoader />
+                    )}
+                    {row.original.status}
+                </Badge>
+            ),
+        },
+        {
+            accessorKey: "role",
+            header: "Role",
         },
         {
             id: "actions",

@@ -27,7 +27,7 @@ export default async function PageCandidates() {
         <div className="flex-1 flex-col gap-2 py-6">
             <section data-qa="teste" className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
                 <SectionCards informations={informations} />
-                <ClientTable data={data}  actions={true} approve={true}/>
+                <ClientTable data={data}  actions={true} approve={true} customSection={[{title : "USUÁRIOS PENDENTES", addUser: false}]}/>
             </section>
         </div>
     )
