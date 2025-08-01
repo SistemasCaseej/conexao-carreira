@@ -20,11 +20,25 @@ export async function getAllPendingUsers() {
             ...doc.data(),
         }));
     }catch (err){
-        console.error("Erro ao criar usuário", error);
+        console.error("Erro ao criar usuário", err);
         throw new Error("Falha ao criar possível usuário");
     }
 
 
+}
+
+export async function getAllAdminUsers(){
+    const usersRef = collection(db, "users");
+
+    const q = query(usersRef, where ("role", "==", "Admin"));
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((doc) => ({
+
+        id: doc.id,
+        ...doc.data(),
+    }));
 }
 
 export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn, city) {
@@ -48,6 +62,37 @@ export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn,
         console.error("Erro ao criar usuário", error);
         throw new Error("Falha ao criar possível usuário");
     }
+}
+
+export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, city) {
+
+    try {
+        const temporaryPassword = generateSecurePassword();
+
+        const userCredential = await createUserWithEmailAndPassword(auth, email, temporaryPassword);
+
+        const pendingUsersRef = collection(db, "users");
+
+        const docRef = await addDoc(pendingUsersRef, {
+            name,
+            email,
+            cpf,
+            phoneNumber,
+            linkedIn,
+            city,
+            status : "Aprovado",
+            role : "Admin",
+            userId : userCredential.user.uid
+        })
+
+        await sendPasswordResetEmail(auth, email);
+
+        return docRef.id
+    }catch (error) {
+        console.error("Erro ao criar usuário", error);
+        throw new Error("Falha ao criar possível usuário");
+    }
+
 }
 
 export async function hasExistingEmail(email) {

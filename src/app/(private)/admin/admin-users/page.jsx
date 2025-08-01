@@ -1,9 +1,9 @@
 import ClientTable from "@/components/ClientTable";
-import {getAllApprovedUsers} from "@/services/userService";
+import { getAllAdminUsers } from "@/services/userService";
 
 export default async function PageUsersAdmins() {
 
-    const data = await getAllApprovedUsers();
+    const data = await getAllAdminUsers();
 
     const informations = [
         {

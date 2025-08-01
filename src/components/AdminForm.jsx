@@ -7,8 +7,8 @@ import {GenericForm} from "@/components/Form";
 
 export function AdminForm() {
 
-    const handleSubmit = () => {
-        console.log("Pagina de admin form");
+    const handleSubmit = (form) => {
+            console.log(form);
     };
 
     return (

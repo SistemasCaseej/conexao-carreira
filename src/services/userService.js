@@ -10,9 +10,17 @@ export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn,
     return await userRepository.createPendingUser(name, email, cpf, phoneNumber, linkedIn, city);
 }
 
+export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, city){
+    return await userRepository.createAdminUser(name, email, cpf, phoneNumber, linkedIn, city);
+}
+
 //Função para pegar todos os usuários que estão aguardando aprovação
 export async function getAllPendingUsers(){
     return await userRepository.getAllPendingUsers()
+}
+
+export async function getAllAdminUsers() {
+    return await userRepository.getAllAdminUsers();
 }
 
 //Função para pegar todos os usuários que estão aprovados
