@@ -10,10 +10,13 @@ export const createPendingUserSchema = z.object({
         .nonempty("O email é obrigatório")
         .max(80),
     cpf: z.string()
-        .nonempty("O cpf não pode ser vazio")
-        .transform((cpf) => cpf.replace(/[^\d]+/g, ''))
+        .nonempty("O CPF não pode ser vazio.")
+        .refine((cpf) => /^\d+$/.test(cpf), {
+            message: "O CPF deve conter apenas números",
+        })
+        .transform((cpf) => cpf.replace(/\D+/g, ''))
         .refine((cpf) => cpf.length === 11, {
-            message : "O CPF deve conter 11 caracteres"
+            message: "O CPF deve conter exatamente 11 números",
         }),
     phoneNumber: z.string()
         .regex(/^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$/, "Telefone inválido")
