@@ -11,7 +11,7 @@ export const createPendingUserSchema = z.object({
         .max(80),
     cpf: z.string()
         .nonempty("O CPF não pode ser vazio.")
-        .refine((cpf) => /^\d+$/.test(cpf), {
+        .refine((cpf) => /^[\d.-]+$/.test(cpf), {
             message: "O CPF deve conter apenas números",
         })
         .transform((cpf) => cpf.replace(/\D+/g, ''))
@@ -22,7 +22,13 @@ export const createPendingUserSchema = z.object({
         .regex(/^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$/, "Telefone inválido")
         .max(15),
     linkedIn: z.string()
-        .nonempty("O campo linkedin precisa ser informado"),
+        .nonempty("O campo linkedin precisa ser informado")
+        .refine((value) => {
+            const linkedInRegex = /^https:\/\/(www\.)?linkedin\.com\/.*$/i;
+            return linkedInRegex.test(value);
+        }, {
+            message: "Link do LinkedIn inválido"
+        }),
     city: z.string()
         .nonempty("A cidade não pode ser vazio")
         .max(30),

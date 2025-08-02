@@ -27,7 +27,6 @@ export function RegisterForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
         try {
             const res = await fetch("/api/users/pending", {
                 method: "POST",
@@ -145,8 +144,7 @@ export function RegisterForm() {
                         </div>
                     </div>
                     <div className="mt-4 w-full flex justify-end">
-                        <Button className="rounded-sm cursor-pointer w-[120px]" onClick={handleSubmit}>Cadastrar</Button>
-
+                        <Button type="submit" className="rounded-sm cursor-pointer w-[120px]">Cadastrar</Button>
                     </div>
                 </div>
             </Form>

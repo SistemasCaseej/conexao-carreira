@@ -49,7 +49,6 @@ describe('Admin Users', ()=>{
 
         const matchingUser = data.find((user) => user.email === newUserAdmin.email);
 
-        console.log(matchingUser);
         expect(matchingUser.role).toBe("Admin")
         expect(matchingUser.status).toBe("Aprovado");
     }); //GET
@@ -97,14 +96,12 @@ describe('Admin Users', ()=>{
         const response = await POST(request);
         const data = await response.json();
 
-        console.log(data);
-
         expect(response.status).toBe(400);
         expect(data.success).toBe(false);
         expect(data.message).toBe("Dados inválidos");
     }); //POST
 
-    it('Should reject user if CPF contains non-numeric characters', async () => {
+    it('Should reject user if CPF contains characters other than digits, dots, or hyphens', async () => {
         const userWithInvalidCPF = {
             name: "Usuário Inválido",
             email: "invalidcpf@example.com",
@@ -153,7 +150,7 @@ describe('Admin Users', ()=>{
         expect(cpfErrorMessage).toBe('O CPF deve conter exatamente 11 números')
     })//POST
 
-    it('Should reject phone number if it does not contain exactly 11 digits', async () => {
+    it('Should reject PHONE NUMBER if it does not contain exactly 11 digits', async () => {
         const userWithInvalidPhoneNumber = {
             name: "Usuário",
             email: "invalsdcpf@example.com",
@@ -175,5 +172,49 @@ describe('Admin Users', ()=>{
         expect(response.status).toBe(400);
         expect(data.success).toBe(false);
         expect(phoneNumberErrorMessage).toBe('Telefone inválido')
-    })
+    })//POST
+
+    it('Should reject user if PHONE NUMBER contains characters other than digits, parentheses, or hyphens', async () => {
+
+        const userWithInvalidPhoneNumber = {
+            name: "Usuário",
+            email: "invalsdcpf@example.com",
+            cpf: "333.444.555-31", // inválido
+            phoneNumber: "22121221B",
+            linkedIn: "https://linkedin.com/in/usuarioinvalido",
+            city: "Quixadá"
+        };
+
+        const requestLetterNumber = {
+            json: async () => userWithInvalidPhoneNumber
+        };
+
+        const response = await POST(requestLetterNumber);
+        const data = await response.json();
+
+        const phoneNumberErrorMessage = data.errors?.phoneNumber?._errors?.[0];
+
+        expect(response.status).toBe(400);
+        expect(data.success).toBe(false);
+        expect(phoneNumberErrorMessage).toBe('Telefone inválido')
+    }) //POST
+
+    it('Should ignore unexpected fields in request body', async () => {
+        const userWithExtraField = {
+            name: "Usuário",
+            email: "extras@example.com",
+            cpf: "12345678901",
+            phoneNumber: "85999999999",
+            linkedIn: "https://linkedin.com/in/usuario",
+            city: "Fortaleza",
+            senha: "senha123", // não deveria estar aqui
+            idade: 30 //Não deveria estar aqui
+        };
+
+        const response = await POST({ json: async () => userWithExtraField });
+        const data = await response.json();
+
+        expect(response.status).toBe(201);
+        expect(data.success).toBe(true);
+    });
 })
