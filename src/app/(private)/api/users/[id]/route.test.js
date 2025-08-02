@@ -1,4 +1,4 @@
-import {DELETE, GET} from "@/app/(private)/api/users/[id]/route"
+import { DELETE, GET } from "@/app/(private)/api/users/[id]/route"
 import { POST } from "@/app/(private)/api/users/pending/route";
 
 describe('Specific user', () => {
@@ -28,6 +28,7 @@ describe('Specific user', () => {
 
             const responseCreateUser = await POST(newUserRequest);
             const bodyCreateUser = await responseCreateUser.json();
+
             const documentId = bodyCreateUser.data.userId;
 
             const responseDeleteUser = await DELETE(null, { params: { id: documentId } });

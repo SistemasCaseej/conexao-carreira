@@ -39,7 +39,7 @@ export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFie
         return <p className="text-red-500 text-sm mt-1">{error}</p>;
     };
 
-    const renderField = (label, name, type, placeholder, cpfMask, telMask) => {
+    const renderField = (label, name, type, placeholder, cpfMask, telMask, maxLength, required) => {
         if (hiddenFields.includes(name)) return null;
 
         let inputRef = null;
@@ -58,6 +58,8 @@ export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFie
                     onChange={handleChange}
                     placeholder={placeholder}
                     className="mt-2"
+                    maxLength={maxLength}
+                    required={required}
                 />
             </div>
         );
@@ -69,12 +71,12 @@ export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFie
 
                 <div className="flex flex-row flex-wrap justify-between items-center gap-4">
                     <div className="flex-1 min-w-[280px]">
-                        {renderField("Nome", "name", "text", "Digite seu nome")}
+                        {renderField("Nome", "name", "text", "Digite seu nome", false, false, 40, true)}
                         {renderFieldError(errors, "name")}
                     </div>
 
                     <div className="flex-1 min-w-[280px]">
-                        {renderField("Email", "email", "type", "Digite seu email")}
+                        {renderField("Email", "email", "type", "Digite seu email", false, false, 50, true)}
                         {renderFieldError(errors, "email")}
                     </div>
                 </div>
@@ -94,12 +96,12 @@ export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFie
 
                 <div className="flex flex-row flex-wrap justify-between items-center gap-4 mt-4">
                     <div className="flex-1 min-w-[280px]">
-                        {renderField("LinkedIn", "linkedIn", "text", "https://www.linkedin.com/in/seu-perfil")}
+                        {renderField("LinkedIn", "linkedIn", "text", "https://www.linkedin.com/in/seu-perfil", false, false, 100)}
                         {renderFieldError(errors, "linkedIn")}
                     </div>
 
-                    <div className="flex-1 min-w-[280px]">
-                        {renderField("Cidade", "city", "text", "Informe a sua cidade")}
+                     <div className="flex-1 min-w-[280px]">
+                        {renderField("Cidade", "city", "text", "Informe a sua cidade", false, false, 30)}
                         {renderFieldError(errors, "city")}
                     </div>
                 </div>
