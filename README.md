@@ -32,4 +32,4 @@ Este boilerplate fornece uma base robusta para projetos Next.js com UI moderna, 
 ```
 Abra http://localhost:3000 no seu navegador para ver o resultado.
 
-Você pode começar a editar a página modificando o arquivo app/page.js. A página será atualizada automaticamente à medida que você edita o arquivo.
+Você pode começar a editar a página modificando o arquivo app/page.jsx. A página será atualizada automaticamente à medida que você edita o arquivo.
