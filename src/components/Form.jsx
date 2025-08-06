@@ -8,16 +8,17 @@ import { withMask } from 'use-mask-input';
 import Form from "next/form";
 
 
-export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFields = []}) {
-    const [userData, setUserData] = useState({
-        name: initialData.name || '',
-        email: initialData.email || '',
-        cpf: initialData.cpf || '',
-        phoneNumber: initialData.phoneNumber || '',
-        linkedIn: initialData.linkedIn || '',
-        city: initialData.city || '',
-        enrollmentProof: null
-    });
+export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = {}, hiddenFields = []}) {
+
+    const buildInitialState = (initialData = {}) => {
+        const result = {};
+        fields.forEach((field) => {
+            result[field.name] = initialData[field.name] ?? (field.type === "file" ? null : "");
+        });
+        return result;
+    }
+
+    const [userData, setUserData] = useState(() => buildInitialState(fields, initialData));
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -30,6 +31,9 @@ export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFie
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit?.(userData);
+
+        const resetData = buildInitialState({})
+        setUserData(resetData);
     };
 
     const renderFieldError = (errors, fieldName) => {
@@ -39,7 +43,7 @@ export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFie
         return <p className="text-red-500 text-sm mt-1">{error}</p>;
     };
 
-    const renderField = (label, name, type, placeholder, cpfMask, telMask, maxLength, required) => {
+    const renderField = ({label, name, type, placeholder, cpfMask, telMask, maxLength, required}) => {
         if (hiddenFields.includes(name)) return null;
 
         let inputRef = null;
@@ -61,6 +65,7 @@ export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFie
                     maxLength={maxLength}
                     required={required}
                 />
+                {renderFieldError(name)}
             </div>
         );
     }
@@ -68,58 +73,14 @@ export function GenericForm({ onSubmit, initialData = {}, errors = {}, hiddenFie
     return (
         <Form onSubmit={handleSubmit} className="flex flex-wrap flex-col gap-6 py-4 w-full">
             <div className="flex flex-col">
-
-                <div className="flex flex-row flex-wrap justify-between items-center gap-4">
-                    <div className="flex-1 min-w-[280px]">
-                        {renderField("Nome", "name", "text", "Digite seu nome", false, false, 40, true)}
-                        {renderFieldError(errors, "name")}
-                    </div>
-
-                    <div className="flex-1 min-w-[280px]">
-                        {renderField("Email", "email", "type", "Digite seu email", false, false, 50, true)}
-                        {renderFieldError(errors, "email")}
-                    </div>
+                <div className="flex flex-wrap gap-4">
+                    {fields.map(renderField)}
                 </div>
-
-                <div className="flex flex-row flex-wrap justify-between items-center gap-4 mt-4">
-                    <div className="flex-1 min-w-[280px]">
-                        {renderField("CPF", "cpf", "text", "Informe o seu CPF", true)}
-                        {renderFieldError(errors, "cpf")}
-                    </div>
-
-                    <div className="flex-1 min-w-[280px]">
-                        {renderField("Telefone", "phoneNumber", "tel", "(00) 00000-0000", false, true)}
-                        {renderFieldError(errors, "phoneNumber")}
-                    </div>
-
-                </div>
-
-                <div className="flex flex-row flex-wrap justify-between items-center gap-4 mt-4">
-                    <div className="flex-1 min-w-[280px]">
-                        {renderField("LinkedIn", "linkedIn", "text", "https://www.linkedin.com/in/seu-perfil", false, false, 100)}
-                        {renderFieldError(errors, "linkedIn")}
-                    </div>
-
-                     <div className="flex-1 min-w-[280px]">
-                        {renderField("Cidade", "city", "text", "Informe a sua cidade", false, false, 30)}
-                        {renderFieldError(errors, "city")}
-                    </div>
-                </div>
-
-                <div className="flex flex-row flex-wrap justify-between items-center gap-4 mt-4">
-                    <div className="w-[45%]">
-                        {renderField("Comprovante de Matrícula", "enrollmentProof", "file")}
-                        {renderFieldError(errors, "enrollmentProof")}
-                    </div>
-
                 <div className="mt-2 w-full flex justify-end">
                     <Button type="submit" className="cursor-pointer w-[120px]">
                         Cadastrar
                     </Button>
                 </div>
-
-            </div>
-
             </div>
         </Form>
     );
