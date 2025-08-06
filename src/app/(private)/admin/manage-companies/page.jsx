@@ -5,7 +5,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import {createCompany} from "@/app/actions/companies/actions";
 import {useActionState, useEffect, useState} from "react";
 import {toast} from "sonner";
-import {AdminForm} from "@/components/AdminForm";
+import CompanyForm from "@/components/CompanyForm";
 
 const initialState = {
     success: false,
@@ -30,10 +30,10 @@ export default function ManageCompanies() {
         <section className="py-12 px-8">
             <h1 className="text-2xl font-semibold mb-5">Empresas Cadastradas</h1>
             <div className="flex flex-row justify-between items-center">
-                <Input type={"text"} placeholder={"Pesquisar"} className="rounded-none"/>
-                <AdminForm/>
+                <Input placeholder="Filter emails..." className="max-w-sm rounded-sm border"/>
+                <CompanyForm/>
             </div>
-            <Table>
+            <Table className="mt-5">
                 <TableCaption>A list of your recent invoices.</TableCaption>
                 <TableHeader>
                     <TableRow>
