@@ -1,11 +1,12 @@
 'use client'
 
 import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {createCompany} from "@/app/actions/companies/actions";
 import {useActionState, useEffect, useState} from "react";
 import {toast} from "sonner";
 import CompanyForm from "@/components/CompanyForm";
+import Image from "next/image";
 
 const initialState = {
     success: false,
@@ -30,28 +31,25 @@ export default function ManageCompanies() {
         <section className="py-12 px-8">
             <h1 className="text-2xl font-semibold mb-5">Empresas Cadastradas</h1>
             <div className="flex flex-row justify-between items-center">
-                <Input placeholder="Filter emails..." className="max-w-sm rounded-sm border"/>
+                <Input placeholder="Pesquisar Empresas" className="max-w-sm border"/>
                 <CompanyForm/>
             </div>
-            <Table className="mt-5">
-                <TableCaption>A list of your recent invoices.</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="w-[100px]">Invoice</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Method</TableHead>
-                        <TableHead className="text-right">Amount</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    <TableRow>
-                        <TableCell className="font-medium">INV001</TableCell>
-                        <TableCell>Paid</TableCell>
-                        <TableCell>Credit Card</TableCell>
-                        <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+            <div className="flex flex-row flex-wrap justify-between items-center">
+                <Card className="mt-5 sm:min-w-[400px] flex-row">
+                    <div className="bg-yellow-400">
+                        <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit bg-red-600"/>
+                    </div>
+                    <div className="bg-pink-400">
+                        <CardHeader>
+                            <CardTitle>MHWIRTH</CardTitle>
+                        </CardHeader>
+                        <CardContent className="bg-pink-400">
+                            <p>Card Content</p>
+                        </CardContent>
+                    </div>
+
+                </Card>
+            </div>
         </section>
     )
 }
