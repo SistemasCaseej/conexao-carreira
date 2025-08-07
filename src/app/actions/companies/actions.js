@@ -6,8 +6,8 @@ export async function createCompany(_, formData){
 
     try{
         const infoCompany = {
-            area: formData.get('area'),
             address: formData.get('address'),
+            businessSector: formData.get('businessSector'),
             cnpj: formData.get('cnpj'),
             city: formData.get('city'),
             description: formData.get('description'),

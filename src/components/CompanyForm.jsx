@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogHeader, Dialog
 import { CirclePlus } from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {IconPlus} from "@tabler/icons-react";
+import {GenericForm} from "@/components/Form";
 
 
 
@@ -18,13 +19,24 @@ export default function CompanyForm(){
                         <span className="hidden lg:inline">Adicionar Usuário</span>
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:min-w-[670px]">
                     <DialogHeader>
                         <DialogTitle>Cadastrar Empresa</DialogTitle>
-                        <DialogDescription>
+                        <DialogDescription className="">
                             Inclua a adição da empresa. Clique em salvar quando terminar.
                         </DialogDescription>
                     </DialogHeader>
+                    <GenericForm
+                        fields={[
+                            {label: "Razão Social", name: "razão"},
+                            {label: "Nome Fantasia", name: "nome"},
+                            {label: "CNPJ", name: "cnpj"},
+                            {label: "Porte da Empresa", name: "porte"},
+                            {label: "Ramo de Atuação", name: "ramo"},
+                            {label: "WebSite", name: "site"},
+                            {label: "Cidade", name: "city"},
+                        ]}
+                    />
                 </DialogContent>
             </form>
 

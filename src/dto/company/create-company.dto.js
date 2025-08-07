@@ -6,7 +6,7 @@ export const createCompanySchema = z.object({
     address: z.string()
         .max("40", "Informe um endereço")
         .optional(),
-    area: z.string()
+    businessSector: z.string()
         .max(40, "Por favor, digite uma área de atuação com até 40 caracteres")
         .optional(),
     city: z.string()
@@ -23,19 +23,19 @@ export const createCompanySchema = z.object({
             const cnpjFormatRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
             return cnpjFormatRegex.test(doc);
         }, 'CNPJ deve estar no formato 00.000.000/0000-00.'),
-    description: z.string()
+    companySize: z.string()
         .max("80", "Informe uma descrição com até 100 caracteres"),
-    logoUrl: z.string()
-        .url()
-        .optional(),
-    name: z.string()
+    legalName: z.string()
         .nonempty("O nome da empresa é obrigatório")
         .max(40, "Por favor, digite um nome com até 40 caracteres."),
-    phone: z.string()
-        .optional(),
     site: z.string()
         .url()
         .optional(),
+    tradeName: z.string()
+        .nonempty("O nome da empresa é obrigatório")
+        .max(40, "Por favor, digite um nome com até 40 caracteres."),
+    users: z.array()
+        .optional()
 })
 
 

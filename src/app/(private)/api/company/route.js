@@ -25,14 +25,14 @@ export async function POST(req){
 
         const companyId = await createCompanyService(
                 companyDto.address,
-                companyDto.area,
+                companyDto.businessSector,
                 companyDto.city,
                 companyDto.cnpj,
-                companyDto.description,
-                companyDto.logoUrl,
-                companyDto.name,
-                companyDto.phone,
+                companyDto.companySize,
+                companyDto.legalName,
                 companyDto.site,
+                companyDto.tradeName,
+                companyDto.users,
             );
 
         return NextResponse.json(
