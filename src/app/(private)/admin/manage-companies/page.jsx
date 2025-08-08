@@ -20,6 +20,10 @@ export default function ManageCompanies() {
     const [open, setOpen] = useState(false);
 
 
+    const handleClick = () =>{
+        alert("Teste")
+    }
+
     useEffect(() => {
         if(state.success){
             toast.success("Company created successfully!");
@@ -35,7 +39,7 @@ export default function ManageCompanies() {
                 <CompanyForm/>
             </div>
             <div className="flex flex-row flex-wrap justify-between items-center">
-                <Card className="mt-5 sm:min-w-[400px] flex-row">
+                <Card onClick={handleClick} className="mt-5 sm:min-w-[400px] flex-row cursor-pointer">
                     <div className="bg-yellow-400">
                         <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit bg-red-600"/>
                     </div>

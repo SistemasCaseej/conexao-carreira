@@ -1,14 +1,20 @@
 'use client'
 
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { withMask } from 'use-mask-input';
 import Form from "next/form";
+import Image from 'next/image'
 
 
-export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = {}, hiddenFields = []}) {
+
+export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = {}, hiddenFields = [], logo}) {
+
+    const [preview, setPreview] = useState(true);
+    const fileInputRef = useRef(null);
+
 
     const buildInitialState = (initialData = {}) => {
         const result = {};
@@ -26,6 +32,23 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
             ...prev,
             [name]: files ? files[0] : value
         }));
+    };
+
+    const handleImageClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     const handleSubmit = (e) => {
@@ -72,16 +95,26 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
 
     return (
         <Form onSubmit={handleSubmit} className="flex flex-wrap flex-col gap-6 py-4 w-full">
-            <div className="flex flex-col">
-                <div className="flex flex-wrap gap-4">
-                    {fields.map(renderField)}
+            <section className="flex flex-row mt-5">
+                {logo && (
+                    <div className="flex-[2]">
+                        {preview && (
+                            <Image onClick={handleImageClick} src={"/jose.jpg" || preview} alt="Logo" height="100" width="150" className="rounded-full border-2 border-purple-700 mb-10 cursor-pointer"/>
+                        )}
+                        <Input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden"/>
+                    </div>
+                )}
+                <div className="flex flex-[4] flex-col">
+                    <div className="flex flex-wrap gap-4">
+                        {fields.map(renderField)}
+                    </div>
+                    <div className="mt-2 w-full flex justify-end">
+                        <Button type="submit" className="cursor-pointer w-[120px]">
+                            Cadastrar
+                        </Button>
+                    </div>
                 </div>
-                <div className="mt-2 w-full flex justify-end">
-                    <Button type="submit" className="cursor-pointer w-[120px]">
-                        Cadastrar
-                    </Button>
-                </div>
-            </div>
+            </section>
         </Form>
     );
 }
