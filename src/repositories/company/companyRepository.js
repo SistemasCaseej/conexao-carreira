@@ -1,4 +1,4 @@
-import {addDoc, collection} from "firebase/firestore";
+import {addDoc, collection, getDocs, query} from "firebase/firestore";
 import {db} from "@/firebase/config";
 
 export async function createCompanyRepository(address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users) {
@@ -23,4 +23,17 @@ export async function createCompanyRepository(address, businessSector, city, cnp
     }catch (error) {
         console.log("Error ao criar a empresa");
     }
+}
+
+export async function getAllCompaniesRepository() {
+
+    const q = query(collection(db, "companies"));
+
+    const querySnapshot = await getDocs(q)
+
+    return querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+
 }

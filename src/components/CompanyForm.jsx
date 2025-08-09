@@ -13,7 +13,6 @@ export default function CompanyForm(){
 
     const router = useRouter();
 
-
     const handleSubmit = async (data) => {
 
         try{
@@ -28,8 +27,7 @@ export default function CompanyForm(){
             if(!response.ok) {
                 toast.error(responseData.message || "Erro ao enviar formulário.");
             }else {
-                toast.error(responseData.message || "Administrador cadastrado com sucesso!");
-                //setOpen(false);
+                toast.success(responseData.message || "Empresa cadastrada com sucesso!");
                 router.refresh();
             }
         }catch (error){

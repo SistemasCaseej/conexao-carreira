@@ -16,10 +16,6 @@ export const createCompanySchema = z.object({
         .max(18, "Informe um CNPJ, com exatos 18 caracteres")
         .nonempty("O CNPJ da empresa é obrigatório")
         .refine((doc) => {
-            const digits = doc.replace(/\D/g, '');
-            return !!Number(digits);
-        }, 'CNPJ deve conter apenas números.')
-        .refine((doc) => {
             const cnpjFormatRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
             return cnpjFormatRegex.test(doc);
         }, 'CNPJ deve estar no formato 00.000.000/0000-00.'),
