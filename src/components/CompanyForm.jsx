@@ -13,6 +13,7 @@ export default function CompanyForm(){
 
     const router = useRouter();
 
+
     const handleSubmit = async (data) => {
 
         try{
@@ -37,7 +38,7 @@ export default function CompanyForm(){
 
     };
     return (
-        <Dialog>
+        <Dialog >
             <form>
                 <DialogTrigger asChild>
                     <Button variant="outline" size="sm" className="ml-2 border cursor-pointer">
@@ -45,19 +46,19 @@ export default function CompanyForm(){
                         <span className="hidden lg:inline">Adicionar Empresa</span>
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:min-w-[670px]">
-                    <DialogHeader>
-                        <DialogTitle className="font-semibold text-black">CADASTRAR EMPRESA</DialogTitle>
+                <DialogContent className="sm:min-w-[900px] p-0" showCloseButton={false} >
+                    <DialogHeader className="">
+                        <DialogTitle className="font-semibold text-black"></DialogTitle>
                     </DialogHeader>
                     <GenericForm
                         fields={[
                             {label: "Razão Social", name: "razão"},
                             {label: "Nome Fantasia", name: "nome"},
                             {label: "CNPJ", name: "cnpj"},
-                            {label: "Porte da Empresa", name: "porte"},
                         ]}
                         logo={true}
                         onSubmit={handleSubmit}
+                        dialogButton={false}
                     />
                 </DialogContent>
             </form>
