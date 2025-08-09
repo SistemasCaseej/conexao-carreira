@@ -9,7 +9,7 @@ export async function createCompanyRepository(address, businessSector, city, cnp
         const docRef = await addDoc(companyRef, {
             address: address ?? null,
             businessSector: businessSector ?? null,
-            city,
+            city : city ?? null,
             cnpj,
             companySize: companySize ?? null,
             legalName,

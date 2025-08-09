@@ -29,7 +29,7 @@ export default function CompanyForm(){
                 toast.error(responseData.message || "Erro ao enviar formulário.");
             }else {
                 toast.error(responseData.message || "Administrador cadastrado com sucesso!");
-                setOpen(false);
+                //setOpen(false);
                 router.refresh();
             }
         }catch (error){
@@ -52,9 +52,9 @@ export default function CompanyForm(){
                     </DialogHeader>
                     <GenericForm
                         fields={[
-                            {label: "Razão Social", name: "razão"},
-                            {label: "Nome Fantasia", name: "nome"},
-                            {label: "CNPJ", name: "cnpj"},
+                            {label: "Razão Social", name: "legalName", type: "text", required: true, maxLength: 50},
+                            {label: "Nome Fantasia", name: "tradeName", type: "text", required: true, maxLength: 50},
+                            {label: "CNPJ", name: "cnpj", type: "text", placeholder: "12.169.764/0001-94", cnpjMask: true, required: true},
                         ]}
                         logo={true}
                         onSubmit={handleSubmit}

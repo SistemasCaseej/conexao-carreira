@@ -2,34 +2,10 @@
 
 import { Input } from "@/components/ui/input"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
-import {createCompany} from "@/app/actions/companies/actions";
-import {useActionState, useEffect, useState} from "react";
-import {toast} from "sonner";
 import CompanyForm from "@/components/CompanyForm";
 import Image from "next/image";
 
-const initialState = {
-    success: false,
-    message: '',
-    data: ''
-};
-
-
 export default function ManageCompanies() {
-    const [state, formAction] = useActionState(createCompany, initialState);
-    const [open, setOpen] = useState(false);
-
-
-    const handleClick = () =>{
-        alert("Teste")
-    }
-
-    useEffect(() => {
-        if(state.success){
-            toast.success("Company created successfully!");
-            setOpen(false);
-        }
-    }, [state.success])
 
     return (
         <section className="py-12 px-8">
@@ -39,16 +15,16 @@ export default function ManageCompanies() {
                 <CompanyForm/>
             </div>
             <div className="flex flex-row flex-wrap justify-between items-center">
-                <Card onClick={handleClick} className="mt-5 sm:min-w-[400px] flex-row cursor-pointer">
-                    <div className="bg-yellow-400">
-                        <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit bg-red-600"/>
+                <Card className="mt-5 sm:min-w-[350px] flex flex-row justify-around cursor-pointer">
+                    <div>
+                        <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit"/>
                     </div>
-                    <div className="bg-pink-400">
-                        <CardHeader>
+                    <div className="flex flex-col">
+                        <CardHeader className="mb-5">
                             <CardTitle>MHWIRTH</CardTitle>
                         </CardHeader>
-                        <CardContent className="bg-pink-400">
-                            <p>Card Content</p>
+                        <CardContent>
+                            <p>12.169.764/0001-94</p>
                         </CardContent>
                     </div>
 
