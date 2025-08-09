@@ -6,13 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { withMask } from 'use-mask-input';
 import Form from "next/form";
-import Image from 'next/image'
+import Image from 'next/image';
+import { Upload } from "lucide-react"
 
 
 
 export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = {}, hiddenFields = [], logo}) {
 
-    const [preview, setPreview] = useState(true);
+    const [preview, setPreview] = useState(false);
     const fileInputRef = useRef(null);
 
 
@@ -75,7 +76,7 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
 
         return (
             <div key={name} className="flex-1 min-w-[280px]">
-                <Label htmlFor={name}>{label}</Label>
+                <Label className="font-normal" htmlFor={name}>{label}</Label>
                 <Input
                     ref={inputRef}
                     type={type}
@@ -94,21 +95,32 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
     }
 
     return (
-        <Form onSubmit={handleSubmit} className="flex flex-wrap flex-col gap-6 py-4 w-full">
-            <section className="flex flex-row mt-5">
+        <Form onSubmit={handleSubmit} className="flex flex-wrap flex-col">
+            <section className="flex flex-row flex-wrap">
                 {logo && (
-                    <div className="flex-[2]">
-                        {preview && (
-                            <Image onClick={handleImageClick} src={"/jose.jpg" || preview} alt="Logo" height="100" width="150" className="rounded-full border-2 border-purple-700 mb-10 cursor-pointer"/>
-                        )}
-                        <Input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden"/>
+                    <div className="flex-[3] bg-[#f7f7f9] flex flex-col items-center justify-start gap-4">
+                        <h3 className="mt-10">CADASTRAR EMPRESA</h3>
+                        <div className="bg-white w-[80%] flex flex-col justify-center items-center gap-10 p-7">
+                            {preview ? (
+                                <Image src={preview} width={150} height={150} alt="Logo preview" className="rounded-md w-[150px] h-[150px] bg-[#f7f7f9] object-fill"/>
+                            ):(
+                                <Upload height={150} width={150} className="border-1 border-[#ffffff] rounded-lg bg-[#f7f7f9] p-4"/>
+                                )}
+
+                            <Button type="button" onClick={handleImageClick} className="cursor-pointer" size={"lg"}>Adicionar logo</Button>
+                            <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageChange} style={{ display: "none" }}
+                            />
+                        </div>
                     </div>
                 )}
-                <div className="flex flex-[4] flex-col">
-                    <div className="flex flex-wrap gap-4">
+                <div className={`${logo ? "flex flex-[4] flex-col p-10" : "flex flex-col p-10"} `}>
+                    <div className="flex flex-wrap gap-6">
                         {fields.map(renderField)}
                     </div>
-                    <div className="mt-2 w-full flex justify-end">
+                    <div className="mt-20 gap-5 w-full flex items-end justify-end">
+                        <Button type="text" className="cursor-pointer w-[120px]">
+                            Cancelar
+                        </Button>
                         <Button type="submit" className="cursor-pointer w-[120px]">
                             Cadastrar
                         </Button>
