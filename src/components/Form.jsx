@@ -67,12 +67,13 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
         return <p className="text-red-500 text-sm mt-1">{error}</p>;
     };
 
-    const renderField = ({label, name, type, placeholder, cpfMask, telMask, maxLength, required}) => {
+    const renderField = ({label, name, type, placeholder, cpfMask, telMask, maxLength, required, cnpjMask}) => {
         if (hiddenFields.includes(name)) return null;
 
         let inputRef = null;
         if (cpfMask && name === "cpf") inputRef = withMask("cpf");
         if (telMask && name === "phoneNumber") inputRef = withMask("(99) 99999-9999");
+        if (cnpjMask && name === "cnpj") inputRef = withMask("99.999.999/9999-99")
 
         return (
             <div key={name} className="flex-1 min-w-[280px]">
@@ -102,7 +103,7 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
                         <h3 className="mt-10">CADASTRAR EMPRESA</h3>
                         <div className="bg-white w-[80%] flex flex-col justify-center items-center gap-10 p-7">
                             {preview ? (
-                                <Image src={preview} width={150} height={150} alt="Logo preview" className="rounded-md w-[150px] h-[150px] bg-[#f7f7f9] object-fill"/>
+                                <Image src={preview} width={150} height={150} alt="Logo preview" className="rounded-md w-[150px] h-[150px] bg-[#f7f7f9] object-fit"/>
                             ):(
                                 <Upload height={150} width={150} className="border-1 border-[#ffffff] rounded-lg bg-[#f7f7f9] p-4"/>
                                 )}
@@ -118,7 +119,7 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
                         {fields.map(renderField)}
                     </div>
                     <div className="mt-20 gap-5 w-full flex items-end justify-end">
-                        <Button type="text" className="cursor-pointer w-[120px]">
+                        <Button type="button" className="cursor-pointer w-[120px]">
                             Cancelar
                         </Button>
                         <Button type="submit" className="cursor-pointer w-[120px]">

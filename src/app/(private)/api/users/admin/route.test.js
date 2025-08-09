@@ -76,6 +76,8 @@ describe('Admin Users', ()=>{
         const response = await POST(secondRequest)
         const data = await response.json();
 
+        console.log(data)
+
         expect(response.status).toEqual(409)
         expect(data.success).toBe(false);
         expect(data.message).toBe("E-mail já está em uso");

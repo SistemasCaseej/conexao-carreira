@@ -1,58 +1,71 @@
 'use client'
 
 import { Input } from "@/components/ui/input"
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
-import {createCompany} from "@/app/actions/companies/actions";
-import {useActionState, useEffect, useState} from "react";
-import {toast} from "sonner";
+import { Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import CompanyForm from "@/components/CompanyForm";
 import Image from "next/image";
-
-const initialState = {
-    success: false,
-    message: '',
-    data: ''
-};
-
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function ManageCompanies() {
-    const [state, formAction] = useActionState(createCompany, initialState);
-    const [open, setOpen] = useState(false);
 
+    const router = useRouter();
+    const [companies, setCompanies] = useState([]);
+    const [searchCompany, setSearchCompany] = useState("");
 
-    const handleClick = () =>{
-        alert("Teste")
-    }
+    const filteredCompanies = companies.filter(company => company.legalName.toLowerCase().includes(searchCompany.toLowerCase()));
 
     useEffect(() => {
-        if(state.success){
-            toast.success("Company created successfully!");
-            setOpen(false);
+        async function loadCompanies() {
+            try {
+                const response = await fetch("/api/company", {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const data = await response.json();
+                setCompanies(data);
+
+                if(response.ok) {
+                    router.refresh();
+                }
+
+
+            }catch (error) {
+                console.error("Erro ao carregar as empresas", error)
+            }
         }
-    }, [state.success])
+
+        loadCompanies()
+    },[])
 
     return (
         <section className="py-12 px-8">
             <h1 className="text-2xl font-semibold mb-5">Empresas Cadastradas</h1>
             <div className="flex flex-row justify-between items-center">
-                <Input placeholder="Pesquisar Empresas" className="max-w-sm border"/>
+                <Input placeholder="Pesquisar Empresas" className="max-w-sm border" value={searchCompany} onChange={(e) => setSearchCompany(e.target.value)} />
                 <CompanyForm/>
             </div>
-            <div className="flex flex-row flex-wrap justify-between items-center">
-                <Card onClick={handleClick} className="mt-5 sm:min-w-[400px] flex-row cursor-pointer">
-                    <div className="bg-yellow-400">
-                        <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit bg-red-600"/>
-                    </div>
-                    <div className="bg-pink-400">
-                        <CardHeader>
-                            <CardTitle>MHWIRTH</CardTitle>
-                        </CardHeader>
-                        <CardContent className="bg-pink-400">
-                            <p>Card Content</p>
-                        </CardContent>
-                    </div>
+            <div className="grid gap-4 mt-5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
+                {filteredCompanies.map((company, index) => (
+                    <Card key={index} className="p-4 cursor-pointer flex flex-row max-w-[380px]">
+                        <div>
+                            <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit"/>
+                        </div>
+                        <div className="flex flex-col">
+                            <CardHeader className="mb-5">
+                                <CardTitle>{company.legalName}</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>{company.cnpj}</p>
+                            </CardContent>
+                        </div>
 
-                </Card>
+                    </Card>
+                ))}
+
             </div>
         </section>
     )

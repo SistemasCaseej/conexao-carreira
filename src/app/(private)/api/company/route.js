@@ -1,6 +1,13 @@
-import {createCompanyService} from "@/services/companyService";
+import {createCompanyService, getAllCompaniesService} from "@/services/companyService";
 import {NextResponse} from "next/server";
 import {createCompanySchema} from "@/dto/company/create-company.dto";
+
+
+export async function GET() {
+    const allCompanies = await getAllCompaniesService();
+
+    return NextResponse.json(allCompanies, { status: 200 });
+}
 
 export async function POST(req){
 
@@ -38,7 +45,7 @@ export async function POST(req){
         return NextResponse.json(
             {
                 success: true,
-                message: "Empresa Criada com sucesso!",
+                message: "Empresa criada com sucesso!",
                 data: {companyId},
             },
             {status: 201}

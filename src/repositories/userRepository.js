@@ -66,14 +66,13 @@ export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn,
 
 export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, city) {
 
-    try {
-        const temporaryPassword = generateSecurePassword();
+    const temporaryPassword = generateSecurePassword();
 
-        const userCredential = await createUserWithEmailAndPassword(auth, email, temporaryPassword);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, temporaryPassword);
 
-        const pendingUsersRef = collection(db, "users");
+    const pendingUsersRef = collection(db, "users");
 
-        const docRef = await addDoc(pendingUsersRef, {
+    const docRef = await addDoc(pendingUsersRef, {
             name,
             email,
             cpf,
@@ -85,14 +84,9 @@ export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, c
             userId : userCredential.user.uid
         })
 
-        await sendPasswordResetEmail(auth, email);
+    await sendPasswordResetEmail(auth, email);
 
-        return docRef.id
-    }catch (error) {
-        console.error("Erro ao criar usuário", error);
-        throw new Error("Falha ao criar possível usuário");
-    }
-
+    return docRef.id;
 }
 
 export async function hasExistingEmail(email) {

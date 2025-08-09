@@ -13,7 +13,6 @@ export default function CompanyForm(){
 
     const router = useRouter();
 
-
     const handleSubmit = async (data) => {
 
         try{
@@ -28,8 +27,7 @@ export default function CompanyForm(){
             if(!response.ok) {
                 toast.error(responseData.message || "Erro ao enviar formulário.");
             }else {
-                toast.error(responseData.message || "Administrador cadastrado com sucesso!");
-                setOpen(false);
+                toast.success(responseData.message || "Empresa cadastrada com sucesso!");
                 router.refresh();
             }
         }catch (error){
@@ -52,9 +50,9 @@ export default function CompanyForm(){
                     </DialogHeader>
                     <GenericForm
                         fields={[
-                            {label: "Razão Social", name: "razão"},
-                            {label: "Nome Fantasia", name: "nome"},
-                            {label: "CNPJ", name: "cnpj"},
+                            {label: "Razão Social", name: "legalName", type: "text", required: true, maxLength: 50},
+                            {label: "Nome Fantasia", name: "tradeName", type: "text", required: true, maxLength: 50},
+                            {label: "CNPJ", name: "cnpj", type: "text", placeholder: "12.169.764/0001-94", cnpjMask: true, required: true},
                         ]}
                         logo={true}
                         onSubmit={handleSubmit}

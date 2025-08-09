@@ -11,29 +11,26 @@ export const createCompanySchema = z.object({
         .optional(),
     city: z.string()
         .max(40, "Informe uma cidade com até 40 caracteres")
-        .nonempty("A cidade da empresa é obrigatório"),
+        .optional(),
     cnpj: z.string()
         .max(18, "Informe um CNPJ, com exatos 18 caracteres")
         .nonempty("O CNPJ da empresa é obrigatório")
-        .refine((doc) => {
-            const digits = doc.replace(/\D/g, '');
-            return !!Number(digits);
-        }, 'CNPJ deve conter apenas números.')
         .refine((doc) => {
             const cnpjFormatRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
             return cnpjFormatRegex.test(doc);
         }, 'CNPJ deve estar no formato 00.000.000/0000-00.'),
     companySize: z.string()
-        .max("80", "Informe uma descrição com até 100 caracteres"),
+        .max("80", "Informe uma descrição com até 100 caracteres")
+        .optional(),
     legalName: z.string()
         .nonempty("O nome da empresa é obrigatório")
-        .max(40, "Por favor, digite um nome com até 40 caracteres."),
+        .max(50, "Por favor, digite um nome com até 40 caracteres."),
     site: z.string()
         .url()
         .optional(),
     tradeName: z.string()
         .nonempty("O nome da empresa é obrigatório")
-        .max(40, "Por favor, digite um nome com até 40 caracteres."),
+        .max(50, "Por favor, digite um nome com até 40 caracteres."),
     users: z.array()
         .optional()
 })
