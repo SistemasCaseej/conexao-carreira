@@ -1,4 +1,4 @@
-import {addDoc, collection, getDocs, query} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, query} from "firebase/firestore";
 import {db} from "@/firebase/config";
 
 export async function createCompanyRepository(address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users) {
@@ -36,4 +36,17 @@ export async function getAllCompaniesRepository() {
         ...doc.data()
     }));
 
+}
+
+export async function getCompanyByIdRepository(documentId){
+
+    const docRef = doc(db, "companies", documentId);
+
+    const docSnap = await getDoc(docRef);
+
+    if(!docSnap.exists()) {
+        throw new Error("Documento não encontrado")
+    }
+
+    return docSnap.data();
 }
