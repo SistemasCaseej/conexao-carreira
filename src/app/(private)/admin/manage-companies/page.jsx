@@ -7,11 +7,17 @@ import Image from "next/image";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 
+
 export default function ManageCompanies() {
 
     const router = useRouter();
     const [companies, setCompanies] = useState([]);
     const [searchCompany, setSearchCompany] = useState("");
+
+
+    const handleCompany = (id) => {
+        router.push(`/admin/information-company/${id}`);
+    }
 
     const filteredCompanies = companies.filter(company => company.legalName.toLowerCase().includes(searchCompany.toLowerCase()));
 
@@ -32,7 +38,6 @@ export default function ManageCompanies() {
                     router.refresh();
                 }
 
-
             }catch (error) {
                 console.error("Erro ao carregar as empresas", error)
             }
@@ -50,20 +55,20 @@ export default function ManageCompanies() {
             </div>
             <div className="grid gap-4 mt-5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
                 {filteredCompanies.map((company, index) => (
-                    <Card key={index} className="p-4 cursor-pointer flex flex-row max-w-[380px]">
-                        <div>
-                            <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit"/>
-                        </div>
-                        <div className="flex flex-col">
-                            <CardHeader className="mb-5">
-                                <CardTitle>{company.legalName}</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p>{company.cnpj}</p>
-                            </CardContent>
-                        </div>
+                        <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row max-w-[380px]">
+                            <div>
+                                <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit"/>
+                            </div>
+                            <div className="flex flex-col">
+                                <CardHeader className="mb-5">
+                                    <CardTitle>{company.legalName}</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p>{company.cnpj}</p>
+                                </CardContent>
+                            </div>
 
-                    </Card>
+                        </Card>
                 ))}
 
             </div>

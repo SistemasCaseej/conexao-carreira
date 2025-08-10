@@ -7,3 +7,7 @@ export async function createCompanyService(address, businessSector, city, cnpj, 
 export async function getAllCompaniesService() {
     return await companyRepository.getAllCompaniesRepository()
 }
+
+export async function getCompanyByIdService(id) {
+    return await companyRepository.getCompanyByIdRepository(id);
+}
