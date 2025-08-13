@@ -1,6 +1,6 @@
 import * as companyRepository from "../repositories/company/companyRepository";
 
-export async function createCompanyService(address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users) {
+export async function createCompanyService(address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users = []) {
     return await companyRepository.createCompanyRepository(address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users);
 }
 
@@ -10,4 +10,8 @@ export async function getAllCompaniesService() {
 
 export async function getCompanyByIdService(id) {
     return await companyRepository.getCompanyByIdRepository(id);
+}
+
+export async function updateCompanyService(id, address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users = []) {
+    return await companyRepository.updateCompanyRepository(id, address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users)
 }

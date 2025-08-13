@@ -61,7 +61,7 @@ export default function ManageCompanies() {
                             </div>
                             <div className="flex flex-col">
                                 <CardHeader className="mb-5">
-                                    <CardTitle>{company.legalName}</CardTitle>
+                                    <CardTitle>{company.tradeName}</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <p>{company.cnpj}</p>
