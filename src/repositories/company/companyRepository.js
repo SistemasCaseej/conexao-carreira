@@ -1,4 +1,4 @@
-import {addDoc, collection, doc, getDoc, getDocs, query} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc} from "firebase/firestore";
 import {db} from "@/firebase/config";
 
 export async function createCompanyRepository(address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users) {
@@ -49,4 +49,25 @@ export async function getCompanyByIdRepository(documentId){
     }
 
     return docSnap.data();
+}
+
+export async function updateCompanyRepository(id, address, businessSector, city, cnpj, companySize, legalName, site, tradeName, users){
+
+
+    const docRef = doc(db, "companies", id);
+
+    const updatedData = {
+        address: address,
+        businessSector: businessSector,
+        city: city,
+        cnpj: cnpj,
+        companySize: companySize,
+        legalName: legalName,
+        site: site,
+        tradeName: tradeName,
+        users: users,
+    };
+
+    await updateDoc(docRef, updatedData);
+
 }
