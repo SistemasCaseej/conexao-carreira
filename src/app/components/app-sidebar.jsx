@@ -131,7 +131,7 @@ const data = {
                 },
                 {
                     title: "Gerenciar Usuários",
-                    url: "/admin/cp",
+                    url: "/admin/company/users",
                 },
             ],
         },
@@ -154,7 +154,6 @@ const data = {
                 },
             ],
         },
-
 
     ],
 }

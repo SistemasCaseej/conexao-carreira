@@ -45,7 +45,7 @@ export default function CompanyForm(){
                     </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:min-w-[900px] p-0" showCloseButton={false} >
-                    <DialogHeader className="">
+                    <DialogHeader>
                         <DialogTitle className="font-semibold text-black"></DialogTitle>
                     </DialogHeader>
                     <GenericForm

@@ -54,3 +54,11 @@ export async function hasExistingEmail(email){
 export async function cpfAlreadyExists(cpf){
     return await userRepository.cpfAlreadyExists(cpf);
 }
+
+export async function createUserCompany(name, email, cpf, phoneNumber, linkedIn, city, company){
+    return await userRepository.createUserCompany(name, email, cpf, phoneNumber, linkedIn, city, company);
+}
+
+export async function getUsersWithCompany(){
+    return await userRepository.getUsersWithCompany();
+}

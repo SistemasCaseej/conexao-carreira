@@ -67,7 +67,7 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
         return <p className="text-red-500 text-sm mt-1">{error}</p>;
     };
 
-    const renderField = ({label, name, type, placeholder, cpfMask, telMask, maxLength, required, cnpjMask}) => {
+    const renderField = ({label, name, type, placeholder, cpfMask, telMask, maxLength, required, cnpjMask, options}) => {
         if (hiddenFields.includes(name)) return null;
 
         let inputRef = null;
@@ -78,18 +78,35 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
         return (
             <div key={name} className="flex-1 min-w-[280px]">
                 <Label className="font-normal" htmlFor={name}>{label}</Label>
-                <Input
-                    ref={inputRef}
-                    type={type}
-                    name={name}
-                    id={name}
-                    value={userData[name] || ""}
-                    onChange={handleChange}
-                    placeholder={placeholder}
-                    className="mt-2"
-                    maxLength={maxLength}
-                    required={required}
-                />
+
+                {type === "select" ? (
+                    <select
+                        name={name}
+                        id={name}
+                        value={userData[name] || ""}
+                        onChange={handleChange}
+                        className="mt-2 p-2 border border-gray-200 w-[80%]"
+                        required={required}
+                    >
+                        <option value="">{placeholder}</option>
+                        {options?.map(company => (
+                            <option key={company.id} value={company.id} className="font-normal">{company.tradeName}</option>
+                        ))}
+                    </select>
+                ) : (
+                    <Input
+                        ref={inputRef}
+                        type={type}
+                        name={name}
+                        id={name}
+                        value={userData[name] || ""}
+                        onChange={handleChange}
+                        placeholder={placeholder}
+                        className="mt-2"
+                        maxLength={maxLength}
+                        required={required}
+                    />
+                )}
                 {renderFieldError(name)}
             </div>
         );
@@ -118,7 +135,7 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
                     <div className="flex flex-wrap gap-6">
                         {fields.map(renderField)}
                     </div>
-                    <div className="mt-20 gap-5 w-full flex items-end justify-end">
+                    <div className={`gap-5 w-full flex items-end justify-end mt-10 ${logo ? "mt-20" : ""}`}>
                         <Button type="button" className="cursor-pointer w-[120px]">
                             Cancelar
                         </Button>

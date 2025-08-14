@@ -27,7 +27,7 @@ export function AdminForm() {
             if(!response.ok) {
                 toast.error(responseData.message || "Erro ao enviar formulário.");
             }else {
-                toast.error(responseData.message || "Administrador cadastrado com sucesso!");
+                toast.success(responseData.message || "Administrador cadastrado com sucesso!");
                 setOpen(false);
                 router.refresh();
             }
@@ -45,8 +45,8 @@ export function AdminForm() {
                     <span className="hidden lg:inline">Adicionar Usuário</span>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:min-w-[670px]">
-                <DialogTitle className="text-xl font-semibold">
+            <DialogContent showCloseButton={false} className="sm:min-w-[900px] p-0 flex flex-row flex-wrap">
+                <DialogTitle className="text-xl font-semibold uppercase     text-black pr-10 pt-8 pl-10">
                     Cadastrar Administrador
                 </DialogTitle>
               <GenericForm
@@ -58,7 +58,7 @@ export function AdminForm() {
                       { label: "LinkedIn", name: "linkedIn", type: "text", placeholder: "https://www.linkedin.com/in/seu-perfil", maxLength: 100},
                       { label: "Cidade", name: "city", type: "text", placeholder: "Informe a sua cidade", maxLength: 30},
                   ]}
-
+                  logo={false}
                   onSubmit={handleSubmit}
                   hiddenFields={["enrollmentProof"]}/>
             </DialogContent>
