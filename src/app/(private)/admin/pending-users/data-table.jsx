@@ -9,6 +9,7 @@ import {IconChevronDown, IconLayoutColumns} from "@tabler/icons-react";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {useState} from "react";
 import {AdminForm} from "@/components/AdminForm";
+import {CompanyUserForm} from "@/components/CompanyUserForm";
 
 export function DataTable({ columns, data, customSection}) {
     const [sorting, setSorting] = useState([])
@@ -58,10 +59,11 @@ export function DataTable({ columns, data, customSection}) {
                                 </DropdownMenuContent>
                         </DropdownMenu>
                         {section.addUser && <AdminForm />}
+                        {section.addCompanyUser && <CompanyUserForm/>}
                     </section>
                 </div>
                 ))}
-            <div className="rounded-sm border">
+            <div className="border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

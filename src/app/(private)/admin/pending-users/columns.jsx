@@ -57,7 +57,12 @@ export const getColumns = ({ onApprove, onReject, actions, approve }) => {
         },
         {
             accessorKey: "role",
-            header: "Role",
+            header: "Papel",
+        },
+        {
+            accessorKey: "company",
+            header: "Empresa",
+            cell: ({ row }) => row.original.company?.tradeName || "-"
         },
         {
             id: "actions",

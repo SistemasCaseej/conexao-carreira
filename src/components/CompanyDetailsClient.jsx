@@ -51,7 +51,7 @@ export default function CompanyDetailsClient({ id }) {
 
 
     return (
-        <div className="pt-11 bg-[#f7f7f9] h-auto flex flex-col items-center gap-10">
+        <div className="pt-11 bg-[#f0f3f4] h-auto flex flex-col items-center gap-10">
 
             <div className="bg-white w-[90%] text-left p-5 border-2 border-[#1447e6] shadow-md" data-name="Dados básicos">
                 <h1 className="uppercase text-xl">{data?.tradeName}</h1>

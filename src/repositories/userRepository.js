@@ -53,6 +53,7 @@ export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn,
             phoneNumber,
             linkedIn,
             city,
+            company: null,
             status : "Pendente",
             role : "Candidate"
         })
@@ -79,6 +80,7 @@ export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, c
             phoneNumber,
             linkedIn,
             city,
+            company: null,
             status : "Aprovado",
             role : "Admin",
             userId : userCredential.user.uid
@@ -205,4 +207,59 @@ export async function getUserByDocumentId(documentId) {
     }
 
     return docSnap.data();
+}
+
+export async function createUserCompany(name, email, cpf, phoneNumber, linkedIn, city, companyId) {
+
+    const temporaryPassword = generateSecurePassword();
+
+    const userCredential = await createUserWithEmailAndPassword(auth, email, temporaryPassword);
+
+    const pendingUsersRef = collection(db, "users");
+
+    const docRef = await addDoc(pendingUsersRef, {
+        name,
+        email,
+        cpf,
+        phoneNumber,
+        linkedIn,
+        city,
+        company: doc(db, "companies", companyId),
+        status : "Aprovado",
+        role : "Employee",
+        userId : userCredential.user.uid
+    })
+
+    await sendPasswordResetEmail(auth, email);
+
+    return docRef.id;
+}
+
+export async function getUsersWithCompany() {
+    const usersRef = collection(db, "users");
+
+    const q = query(usersRef, where("company", "!=", null));
+
+    const querySnapshot = await getDocs(q);
+    const users = [];
+
+    for (const docSnap of querySnapshot.docs) {
+        const userData = docSnap.data();
+
+        let companyData = null;
+        if (userData.company) {
+            const companySnap = await getDoc(userData.company); // DocumentReference
+            if (companySnap.exists()) {
+                companyData = { id: companySnap.id, ...companySnap.data() };
+            }
+        }
+
+        users.push({
+            id: docSnap.id,
+            ...userData,
+            company: companyData
+        });
+    }
+
+    return users;
 }
