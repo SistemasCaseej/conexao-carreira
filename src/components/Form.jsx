@@ -85,7 +85,7 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
                         id={name}
                         value={userData[name] || ""}
                         onChange={handleChange}
-                        className="mt-2 p-2 border border-gray-200 w-[80%]"
+                        className="mt-2 p-2 border border-gray-200 w-[60%]"
                         required={required}
                     >
                         <option value="">{placeholder}</option>
