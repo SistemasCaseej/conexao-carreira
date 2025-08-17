@@ -42,7 +42,7 @@ export function SidebarRight({...props}) {
                                 className="object-cover border-1 rounded-2xl"
                             />
                             <h1 className="text-2xl font-semibold mt-2">UIUX Designer</h1>
-                            <span className="text-[#1d9bf0] font-semibold">Twitter</span>
+                            <span className="text-[#6b6969] font-semibold">Twitter</span>
                         </section>
                         <DropdownMenuSeparator />
                         <section data-qa="position-information" className="flex flex-row px-6 py-2 justify-between h-[30vh]">

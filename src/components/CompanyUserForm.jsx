@@ -17,7 +17,7 @@ export function CompanyUserForm() {
 
     const handleSubmit = async (data) => {
         try{
-            const response = await fetch('/api/users/company', {
+            const response = await fetch('/api/company/user', {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(data),
@@ -28,7 +28,7 @@ export function CompanyUserForm() {
             if(!response.ok) {
                 toast.error(responseData.message || "Erro ao enviar formulário.");
             }else {
-                toast.error(responseData.message || "Administrador cadastrado com sucesso!");
+                toast.success(responseData.message || "Administrador cadastrado com sucesso!");
                 setOpen(false);
                 router.refresh();
             }

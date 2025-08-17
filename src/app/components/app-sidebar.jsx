@@ -17,85 +17,6 @@ const data = {
             url: "/dashboard",
             icon: Home,
             isActive: true,
-            items: [
-                {
-                    title: "History",
-                    url: "#",
-                },
-                {
-                    title: "Starred",
-                    url: "#",
-                },
-                {
-                    title: "Settings",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Procurar Emprego",
-            url: "#",
-            icon: Search,
-            items: [
-                {
-                    title: "Genesis",
-                    url: "#",
-                },
-                {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Empresas Favoritas",
-            url: "#",
-            icon: Star,
-            items: [
-                {
-                    title: "General",
-                    url: "#",
-                },
-                {
-                    title: "Team",
-                    url: "#",
-                },
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-                {
-                    title: "Limits",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Documentação",
-            url: "#",
-            icon: BookOpen,
-            items: [
-                {
-                    title: "Introduction",
-                    url: "#",
-                },
-                {
-                    title: "Get Started",
-                    url: "#",
-                },
-                {
-                    title: "Tutorials",
-                    url: "#",
-                },
-                {
-                    title: "Changelog",
-                    url: "#",
-                },
-            ],
         },
         {
             title: "Usuários",
@@ -103,15 +24,15 @@ const data = {
             icon: Users,
             items: [
                 {
-                    title: "Usuários Aprovados",
+                    title: "Usuários aprovados",
                     url: "/admin/approved-users",
                 },
                 {
-                    title: "Usuários Pendentes",
+                    title: "Usuários pendentes",
                     url: "/admin/pending-users",
                 },
                 {
-                    title: "Usuários Administradores",
+                    title: "Usuários administradores",
                     url: "/admin/admin-users",
                 },
             ],
@@ -141,16 +62,12 @@ const data = {
             icon: Building2,
             items: [
                 {
-                    title: "Cadastrar Nova Vaga",
-                    url: "admin/"
+                    title: "Nova vaga",
+                    url: "/dashboard/new-job"
                 },
                 {
-                    title: "Vagas Publicadas",
+                    title: "Vagas publicadas",
                     url: "/admin/",
-                },
-                {
-                    title: "Candidaturas Recebidas",
-                    url: "/admin/cp",
                 },
             ],
         },
