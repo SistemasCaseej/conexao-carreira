@@ -10,6 +10,7 @@ export async function GET(){
     return NextResponse.json(usersWithCompany)
 }
 
+
 export async function POST(req) {
     try {
         const body = await req.json();
@@ -64,7 +65,7 @@ export async function POST(req) {
         return NextResponse.json(
             {
                 success: true,
-                message: `Usuário da Empresa foi criado com sucesso`,
+                message: `Usuário da empresa foi criado com sucesso`,
                 data: {userId},
             },
             {status: 201}

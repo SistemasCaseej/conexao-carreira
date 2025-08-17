@@ -35,17 +35,3 @@ export const createCompanySchema = z.object({
         .optional()
 })
 
-
-/*
-
- body.address,
-                body.area,
-                body.city,
-                body.cnpj,
-                body.description,
-                body.email,
-                body.logoUrl,
-                body.name,
-                body.phone,
-                body.site,
-*/

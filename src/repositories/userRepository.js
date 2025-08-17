@@ -248,7 +248,7 @@ export async function getUsersWithCompany() {
 
         let companyData = null;
         if (userData.company) {
-            const companySnap = await getDoc(userData.company); // DocumentReference
+            const companySnap = await getDoc(userData.company);
             if (companySnap.exists()) {
                 companyData = { id: companySnap.id, ...companySnap.data() };
             }
