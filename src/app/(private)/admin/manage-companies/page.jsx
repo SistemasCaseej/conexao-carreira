@@ -55,7 +55,7 @@ export default function ManageCompanies() {
             </div>
             <div className="grid gap-4 mt-5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
                 {filteredCompanies.map((company, index) => (
-                        <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row max-w-[380px]">
+                        <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row max-w-[380px] border-2 border-[#49257b]">
                             <div>
                                 <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit"/>
                             </div>

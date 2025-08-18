@@ -36,6 +36,7 @@ export function JobBenefits({ value = [], onChange }) {
                     <Input
                         type="text"
                         placeholder="Adicionar benefício"
+                        className="focus:outline-none focus:ring-2 focus:ring-[#49257b]"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                     />

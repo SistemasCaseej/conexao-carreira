@@ -23,7 +23,7 @@ export default function JobTitleInput({ value, onChange }) {
                 onChange={handleChange}
                 maxLength={100}
                 placeholder="Ex.: Desenvolvedor Frontend, Analista de QA..."
-                className="border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#49257b]"
             />
         </section>
     );
