@@ -67,7 +67,7 @@ const data = {
                 },
                 {
                     title: "Vagas publicadas",
-                    url: "/admin/",
+                    url: "/dashboard/jobs",
                 },
             ],
         },

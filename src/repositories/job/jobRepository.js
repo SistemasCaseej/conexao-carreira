@@ -1,10 +1,10 @@
 import {db} from "@/firebase/config";
-import {addDoc, collection, doc, updateDoc, arrayUnion, getDocs, getDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where} from "firebase/firestore";
 
 
 export async function createJobRepository(job) {
 
-    const { companyId = "TwcENaLW8OpQoZi0H5MO", title, description, requirements, responsibilities, location, employmentType, seniority, salaryRange, benefits, status} = job;
+    const { companyId = "RNk2pBMBE57gT4JqxzvL", title, description, requirements, responsibilities, location, employmentType, seniority, salaryRange, benefits, status} = job;
 
     const companyRef = await collection(db, "jobs");
 
@@ -37,8 +37,6 @@ export async function createJobRepository(job) {
 
 export async function getAllJobsRepository() {
 
-    const companyId = "TwcENaLW8OpQoZi0H5MO"
-
     const jobRef = collection(db, "jobs");
 
     const querySnapshot = await getDocs(jobRef)
@@ -63,4 +61,23 @@ export async function getAllJobsRepository() {
     );
 
     return jobs;
+}
+
+export async function getJobByCompanyIdService(companyId) {
+
+    const jobsRef = collection(db, "jobs");
+    const companyRef = doc(db, "companies", companyId);
+
+    const q = query(jobsRef, where ("companyId", "==", companyRef));
+    const querySnapshot = await getDocs(q);
+
+    const companySnap = await getDoc(companyRef);
+    const companyData = companySnap.exists() ? companySnap.data() : null;
+
+    return querySnapshot.docs.map((doc) => ({
+        company: companyData,
+        id: doc.id,
+        ...doc.data(),
+    }));
+
 }

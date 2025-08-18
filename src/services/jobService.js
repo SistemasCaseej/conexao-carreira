@@ -8,3 +8,7 @@ export async function createJobService(job) {
 export async function getAllJobsService() {
     return await jobRepository.getAllJobsRepository();
 }
+
+export async function getJobByCompanyIdService(companyId) {
+    return await jobRepository.getJobByCompanyIdService(companyId);
+}
