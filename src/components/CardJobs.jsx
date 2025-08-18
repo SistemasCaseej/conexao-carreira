@@ -3,9 +3,9 @@
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
-import {MapPin, Timer} from "lucide-react"
+import {MapPin, Timer, DollarSign} from "lucide-react"
 
-export default function CardJobs({title, company, location, posted_at}) {
+export default function CardJobs({title, company, location, posted_at, salary_range}) {
 
     function parseDateBRtoISO(dateStr) {
         const [datePart, timePart] = dateStr.split(", ");
@@ -24,13 +24,13 @@ export default function CardJobs({title, company, location, posted_at}) {
         const diffHours = Math.floor(diffMins / 60);
         const diffDays = Math.floor(diffHours / 24);
 
-        if (diffMins < 1) return "agora mesmo";
-        if (diffMins < 60) return `há ${diffMins} minuto${diffMins > 1 ? "s" : ""}`;
-        if (diffHours < 24) return `há ${diffHours} hora${diffHours > 1 ? "s" : ""}`;
+        if (diffMins < 1) return "Agora mesmo";
+        if (diffMins < 60) return `Publicado ${diffMins} minuto${diffMins > 1 ? "s" : ""} atrás`;
+        if (diffHours < 24) return `Publicado ${diffHours} hora${diffHours > 1 ? "s" : ""} atrás`;
         return `há ${diffDays} dia${diffDays > 1 ? "s" : ""}`;
     }
     return (
-        <Card className="font-mona-sans w-full max-w-[750px]  min-w-[700] min-h-[230px] flex flex-col border border-[#49257b] mb-5 rounded-sm p-4">
+        <Card className="font-mona-sans w-full max-w-[750px]  min-w-[700] min-h-[230px] flex flex-col border border-[#49257b] mb-3 rounded-sm p-4">
             <section className="flex flex-row gap-9 items-center">
                 <div className="w-15 h-15 relative overflow-hidden">
                     <Image
@@ -52,12 +52,13 @@ export default function CardJobs({title, company, location, posted_at}) {
                         <MapPin size={20}/>
                         <h3>{location}</h3>
                     </div>
-                    <div className="flex-row flex mb-2">
-                        <h3>Apply by: 30 August 2025</h3>
-                    </div>
                     <div className="flex-row flex items-center gap-2">
                         <Timer size={20}/>
                         <dd className="text-sm font-normal text-gray-500">{timeAgo(posted_at)}</dd>
+                    </div>
+                    <div className="flex-row items-center flex mt-2 gap-2">
+                        <DollarSign size={20}/>
+                        {salary_range?.minSalary || "R$ 0,00" } - {salary_range?.maxSalary || 0}
                     </div>
                 </dl>
 
