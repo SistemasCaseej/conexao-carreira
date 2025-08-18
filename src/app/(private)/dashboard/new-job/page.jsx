@@ -25,7 +25,6 @@ export default function PageNewJob(){
     });
 
     const handleChange = (field, value) => {
-        console.log(field, value);
         setFormData((prev) => ({
             ...prev,
             [field]: value,
@@ -33,7 +32,7 @@ export default function PageNewJob(){
     };
 
     const handleSubmit = async () => {
-
+        console.log(formData);
         const response = await fetch("/api/company/job", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -50,8 +49,8 @@ export default function PageNewJob(){
             setFormData({
                 title: "",
                 location: "",
-                requirements: "",
-                benefits: "",
+                requirements: [],
+                benefits: [],
                 description: "",
                 employmentType: "",
                 salaryRange: { minSalary: "", maxSalary: "", notInformed: false },
@@ -101,10 +100,10 @@ export default function PageNewJob(){
 
             <Button
                 onClick={handleSubmit}
-                className="mt-6 mb-5 px-6 py-2 bg-[#49257b] text-white"
+                className="mb-5 px-6 py-2 bg-[#49257b] text-white cursor-pointer"
             >
 
-                Salvar Vaga
+                Publicar vaga
             </Button>
 
         </section>

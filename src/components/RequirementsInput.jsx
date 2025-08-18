@@ -36,6 +36,7 @@ export function RequirementsInput({value = [], onChange}) {
                         type="text"
                         maxLength={100}
                         placeholder="Adicione os requisitos"
+                        className="focus:outline-none focus:ring-2 focus:ring-[#49257b]"
                         value={inputValue}
                         onChange={e => setInputValue(e.target.value)}
                     />

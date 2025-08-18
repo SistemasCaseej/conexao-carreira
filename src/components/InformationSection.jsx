@@ -21,9 +21,9 @@ export default function InformationSection({name, data, setData, initialExcluded
     }
 
     return (
-        <div className="bg-white w-[90%] border-2 border-[#1447e6] mb-10 flex flex-col justify-around p-4 shadow-lg" data-name={name}>
+        <div className="bg-white w-[90%] border-2 border-[#49257b] mb-10 flex flex-col justify-around p-4 shadow-lg" data-name={name}>
             <div className="mb-10 w-full flex items-center gap-5 pl-3 pt-2">
-                <div className="bg-[#1447e6] rounded-full p-2">
+                <div className="bg-[#49257b] rounded-full p-2">
                     <Building2 className="text-yellow-50" size={30}/>
                 </div>
                 <h2 className="text-lg text-left font-sans">{name}</h2>
