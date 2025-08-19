@@ -5,7 +5,7 @@ import Image from "next/image"
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import {MapPin, Timer, DollarSign} from "lucide-react"
 
-export default function CardJobs({title, company, location, posted_at, salary_range}) {
+export default function CardJobs({title, company, location, posted_at, salary_range, on_details}) {
 
     function parseDateBRtoISO(dateStr) {
         const [datePart, timePart] = dateStr.split(", ");
@@ -63,7 +63,7 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
                 </dl>
 
                 <footer>
-                    <button className="bg-white border-1 cursor-pointer hover:text-white hover:bg-[#49257b] border-[#49257b] w-[100px] h-[40px] rounded-sm text-[#49257b]" aria-label="Ver detalhes da vaga em Jakarta">Detalhes</button>
+                    <button onClick={() => on_details?.()} className="bg-white border-1 cursor-pointer hover:text-white hover:bg-[#49257b] border-[#49257b] w-[100px] h-[40px] rounded-sm text-[#49257b]" aria-label="Ver detalhes da vaga em Jakarta">Detalhes</button>
                 </footer>
             </article>
 

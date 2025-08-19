@@ -50,7 +50,7 @@ export default function SalaryInput({ value = { minSalary: "", maxSalary: "", no
     };
 
     return (
-        <div className="flex flex-col gap-3 mb-10">
+        <div className="flex flex-col gap-3 mt-5">
             <label className="text-lg">Faixa Salarial</label>
 
             <span className="mt-2 text-gray-500 text-sm">

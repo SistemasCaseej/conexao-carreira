@@ -1,6 +1,7 @@
-"use client"
 
-export function EmploymentType({ value, onChange }) {
+
+export function WorkModel({ value, onChange }){
+
     const handleChange = (e) => {
         if (onChange) {
             onChange(e.target.value);
@@ -9,9 +10,9 @@ export function EmploymentType({ value, onChange }) {
 
     return (
         <div className="mt-5">
-            <h3 className="text-lg">Tipo de Contratação</h3>
+            <h3 className="text-lg">Modelo de Trabalho</h3>
             <span className="mt-2 text-gray-500 text-sm">
-                Selecione o tipo de contratação para esta vaga.
+                Selecione o modelo de trabalho para esta vaga.
             </span>
             <section className="mt-4">
                 <select
@@ -20,12 +21,11 @@ export function EmploymentType({ value, onChange }) {
                     className="w-full border border-gray-300 rounded p-2"
                 >
                     <option value="">Selecione</option>
-                    <option value="Tempo integral">CLT</option>
-                    <option value="Meio período">Jovem Aprendiz</option>
-                    <option value="Estágio">Estágio</option>
-                    <option value="Freelance">PJ</option>
+                    <option value="Home office">Home office</option>
+                    <option value="Presencial">Presencial</option>
+                    <option value="Híbrido">Híbrido</option>
                 </select>
             </section>
         </div>
-    );
+    )
 }
