@@ -1,6 +1,7 @@
 "use client"
 
 export function EmploymentType({ value, onChange }) {
+
     const handleChange = (e) => {
         if (onChange) {
             onChange(e.target.value);
@@ -20,10 +21,10 @@ export function EmploymentType({ value, onChange }) {
                     className="w-full border border-gray-300 rounded p-2"
                 >
                     <option value="">Selecione</option>
-                    <option value="Tempo integral">CLT</option>
-                    <option value="Meio período">Jovem Aprendiz</option>
+                    <option value="CLT">CLT</option>
+                    <option value="Jovem Aprendiz">Jovem Aprendiz</option>
                     <option value="Estágio">Estágio</option>
-                    <option value="Freelance">PJ</option>
+                    <option value="PJ">PJ</option>
                 </select>
             </section>
         </div>

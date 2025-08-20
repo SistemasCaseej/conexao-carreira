@@ -11,24 +11,27 @@ export default function PageJobs(){
 
     const { toggleSidebar, open, openMobile, isMobile } = useSidebar()
     const isSidebarOpen = isMobile ? openMobile : open
+
     const [selectedJob, setSelectedJob] = useState(null)
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
         const fetchJobs = async () => {
-            const response = await fetch(`/api/company/job/zLxCB6Ue2p18BkFbT9rf`, {
+            const response = await fetch(`/api/company/job/aIO8nGo53E9INEPalzYD`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             });
 
             const result = await response.json();
 
+            console.log(result);
             if (!response.ok || !result.data?.company?.length) {
                 toast.error("Não existem vagas cadastradas no sistema");
+                setSelectedJob(null)
             } else {
                 setJobs(result.data.company);
                 setSelectedJob(result.data.company[0]);
-                toast.success("Vagas encontradas");
+                toast.success("Vagas encontradas da empresa " + result.data.company[0].company.tradeName);
             }
         };
 
@@ -36,7 +39,6 @@ export default function PageJobs(){
     }, []);
 
     return (
-
         <section className="flex pt-15">
             <div className={`flex justify-center transition-all duration-300 ease-in-out  ${isSidebarOpen ? "w-[880px]" : "w-[1100px]"}`}>
                 <div className="w-full max-w-2xl flex flex-col items-center gap-4">
@@ -53,10 +55,11 @@ export default function PageJobs(){
                     ))}
                 </div>
             </div>
-            <div className="flex-[1]">
-                <SidebarRight job={selectedJob}/>
-            </div>
+            {selectedJob && (
+                <div className="flex-[1]">
+                    <SidebarRight job={selectedJob}/>
+                </div>
+            )}
         </section>
-
     )
 }

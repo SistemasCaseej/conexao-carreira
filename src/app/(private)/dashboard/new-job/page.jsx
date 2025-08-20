@@ -55,6 +55,7 @@ export default function PageNewJob(){
                 benefits: [],
                 description: "",
                 employmentType: "",
+                workModel: "",
                 salaryRange: { minSalary: "", maxSalary: "", notInformed: false },
             });
         }

@@ -5,32 +5,8 @@ import Image from "next/image";
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import { ScrollArea} from "@/components/ui/scroll-area";
 
-// This is sample data.
-const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
-    calendars: [
-        {
-            name: "My Calendars",
-            items: ["Personal", "Work", "Family"],
-        },
-        {
-            name: "Favorites",
-            items: ["Holidays", "Birthdays"],
-        },
-        {
-            name: "Other",
-            items: ["Travel", "Reminders", "Deadlines"],
-        },
-    ],
-}
 
 export function SidebarRight({job,...props}) {
-
-    console.log("SidebarRight" , job)
 
     return (
             <Sidebar collapsible="none" className="font-mona-sans fixed right-0 top-0 hidden h-svh border-l lg:flex w-[27vw]"{...props}>
@@ -64,7 +40,7 @@ export function SidebarRight({job,...props}) {
                             <section className="flex flex-col justify-around">
                                 <div>
                                     <p className="font-normal text-gray-600 text-sm">Modelo de Trabalho</p>
-                                    <h3 className="font-medium">Híbrido</h3>
+                                    <h3 className="font-medium">{job?.workModel}</h3>
                                 </div>
                                 <div>
                                     <p className="font-normal text-gray-600 text-sm">Tipo de Contratação</p>
@@ -75,7 +51,7 @@ export function SidebarRight({job,...props}) {
                         <DropdownMenuSeparator />
                         <article data-qa="position-description" className="px-6 py-4">
                             <h3 className="font-medium text-lg">Descrição</h3>
-                            <p className="py-2 font-normal">{job.description}</p>
+                            <p className="py-2 font-normal">{job?.description}</p>
                         </article>
                         <article data-qa="position-description" className="px-6 py-6">
                             <h3 className="font-medium text-lg">Requisitos</h3>
