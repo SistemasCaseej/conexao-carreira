@@ -4,10 +4,16 @@ import CardJobs from "@/components/CardJobs";
 import {SidebarRight} from "@/components/sidebar-right";
 import {useEffect, useState} from "react";
 import {toast} from "sonner";
+import {useSidebar} from "@/components/ui/sidebar";
 
 export default function Dashboard() {
 
+    const { toggleSidebar, open, openMobile, isMobile } = useSidebar()
+    const isSidebarOpen = isMobile ? openMobile : open
+
     const [jobs, setJobs] = useState([])
+    const [selectedJob, setSelectedJob] = useState(null)
+
 
     useEffect(() => {
         async function fetchJobs() {
@@ -18,12 +24,16 @@ export default function Dashboard() {
                 },
             })
 
-            const data = await response.json()
+            const result = await response.json()
 
-            if(!response.ok) {
+            console.log("Dashboard", result)
+
+            if(!response.ok || !result?.length) {
                 toast.error("Não foi possível encontrar as vagas de emprego")
+                setSelectedJob(null)
             }else{
-                setJobs(data)
+                setJobs(result);
+                setSelectedJob(result[0]);
                 toast.success("Todas as vagas de emprego")
             }
         }
@@ -31,20 +41,27 @@ export default function Dashboard() {
     }, [])
 
     return (
-        <section className="flex flex-col lg:flex-row justify-center bg-[#f9f9f9] h-full w-full md:w-[100%] mx-auto p-4">
-            <section>
-                {jobs.map((job, index) => (
-                    <div key={index} className="flex flex-row pt-10">
-                        <section className="lg:w-2/3 flex justify-end">
-                            <CardJobs title={job.title} salary_range={job.salaryRange} company={job.company.tradeName} location={job.location} posted_at={job.posted_at} />
-                        </section>
-                    </div>
-                ))}
-            </section>
-
-            {/*<section className="flex-shrink-0 lg:w-1/3">*/}
-            {/*    <SidebarRight/>*/}
-            {/*</section>*/}
+        <section className="flex pt-15">
+            <div className={`flex justify-center transition-all duration-300 ease-in-out  ${isSidebarOpen ? "w-[880px]" : "w-[1100px]"}`}>
+                <div className="w-full max-w-2xl flex flex-col items-center gap-4">
+                    {jobs.map((job, i) => (
+                        <CardJobs
+                            key={i}
+                            title={job.title}
+                            company={job.company.tradeName}
+                            location={job.location}
+                            posted_at={job.posted_at}
+                            salary_range={job.salaryRange}
+                            on_details={() => setSelectedJob(job)}
+                        />
+                    ))}
+                </div>
+            </div>
+            {selectedJob && (
+                <div className="flex-[1]">
+                    <SidebarRight job={selectedJob}/>
+                </div>
+            )}
         </section>
 
     )

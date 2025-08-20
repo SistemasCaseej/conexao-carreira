@@ -5,7 +5,7 @@ import Image from "next/image"
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import {MapPin, Timer, DollarSign} from "lucide-react"
 
-export default function CardJobs({title, company, location, posted_at, salary_range}) {
+export default function CardJobs({title, company, location, posted_at, salary_range, on_details}) {
 
     function parseDateBRtoISO(dateStr) {
         const [datePart, timePart] = dateStr.split(", ");
@@ -45,25 +45,25 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
                     <span className="text-[#6b6969] font-semibold">{company}</span>
                 </div>
             </section>
-            <DropdownMenuSeparator className="text-black p-0 w-full"/>
+            <DropdownMenuSeparator/>
             <article className="flex flex-row items-center justify-between">
                 <dl>
                     <div className="flex-row items-center flex mb-2 gap-2">
                         <MapPin size={20}/>
                         <h3>{location}</h3>
                     </div>
-                    <div className="flex-row flex items-center gap-2">
-                        <Timer size={20}/>
-                        <dd className="text-sm font-normal text-gray-500">{timeAgo(posted_at)}</dd>
-                    </div>
-                    <div className="flex-row items-center flex mt-2 gap-2">
+                    <div className="flex-row items-center flex gap-2">
                         <DollarSign size={20}/>
                         {salary_range?.minSalary || "R$ 0,00" } - {salary_range?.maxSalary || 0}
+                    </div>
+                    <div className="flex-row flex items-center gap-2 mt-2">
+                        <Timer size={20}/>
+                        <dd className="text-sm font-normal text-gray-500">{timeAgo(posted_at)}</dd>
                     </div>
                 </dl>
 
                 <footer>
-                    <button className="bg-white border-1 cursor-pointer hover:text-white hover:bg-[#49257b] border-[#49257b] w-[100px] h-[40px] rounded-sm text-[#49257b]" aria-label="Ver detalhes da vaga em Jakarta">Detalhes</button>
+                    <button onClick={() => on_details?.()} className="bg-white border-1 cursor-pointer hover:text-white hover:bg-[#49257b] border-[#49257b] w-[100px] h-[40px] rounded-sm text-[#49257b]" aria-label="Ver detalhes da vaga em Jakarta">Detalhes</button>
                 </footer>
             </article>
 

@@ -10,6 +10,7 @@ import JobTitleInput from "@/components/JobTitle";
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {toast} from "sonner";
+import {WorkModel} from "@/components/WorkModel";
 
 export default function PageNewJob(){
 
@@ -20,6 +21,7 @@ export default function PageNewJob(){
         benefits: [],
         description: "",
         employmentType: "",
+        workModel: "",
         salaryRange: { minSalary: "", maxSalary: "", notInformed: false },
 
     });
@@ -53,6 +55,7 @@ export default function PageNewJob(){
                 benefits: [],
                 description: "",
                 employmentType: "",
+                workModel: "",
                 salaryRange: { minSalary: "", maxSalary: "", notInformed: false },
             });
         }
@@ -76,13 +79,9 @@ export default function PageNewJob(){
                     value={formData.location}
                     onChange={(val) => handleChange("location", val)}
                 />
-                <RequirementsInput
-                    value={formData.requirements}
-                    onChange={(val) => handleChange("requirements", val)}
-                />
-                <JobBenefits
-                    value={formData.benefits}
-                    onChange={(val) => handleChange("benefits", val)}
+                <SalaryRange
+                    value={formData.salaryRange}
+                    onChange={(val) => handleChange("salaryRange", val)}
                 />
                 <JobDescription
                     value={formData.description}
@@ -92,10 +91,20 @@ export default function PageNewJob(){
                     value={formData.employmentType}
                     onChange={(val) => handleChange("employmentType", val)}
                 />
-                <SalaryRange
-                    value={formData.salaryRange}
-                    onChange={(val) => handleChange("salaryRange", val)}
+                <WorkModel
+                    value={formData.workModel}
+                    onChange={(val) => handleChange("workModel", val)}
+
                 />
+                <RequirementsInput
+                    value={formData.requirements}
+                    onChange={(val) => handleChange("requirements", val)}
+                />
+                <JobBenefits
+                    value={formData.benefits}
+                    onChange={(val) => handleChange("benefits", val)}
+                />
+
             </section>
 
             <Button

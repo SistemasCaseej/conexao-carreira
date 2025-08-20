@@ -16,6 +16,8 @@ export async function GET(_request, {params}) {
     try{
         const company = await getCompanyByIdService(id);
 
+
+        console.log(company);
         return NextResponse.json(
             { success: true, message: "Company found" , data: { company } },
             { status: 200 },
@@ -29,10 +31,5 @@ export async function GET(_request, {params}) {
             { status: 500 }
         );
     }
-
-
-
-
-
 
 }
