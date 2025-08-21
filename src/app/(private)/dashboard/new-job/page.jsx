@@ -109,7 +109,7 @@ export default function PageNewJob(){
 
             <Button
                 onClick={handleSubmit}
-                className="mb-5 px-6 py-2 bg-[#49257b] text-white cursor-pointer"
+                className="mb-5 mt-5 px-6 py-2 bg-[#49257b] text-white cursor-pointer"
             >
 
                 Publicar vaga

@@ -51,13 +51,13 @@ export default function CompanyDetailsClient({ id }) {
 
 
     return (
-        <div className="pt-11 bg-[#f0f3f4] h-auto flex flex-col items-center gap-10">
+        <div className="pt-11 h-auto flex flex-col items-center gap-10">
 
             <div className="bg-white w-[90%] text-left p-5 border-2 border-[#49257b] shadow-md" data-name="Dados básicos">
                 <h1 className="uppercase text-xl">{data?.tradeName}</h1>
             </div>
 
-            <InformationSection name={"Dados da Empresa"} data={data} setData={setData} translationMap={translationMap} handleSave={()=>handleSaveCompany(id, data)} ableToEdit={ableToEdit} setAbleToEdit={setAbleToEdit} />
+            <InformationSection name={"Dados da Empresa"} data={data} setData={setData} translationMap={translationMap} handleSave={()=>handleSaveCompany(id, data)} ableToEdit={ableToEdit} setAbleToEdit={setAbleToEdit} initialExcludedKeys={["users", "jobs"]}/>
         </div>
     )
 }

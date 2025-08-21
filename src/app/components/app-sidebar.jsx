@@ -43,15 +43,15 @@ const data = {
             icon: Building2,
             items: [
                 {
-                    title: "Dados da Empresa",
+                    title: "Dados da empresa",
                     url: "admin/"
                 },
                 {
-                    title: "Gerenciar Empresas",
+                    title: "Gerenciar empresas",
                     url: "/admin/manage-companies",
                 },
                 {
-                    title: "Gerenciar Usuários",
+                    title: "Gerenciar usuários",
                     url: "/admin/company/users",
                 },
             ],
