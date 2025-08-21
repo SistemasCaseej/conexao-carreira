@@ -61,7 +61,7 @@ export default function Dashboard() {
                 </div>
                 {selectedJob && (
                     <div className="flex-[1]">
-                        <SidebarRight job={selectedJob}/>
+                        <SidebarRight job={selectedJob} button={true}/>
                     </div>
                 )}
             </ScrollArea>

@@ -48,7 +48,7 @@ export default function ManageCompanies() {
 
     return (
         <section className="py-12 px-8 bg-white">
-            <h1 className="text-2xl font-semibold mb-5">Empresas Cadastradas</h1>
+            <h4 className="mb-5">EMPRESAS CADASTRADAS</h4>
             <div className="flex flex-row justify-between items-center">
                 <Input placeholder="Pesquisar Empresas" className="max-w-sm border" value={searchCompany} onChange={(e) => setSearchCompany(e.target.value)} />
                 <CompanyForm/>

@@ -10,12 +10,12 @@ export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLo
             <NavigationBar/>
             <section className="flex flex-col min-h-screen md:min-h-[93vh] px-6 sm:px-10 md:px-20 bg-[#49257b]">
                 <header className="flex items-center justify-between py-4 border-b-1 border-[rgba(255,255,255,0.3)]">
-                    <h3 className="text-2xl text-white font-nunito font-bold">Conexão Carreira</h3>
+                    <h3 className="text-2xl text-white font-bold">Conexão Carreira</h3>
                     <div className="hidden md:flex space-x-4">
-                        <Button className="bg-[#49257b] hover:bg-white rounded-[1px] hover:text-black font-nunito border font-bold tracking-wide px-5 cursor-pointer">
+                        <Button className="bg-[#49257b] hover:bg-white rounded-[1px] hover:text-black border font-bold tracking-wide px-5 cursor-pointer">
                             {buttonLogin}
                         </Button>
-                        <Button className="rounded-none bg-emerald-400 border-1 px-5 cursor-pointer font-nunito font-bold">
+                        <Button className="rounded-none bg-emerald-400 border-1 px-5 cursor-pointer font-bold">
                             {buttonOption}
                         </Button>
                     </div>
@@ -50,12 +50,12 @@ export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLo
                 )}
                 <section className="flex flex-col flex-1 justify-evenly h-screen flex-wrap">
                     <section className="flex flex-col items-center md:h-auto md:flex-row md:justify-between">
-                        <section className="font-nunito text-white text-left mb-7 mt-7 md:mb-0 max-w-3xl">
-                            <h1 className={`font-bold text-center text-3xl sm:text-5xl ${titleClass} md:text-left mb-4`}>{title}</h1>
+                        <section className="text-white text-left mb-7 mt-7 md:mb-0 max-w-3xl">
+                            <h1 className={`font-semibold text-center text-3xl sm:text-5xl ${titleClass} md:text-left mb-4`}>{title}</h1>
                             <p className="font-normal text-justify text-lg">{subtitle}</p>
                             {buttonDemostration && (
                                 <section className="mt-10">
-                                        <Button size={100} className="cursor-pointer px-8 py-4 font-nunito text-lg bg-[#00d492] hover:bg-[#00b47d]">Solicitar uma demostração</Button>
+                                        <Button size={100} className="cursor-pointer px-8 py-4 text-lg bg-[#00d492] hover:bg-[#00b47d]">Solicitar uma demostração</Button>
                                 </section>
                             )}
                         </section>

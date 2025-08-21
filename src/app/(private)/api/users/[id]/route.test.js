@@ -3,7 +3,7 @@ import { POST } from "@/app/(private)/api/users/pending/route";
 
 describe('Specific user', () => {
 
-    describe('DELETE /api/users/[id]', () => {
+    describe('DELETE /api/users/users', () => {
         it('Should return 400 if no id is provided', async () => {
             const response = await DELETE(null, { params: {} });
             const body = await response.json();
@@ -40,7 +40,7 @@ describe('Specific user', () => {
         }) //DELETE & POST
     })
 
-    describe('GET /api/users/[id]', () => {
+    describe('GET /api/users/users', () => {
 
         it('Should return 400 if no id is provided', async () => {
             const response = await GET(null, { params: {} });

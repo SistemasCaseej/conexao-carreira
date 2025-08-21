@@ -18,7 +18,7 @@ export default function PageJobs(){
 
     useEffect(() => {
         const fetchJobs = async () => {
-            const response = await fetch(`/api/company/job/9PSbqcS8GkmtmiikS2YA`, {
+            const response = await fetch(`/api/company/job/ZFQSLGuTY6BNPHjpC6Pl`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             });
@@ -59,7 +59,7 @@ export default function PageJobs(){
                 </div>
                 {selectedJob && (
                     <div className="flex-[1]">
-                        <SidebarRight job={selectedJob}/>
+                        <SidebarRight job={selectedJob} button={false}/>
                     </div>
                 )}
             </ScrollArea>
