@@ -4,7 +4,7 @@ import {Building2, Pencil} from "lucide-react";
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 
-export default function InformationSection({name, data, setData, initialExcludedKeys = "users", translationMap, handleSave, ableToEdit, setAbleToEdit}) {
+export default function InformationSection({name, data, setData, initialExcludedKeys, translationMap, handleSave, ableToEdit, setAbleToEdit}) {
 
     const [excludedKeys, setExcludedKeys] = useState(initialExcludedKeys);
 

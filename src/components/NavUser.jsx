@@ -1,7 +1,6 @@
 "use client"
 
-import { ChevronsUpDown, LogOut} from "lucide-react"
-
+import {ChevronsUpDown, LogOut, User} from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar} from "@/components/ui/sidebar"
@@ -32,11 +31,10 @@ export function NavUser({user2, user}) {
         <SidebarMenu>
             <SidebarMenuItem>
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+                    <DropdownMenuTrigger asChild className="cursor-pointer hover:bg-white hover:text-[#4c1286]">
+                        <SidebarMenuButton size="lg">
                             <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarImage src={user2.avatar} alt={user2.name} />
-                                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                                <User/>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-medium">{user?.name || "Usuário"}</span>
@@ -45,14 +43,13 @@ export function NavUser({user2, user}) {
                             <ChevronsUpDown className="ml-auto size-4" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg" side={isMobile ? "bottom" : "right"} align="end" sideOffset={4}>
+                    <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-[#4c1286] border-1 border-[#4c1286]" side={isMobile ? "bottom" : "right"} align="end" sideOffset={15}>
                         <DropdownMenuLabel className="p-0 font-normal">
-                            <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                                <Avatar className="h-8 w-8 rounded-lg">
-                                    <AvatarImage src={user2.avatar} alt={user2.name} />
-                                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                            <div className="flex flex-row items-center gap-2 px-1 py-1.5 text-left text-sm">
+                                <Avatar className="h-8 w-8 rounded-lg text-white">
+                                    <User/>
                                 </Avatar>
-                                <div className="grid flex-1 text-left text-sm leading-tight">
+                                <div className="grid flex-1 text-left text-sm leading-tight text-white">
                                     <span className="truncate font-medium">{user?.name || "Usuário"}</span>
                                     <span className="truncate text-xs">{user?.email || "user@gmail.com"}</span>
                                 </div>
@@ -60,8 +57,8 @@ export function NavUser({user2, user}) {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={handleLogout}>
-                            <LogOut />Log out
+                        <DropdownMenuItem onClick={handleLogout} className="bg-[#4c1286] text-white cursor-pointer hover:bg-white hover:text-[#4c1286]">
+                            <LogOut/>Log out
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

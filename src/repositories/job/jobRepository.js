@@ -4,7 +4,7 @@ import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, 
 
 export async function createJobRepository(job) {
 
-    const { companyId = "R04etB6vVY5EnFwYGa13", title, description, requirements, responsibilities, location, employmentType, seniority, salaryRange, benefits, status, workModel} = job;
+    const { companyId = "ZFQSLGuTY6BNPHjpC6Pl", title, description, requirements, responsibilities, location, employmentType, seniority, salaryRange, benefits, workModel} = job;
 
     const companyRef = await collection(db, "jobs");
 
@@ -22,6 +22,7 @@ export async function createJobRepository(job) {
         status : "Open",
         title,
         workModel : workModel ?? null,
+        applications : []
     })
 
     const jobId = docRef.id

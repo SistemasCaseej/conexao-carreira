@@ -5,6 +5,7 @@ import {AuthProvider} from "@/app/context/AuthContext";
 import {getUser} from "@/dal/user/dal";
 import {Toaster} from "sonner";
 
+
 export default async function Layout({children}) {
 
     const user = await getUser();

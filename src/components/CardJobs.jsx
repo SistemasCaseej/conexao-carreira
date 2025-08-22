@@ -5,7 +5,7 @@ import Image from "next/image"
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import {MapPin, Timer, DollarSign} from "lucide-react"
 
-export default function CardJobs({title, company, location, posted_at, salary_range, on_details}) {
+export default function CardJobs({title, company, location, posted_at, salary_range, on_details, isSelected}) {
 
     function parseDateBRtoISO(dateStr) {
         const [datePart, timePart] = dateStr.split(", ");
@@ -29,9 +29,11 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
         if (diffHours < 24) return `Publicado ${diffHours} hora${diffHours > 1 ? "s" : ""} atrás`;
         return `há ${diffDays} dia${diffDays > 1 ? "s" : ""}`;
     }
+
+
     return (
-        <Card className="font-mona-sans w-full max-w-[750px]  min-w-[700] min-h-[230px] flex flex-col border border-[#49257b] mb-3 rounded-sm p-4">
-            <section className="flex flex-row gap-9 items-center">
+        <Card className={`font-mona-sans w-full max-w-[750px]  min-w-[700] min-h-[230px] flex flex-col border-2 mb-3 rounded-sm p-4  ${isSelected ? "border-[#49257b]" : "border-gray-300"}`}>
+            <section className="flex flex-row gap-9 items-center overflow-y-auto">
                 <div className="w-15 h-15 relative overflow-hidden">
                     <Image
                         src="/jose.jpg"
@@ -45,7 +47,7 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
                     <span className="text-[#6b6969] font-semibold">{company}</span>
                 </div>
             </section>
-            <DropdownMenuSeparator/>
+            <DropdownMenuSeparator  className="max-w-full"/>
             <article className="flex flex-row items-center justify-between">
                 <dl>
                     <div className="flex-row items-center flex mb-2 gap-2">
@@ -54,7 +56,9 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
                     </div>
                     <div className="flex-row items-center flex gap-2">
                         <DollarSign size={20}/>
-                        {salary_range?.minSalary || "R$ 0,00" } - {salary_range?.maxSalary || 0}
+                        {salary_range?.notInformed
+                            ? "Não informado"
+                            : `${salary_range?.minSalary} - ${salary_range?.maxSalary}`}
                     </div>
                     <div className="flex-row flex items-center gap-2 mt-2">
                         <Timer size={20}/>

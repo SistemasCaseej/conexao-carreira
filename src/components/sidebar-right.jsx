@@ -1,12 +1,38 @@
-import * as React from "react"
+"use client"
 
 import {Sidebar,} from "@/components/ui/sidebar"
 import Image from "next/image";
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import { ScrollArea} from "@/components/ui/scroll-area";
+import {Button} from "@/components/ui/button";
+import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
+import {toast} from "sonner";
 
 
-export function SidebarRight({job,...props}) {
+export function SidebarRight({button, job,...props}) {
+
+
+    const handleApplication = async () => {
+
+        try{
+            const response = await fetch("/api/application", {
+                method: "POST",
+                body: JSON.stringify({userId: "xBSFjiE1opWCeBtXAUjL", jobId: job.id, resume: "resume",}),
+            });
+
+            await response.json()
+
+            if (!response.ok) {
+                throw new Error(data.error || "Erro ao enviar candidatura");
+            }
+
+            toast.success("Candidatura enviada com sucesso!");
+        }catch (error){
+            toast.error("Erro ao enviar candidatura", error);
+        }
+
+    }
+
 
     return (
             <Sidebar collapsible="none" className="font-mona-sans fixed right-0 top-0 hidden h-svh border-l lg:flex w-[27vw]"{...props}>
@@ -20,8 +46,8 @@ export function SidebarRight({job,...props}) {
                                 height="120"
                                 className="object-cover border-1 rounded-2xl"
                             />
-                            <h1 className="text-2xl font-normal mt-4">{job?.title}</h1>
-                            <span className="text-[#6b6969]">{job?.company.tradeName}</span>
+                            <h1 className="text-xl font-normal mt-4">{job?.title}</h1>
+                            <span className="text-[#6b6969]">{job?.company?.tradeName}</span>
                         </section>
                         <DropdownMenuSeparator />
                         <section data-qa="position-information" className="flex flex-row px-6 py-2 justify-between h-[25vh]">
@@ -51,16 +77,43 @@ export function SidebarRight({job,...props}) {
                         <DropdownMenuSeparator />
                         <article data-qa="position-description" className="px-6 py-4">
                             <h3 className="font-medium text-lg">Descrição</h3>
-                            <p className="py-2 font-normal">{job?.description}</p>
+                            <p className="py-2 font-normal text-justify text-sm">{job?.description}</p>
                         </article>
                         <article data-qa="position-description" className="px-6 py-6">
                             <h3 className="font-medium text-lg">Requisitos</h3>
                             <ul className="list-disc list-inside space-y-2 py-2">
                                 {job?.requirements.map((requirement, index) => (
-                                    <li key={index}>{requirement}</li>
+                                    <li className="text-sm" key={index}>{requirement}</li>
                                 ))}
                             </ul>
                         </article>
+                        <DropdownMenuSeparator/>
+                        {button && (
+                            <Dialog>
+                                <section className="sticky bottom-0 w-full py-4 flex justify-center bg-white">
+                                    <DialogTrigger asChild>
+                                        <Button className="h-12 w-60 text-base bg-[#49257b] hover:bg-[#5d3b94] cursor-pointer font-mona-sans">
+                                            Candidatar-se
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:min-w-[750px] min-h-[330px] rounded-md font-mona-sans flex flex-col justify-between">
+                                        <section>
+                                            <DialogTitle>Candidate-se na {job.company.tradeName}</DialogTitle>
+                                            <h3 className="mt-7">Certifique-se de incluir um currículo atualizado</h3>
+                                            <p className="mt-7">Curriculo</p>
+                                        </section>
+                                        <section className="flex flew-row gap-5 justify-end outline-none">
+                                            <Button type="button" className="text-md cursor-pointer font-semibold text-[#49257b] rounded-md bg-white shadow-none">
+                                                Cancelar
+                                            </Button>
+                                            <Button onClick={handleApplication} type="submit" className="text-md cursor-pointer bg-[#49257b] rounded-sm">
+                                                Concluir
+                                            </Button>
+                                        </section>
+                                    </DialogContent>
+                                </section>
+                            </Dialog>
+                        )}
                     </section>
                 </ScrollArea>
             </Sidebar>

@@ -6,6 +6,7 @@ import CompanyForm from "@/components/CompanyForm";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {toast} from "sonner";
 
 
 export default function ManageCompanies() {
@@ -34,10 +35,35 @@ export default function ManageCompanies() {
                 const data = await response.json();
                 setCompanies(data);
 
-                if(response.ok) {
-                    router.refresh();
+                if(response.ok && data.length > 0) {
+                    toast.success("Todas as empresas do sistema!", {
+                        style: {
+                            border: "1px solid #22c55e",
+                            padding: "16px",
+                            color: "#fff",
+                            background: "#16a34a",
+                        },
+                        iconTheme: {
+                            primary: "#16a34a",
+                            secondary: "#fff",
+                        },
+                    })
+                }else {
+                    toast.error("Não existem empresas cadastradas no sistema", {
+                        style: {
+                            border: "1px solid #ef4444",
+                            padding: "16px",
+                            color: "#fff",
+                            background: "#dc2626",
+                        },
+                        iconTheme: {
+                            primary: "#dc2626",
+                            secondary: "#fff",
+                        },
+                    })
                 }
 
+                router.refresh();
             }catch (error) {
                 console.error("Erro ao carregar as empresas", error)
             }
@@ -48,14 +74,14 @@ export default function ManageCompanies() {
 
     return (
         <section className="py-12 px-8 bg-white">
-            <h1 className="text-2xl font-semibold mb-5">Empresas Cadastradas</h1>
+            <h4 className="mb-5">EMPRESAS CADASTRADAS</h4>
             <div className="flex flex-row justify-between items-center">
                 <Input placeholder="Pesquisar Empresas" className="max-w-sm border" value={searchCompany} onChange={(e) => setSearchCompany(e.target.value)} />
                 <CompanyForm/>
             </div>
             <div className="grid gap-4 mt-5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
                 {filteredCompanies.map((company, index) => (
-                        <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row max-w-[380px] border-2 border-[#49257b]">
+                        <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row max-w-[380px] border-2 ">
                             <div>
                                 <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit"/>
                             </div>

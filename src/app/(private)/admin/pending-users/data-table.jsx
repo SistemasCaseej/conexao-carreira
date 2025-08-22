@@ -30,9 +30,7 @@ export function DataTable({ columns, data, customSection}) {
         <div className="px-4 lg:px-6">
             {customSection.map((section, index) => (
                 <div key={index} className="flex items-center justify-between mb-4">
-                    <div className="text-xl font-semibold text-gray-900">
-                        <h4>{section.title}</h4>
-                    </div>
+                    <div>{section.title}</div>
                     <section>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>

@@ -27,7 +27,18 @@ export default function CompanyForm(){
             if(!response.ok) {
                 toast.error(responseData.message || "Erro ao enviar formulário.");
             }else {
-                toast.success(responseData.message || "Empresa cadastrada com sucesso!");
+                toast.success(responseData.message || "Empresa cadastrada com sucesso!", {
+                    style: {
+                        border: "1px solid #22c55e", // verde (Tailwind: green-500)
+                        padding: "16px",
+                        color: "#fff",
+                        background: "#16a34a", // verde mais forte (Tailwind: green-600)
+                    },
+                    iconTheme: {
+                        primary: "#16a34a",   // ícone verde
+                        secondary: "#fff",    // ícone branco
+                    },
+                });
                 router.refresh();
             }
         }catch (error){
