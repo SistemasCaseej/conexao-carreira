@@ -3,7 +3,8 @@
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar} from "@/components/ui/sidebar"
 import { NavUser } from "@/components/NavUser";
 import { NavMain } from "@/components/nav-main";
-import { BookOpen, Star, BriefcaseBusiness, Home, Search, Users, Building2 } from "lucide-react";
+import { BriefcaseBusiness, Home, Users, Building2 } from "lucide-react";
+import Image from "next/image"
 
 const data = {
     user: {
@@ -59,7 +60,7 @@ const data = {
         {
             title: "Vagas",
             url: "",
-            icon: Building2,
+            icon: BriefcaseBusiness,
             items: [
                 {
                     title: "Nova vaga",
@@ -80,14 +81,14 @@ export function AppSidebar({user}) {
     const { openMobile} = useSidebar()
 
     return (
-        <Sidebar open={openMobile} className="sidebar">
-            <SidebarHeader>
+        <Sidebar open={openMobile} className="">
+            <SidebarHeader className="bg-[#4c1286] text-white">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
                             <a href="/dashboard">
-                                <div className="bg-sidebar-primary dark text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                    <BriefcaseBusiness className="size-4" />
+                                <div className="size-8 items-center justify-center rounded-lg">
+                                    <Image src="/logo_case.png" alt="logo_case" width={200} height={200} className="rounded-lg"></Image>
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
                                     <span className="font-medium">Conexão Carreira</span>
@@ -98,10 +99,10 @@ export function AppSidebar({user}) {
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
-            <SidebarContent>
+            <SidebarContent className="text-white bg-[#4c1286]">
                 <NavMain items={data.navMain} />
             </SidebarContent>
-            <SidebarFooter>
+            <SidebarFooter className="bg-[#4c1286] text-white">
                <NavUser user2={data.user} user={user}/>
             </SidebarFooter>
         </Sidebar>

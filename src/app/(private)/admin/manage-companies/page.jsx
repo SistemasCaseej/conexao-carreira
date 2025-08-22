@@ -6,6 +6,7 @@ import CompanyForm from "@/components/CompanyForm";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {toast} from "sonner";
 
 
 export default function ManageCompanies() {
@@ -34,10 +35,35 @@ export default function ManageCompanies() {
                 const data = await response.json();
                 setCompanies(data);
 
-                if(response.ok) {
-                    router.refresh();
+                if(response.ok && data.length > 0) {
+                    toast.success("Todas as empresas do sistema!", {
+                        style: {
+                            border: "1px solid #22c55e",
+                            padding: "16px",
+                            color: "#fff",
+                            background: "#16a34a",
+                        },
+                        iconTheme: {
+                            primary: "#16a34a",
+                            secondary: "#fff",
+                        },
+                    })
+                }else {
+                    toast.error("Não existem empresas cadastradas no sistema", {
+                        style: {
+                            border: "1px solid #ef4444",
+                            padding: "16px",
+                            color: "#fff",
+                            background: "#dc2626",
+                        },
+                        iconTheme: {
+                            primary: "#dc2626",
+                            secondary: "#fff",
+                        },
+                    })
                 }
 
+                router.refresh();
             }catch (error) {
                 console.error("Erro ao carregar as empresas", error)
             }

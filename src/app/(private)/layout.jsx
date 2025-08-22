@@ -4,7 +4,6 @@ import { AppSidebar } from "@/app/components/app-sidebar"
 import {AuthProvider} from "@/app/context/AuthContext";
 import {getUser} from "@/dal/user/dal";
 import {Toaster} from "sonner";
-import { ScrollArea} from "@/components/ui/scroll-area";
 
 
 export default async function Layout({children}) {

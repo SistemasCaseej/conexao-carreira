@@ -8,11 +8,11 @@ export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLo
     return (
         <>
             <NavigationBar/>
-            <section className="flex flex-col min-h-screen md:min-h-[93vh] px-6 sm:px-10 md:px-20 bg-[#49257b]">
+            <section className="flex flex-col min-h-screen md:min-h-[93vh] px-6 sm:px-10 md:px-20 bg-[#4c1286]">
                 <header className="flex items-center justify-between py-4 border-b-1 border-[rgba(255,255,255,0.3)]">
                     <h3 className="text-2xl text-white font-bold">Conexão Carreira</h3>
                     <div className="hidden md:flex space-x-4">
-                        <Button className="bg-[#49257b] hover:bg-white rounded-[1px] hover:text-black border font-bold tracking-wide px-5 cursor-pointer">
+                        <Button className="bg-[#4c1286] hover:bg-white rounded-[1px] hover:text-black border font-bold tracking-wide px-5 cursor-pointer">
                             {buttonLogin}
                         </Button>
                         <Button className="rounded-none bg-emerald-400 border-1 px-5 cursor-pointer font-bold">
@@ -28,7 +28,7 @@ export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLo
                 {isOpen && (
                     <div className="">
                         <div className="fixed top-0 right-0 h-screen w-3/5 bg-white z-50 shadow-lg border-1 flex flex-col md:hidden">
-                            <div className="px-4 py-4 bg-[#49257b] flex flex-col gap-3 md:hidden">
+                            <div className="px-4 py-4 bg-[#4c1286] flex flex-col gap-3 md:hidden">
                                 <button
                                     onClick={() => setIsOpen(false)}
                                     className="self-end text-gray-600 hover:text-black"
@@ -55,7 +55,7 @@ export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLo
                             <p className="font-normal text-justify text-lg">{subtitle}</p>
                             {buttonDemostration && (
                                 <section className="mt-10">
-                                        <Button size={100} className="cursor-pointer px-8 py-4 text-lg bg-[#00d492] hover:bg-[#00b47d]">Solicitar uma demostração</Button>
+                                        <Button size={60} className="cursor-pointer px-8 py-4 text-lg bg-[#00d492] hover:bg-[#00b47d]">Solicitar uma demostração</Button>
                                 </section>
                             )}
                         </section>

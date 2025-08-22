@@ -29,7 +29,14 @@ export default function Dashboard() {
 
 
             if(!response.ok || !result?.length) {
-                toast.error("Não há vagas de emprego cadastradas no sistema")
+                toast.error("Não há vagas de emprego cadastradas no sistema", {
+                    style: {
+                        border: "1px solid #ef4444",
+                        padding: "16px",
+                        color: "#fff",
+                        background: "#dc2626",
+                    },
+                })
                 setSelectedJob(null)
             }else{
                 setJobs(result);

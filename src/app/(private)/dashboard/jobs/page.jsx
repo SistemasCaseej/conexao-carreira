@@ -26,7 +26,14 @@ export default function PageJobs(){
             const result = await response.json();
 
             if (!response.ok || !result.data?.company?.length) {
-                toast.error("Não existem vagas cadastradas no sistema");
+                toast.error("Não existem vagas cadastradas no sistema", {
+                    style: {
+                        border: "1px solid #ef4444",
+                        padding: "16px",
+                        color: "#fff",
+                        background: "#dc2626",
+                    },
+                });
                 setSelectedJob(null)
             } else {
                 setJobs(result.data.company);
