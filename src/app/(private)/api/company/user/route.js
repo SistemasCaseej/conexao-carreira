@@ -59,7 +59,6 @@ export async function POST(req) {
             userDto.linkedIn,
             userDto.city,
             body.company
-
         );
 
         return NextResponse.json(

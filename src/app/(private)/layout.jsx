@@ -13,7 +13,7 @@ export default async function Layout({children}) {
     return (
         <AuthProvider>
             <SidebarProvider>
-                <AppSidebar user={user} />
+                <AppSidebar user={user}/>
                 <main className="flex-1 relative">
                     <SidebarTrigger className="absolute"/>
                     <Toaster />

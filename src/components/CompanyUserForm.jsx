@@ -86,7 +86,7 @@ export function CompanyUserForm() {
                         { label: "Telefone", name: "phoneNumber", type: "tel", telMask: true, placeholder: "(00) 00000-0000"},
                         { label: "LinkedIn", name: "linkedIn", type: "text", placeholder: "https://www.linkedin.com/in/seu-perfil", maxLength: 100},
                         { label: "Cidade", name: "city", type: "text", placeholder: "Informe a sua cidade", maxLength: 30},
-                        { label: "Empresas", name: "company", type: "select", placeholder: "Selecione a empresa", options: options},
+                        { label: "Empresa", name: "company", type: "select", placeholder: "Selecione a empresa", options: options},
                     ]}
                     logo={false}
                     onSubmit={handleSubmit}

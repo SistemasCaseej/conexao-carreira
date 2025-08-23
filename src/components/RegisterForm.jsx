@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -27,6 +27,7 @@ export function RegisterForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+
         try {
             const res = await fetch("/api/users/pending", {
                 method: "POST",
@@ -55,7 +56,7 @@ export function RegisterForm() {
             }
 
         } catch (err) {
-            console.error(err)
+            console.error(err.message);
         }
     }
 

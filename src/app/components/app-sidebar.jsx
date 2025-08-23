@@ -17,24 +17,28 @@ const data = {
             title: "Home",
             url: "/dashboard",
             icon: Home,
-            isActive: true,
+            roles: ["Admin", "Candidate", "Employee"]
         },
         {
             title: "Usuários",
             url: "",
             icon: Users,
+            roles: ["Admin"],
             items: [
                 {
                     title: "Usuários aprovados",
                     url: "/admin/approved-users",
+                    roles : ["Admin"]
                 },
                 {
                     title: "Usuários pendentes",
                     url: "/admin/pending-users",
+                    roles: ["Admin"]
                 },
                 {
                     title: "Usuários administradores",
                     url: "/admin/admin-users",
+                    roles: ["Admin"]
                 },
             ],
         },
@@ -42,18 +46,22 @@ const data = {
             title: "Empresa",
             url: "",
             icon: Building2,
+            roles: ["Admin", "Employee"],
             items: [
                 {
                     title: "Dados da empresa",
-                    url: "admin/"
+                    url: "admin/",
+                    roles: ["Admin", "Employee"]
                 },
                 {
                     title: "Gerenciar empresas",
                     url: "/admin/manage-companies",
+                    roles: ["Admin"]
                 },
                 {
                     title: "Gerenciar usuários",
                     url: "/admin/company/users",
+                    roles: ["Admin"],
                 },
             ],
         },
@@ -61,14 +69,17 @@ const data = {
             title: "Vagas",
             url: "",
             icon: BriefcaseBusiness,
+            roles: ["Admin", "Employee"],
             items: [
                 {
                     title: "Nova vaga",
-                    url: "/dashboard/new-job"
+                    url: "/dashboard/new-job",
+                    roles: ["Admin", "Employee"]
                 },
                 {
                     title: "Vagas publicadas",
                     url: "/dashboard/jobs",
+                    roles: ["Admin", "Employee"]
                 },
             ],
         },
@@ -100,10 +111,10 @@ export function AppSidebar({user}) {
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent className="text-white bg-[#4c1286]">
-                <NavMain items={data.navMain} />
+                <NavMain items={data.navMain} user={user}/>
             </SidebarContent>
             <SidebarFooter className="bg-[#4c1286] text-white">
-               <NavUser user2={data.user} user={user}/>
+               <NavUser user={user}/>
             </SidebarFooter>
         </Sidebar>
     )

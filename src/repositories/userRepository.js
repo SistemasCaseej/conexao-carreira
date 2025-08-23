@@ -42,26 +42,21 @@ export async function getAllAdminUsers(){
 
 export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn, city) {
 
-    try {
-        const pendingUsersRef = collection(db, "users");
+    const pendingUsersRef = collection(db, "users");
 
-        const docRef = await addDoc(pendingUsersRef, {
-            name,
-            email,
-            cpf,
-            phoneNumber,
-            linkedIn,
-            city,
-            company: null,
-            status : "Pendente",
-            role : "Candidate"
-        })
+    const docRef = await addDoc(pendingUsersRef, {
+        name,
+        email,
+        cpf,
+        phoneNumber,
+        linkedIn,
+        city,
+        company: null,
+        status : "Pendente",
+        role : "Candidate"
+    })
 
-        return docRef.id
-    }catch (error) {
-        console.error("Erro ao criar usuário", error);
-        throw new Error("Falha ao criar possível usuário");
-    }
+    return docRef.id
 }
 
 export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, city) {
@@ -79,7 +74,7 @@ export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, c
             phoneNumber,
             linkedIn,
             city,
-            company: null,
+            company: "CASE",
             status : "Aprovado",
             role : "Admin",
             userId : userCredential.user.uid
@@ -223,7 +218,7 @@ export async function createUserCompany(name, email, cpf, phoneNumber, linkedIn,
         phoneNumber,
         linkedIn,
         city,
-        company: doc(db, "companies", companyId),
+        companyId,
         status : "Aprovado",
         role : "Employee",
         userId : userCredential.user.uid
@@ -237,7 +232,7 @@ export async function createUserCompany(name, email, cpf, phoneNumber, linkedIn,
 export async function getUsersWithCompany() {
     const usersRef = collection(db, "users");
 
-    const q = query(usersRef, where("company", "!=", null));
+    const q = query(usersRef, where("companyId", "!=", null));
 
     const querySnapshot = await getDocs(q);
     const users = [];
@@ -246,8 +241,9 @@ export async function getUsersWithCompany() {
         const userData = docSnap.data();
 
         let companyData = null;
-        if (userData.company) {
-            const companySnap = await getDoc(userData.company);
+        if (userData.companyId) {
+            const companyRef = doc(db, "companies", userData.companyId);
+            const companySnap = await getDoc(companyRef);
             if (companySnap.exists()) {
                 companyData = { id: companySnap.id, ...companySnap.data() };
             }

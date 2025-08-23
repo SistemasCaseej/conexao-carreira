@@ -18,15 +18,29 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import {useEffect, useState} from "react";
 
-export function NavMain({
-  items
-}) {
+export function NavMain({items, user}) {
+
+  const visibleItems = items.filter(item => item.roles.includes(user?.role));
+  const [rolePt, setRolePt] = useState("");
+
+  useEffect(() => {
+    if (user?.role) {
+      const mapRole = {
+        Admin: "Administrador",
+        Employee: "Empresa",
+        Candidate: "Estudante"
+      };
+      setRolePt(mapRole[user.role] || "Desconhecido");
+    }
+  }, [user]);
+
   return (
     (<SidebarGroup>
-      <SidebarGroupLabel className="text-white">Usuários</SidebarGroupLabel>
+      <SidebarGroupLabel className="text-white">{rolePt || ""}</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {visibleItems.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem className="rounded-md">
               <SidebarMenuButton asChild className="hover:bg-white hover:text-[#49257b]" tooltip={item.title}>
@@ -45,15 +59,18 @@ export function NavMain({
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub>
-                      {item.items?.map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton className="hover:bg-white hover:text-[#49257b] text-white" asChild>
-                            <a href={subItem.url}>
-                              <span>{subItem.title}</span>
-                            </a>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
+                      {item.items
+                          .filter(subItem =>  subItem.roles?.includes(user?.role))
+                          .map((subItem) => (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton className="hover:bg-white hover:text-[#49257b] text-white" asChild>
+                                  <a href={subItem.url}>
+                                    <span>{subItem.title}</span>
+                                  </a>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                          )
+                      )}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </>
