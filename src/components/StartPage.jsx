@@ -3,8 +3,12 @@ import {Button} from "@/components/ui/button";
 import {GraduationCap, Laptop, Menu, Rocket, X} from "lucide-react";
 import Image from "next/image";
 import CardPosition from "@/components/CardPosition";
+import {useRouter} from "next/navigation";
 
 export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLogin, buttonOption, cards, titleClass, buttonDemostration, imagePath}){
+
+    const router = useRouter();
+
     return (
         <>
             <NavigationBar/>
@@ -12,7 +16,7 @@ export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLo
                 <header className="flex items-center justify-between py-4 border-b-1 border-[rgba(255,255,255,0.3)]">
                     <h3 className="text-2xl text-white font-bold">Conexão Carreira</h3>
                     <div className="hidden md:flex space-x-4">
-                        <Button className="bg-[#4c1286] hover:bg-white rounded-[1px] hover:text-black border font-bold tracking-wide px-5 cursor-pointer">
+                        <Button onClick={() => router.push("/candidate-login")}  className="bg-[#4c1286] hover:bg-white rounded-[1px] hover:text-black border font-bold tracking-wide px-5 cursor-pointer">
                             {buttonLogin}
                         </Button>
                         <Button className="rounded-none bg-emerald-400 border-1 px-5 cursor-pointer font-bold">

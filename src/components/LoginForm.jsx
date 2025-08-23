@@ -34,8 +34,8 @@ export function LoginForm({className, ...props}) {
     return (
       <form action={formAction} className={cn("flex flex-col gap-6", className)} {...props}>
           <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-2xl font-bold">Acesse a sua conta</h1>
-            <p className="text-gray-500 text-sm text-balance dark:text-gray-400">Digite seu e-mail abaixo para acessar sua conta</p>
+            <h1 className="text-2xl font-bold text-[#4c1286]">Acesse a sua conta</h1>
+            <p className="text-sm text-balance dark:text-gray-400">Digite seu e-mail abaixo para acessar sua conta</p>
           </div>
           <div className="grid gap-6">
             <div className="grid gap-3">
@@ -62,7 +62,7 @@ export function LoginForm({className, ...props}) {
                   )}
 
               </div>
-            <Button disabled={pending} type="submit" className="w-full cursor-pointer border-none rounded-none">
+            <Button disabled={pending} type="submit" className="w-full cursor-pointer border-none rounded-none bg-[#4c1286]">
               Entrar
             </Button>
             <div

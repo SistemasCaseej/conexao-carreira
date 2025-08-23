@@ -1,8 +1,16 @@
 import {NextResponse} from "next/server";
 import {createApplicationService, getAllApplicationsService} from "@/services/applicationService";
+import {verifySession} from "@/dal/session/dal";
 
 
 export async function GET(){
+
+    const session = await verifySession();
+
+    if (session.isAuth === false) {
+        return new Response(null, { status: 401 })
+    }
+
     const allApplications = await getAllApplicationsService();
 
     return NextResponse.json(allApplications, { status: 200 });

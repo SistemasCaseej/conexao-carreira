@@ -15,33 +15,40 @@ export default function Dashboard() {
     const [jobs, setJobs] = useState([])
     const [selectedJob, setSelectedJob] = useState(null)
 
-
     useEffect(() => {
         async function fetchJobs() {
-            const response = await fetch("api/company/job", {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
 
-            const result = await response.json()
-
-
-            if(!response.ok || !result?.length) {
-                toast.error("Não há vagas de emprego cadastradas no sistema", {
-                    style: {
-                        border: "1px solid #ef4444",
-                        padding: "16px",
-                        color: "#fff",
-                        background: "#dc2626",
+            try{
+                const response = await fetch("/api/company/job", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
                     },
-                })
-                setSelectedJob(null)
-            }else{
+                });
+
+                if (!response.ok) throw new Error("Erro ao buscar vagas");
+
+                const result = await response.json();
+
+                if (!result?.length) {
+                    toast.error("Não há vagas de emprego cadastradas no sistema", {
+                        style: {
+                            border: "1px solid #ef4444",
+                            padding: "16px",
+                            color: "#fff",
+                            background: "#dc2626",
+                        },
+                    });
+                    setSelectedJob(null);
+                    return;
+                }
+
                 setJobs(result);
                 setSelectedJob(result[0]);
-                toast.success("Todas as vagas de emprego")
+                toast.success("Todas as vagas de emprego");
+            }catch(error){
+                toast.error("Erro ao carregar vagas");
+                console.error(error);
             }
         }
         fetchJobs()
