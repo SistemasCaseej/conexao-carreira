@@ -2,15 +2,25 @@ import { createPendingUserSchema } from "@/dto/users/userDto";
 import { NextResponse } from "next/server";
 import { cpfAlreadyExists, createAdminUser, getAllAdminUsers, hasExistingEmail } from "@/services/userService";
 import { cpf as cpfValidator} from "cpf-cnpj-validator";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function GET() {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
+
     const adminUsers = await getAllAdminUsers();
 
     return NextResponse.json(adminUsers)
 }
 
 export async function POST(req){
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
 
     try{
         const body = await req.json();

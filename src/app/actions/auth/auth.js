@@ -28,6 +28,10 @@ export async function signin(state, formData) {
         return { success: true };
 
     } catch (error) {
+        console.log("Erro completo:", error);
+        console.log("Código do erro:", error.code);
+        console.log("Mensagem do erro:", error.message);
+
         const errors = {};
 
         switch (error.code) {

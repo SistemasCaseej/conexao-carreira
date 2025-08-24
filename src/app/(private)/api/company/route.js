@@ -1,15 +1,25 @@
 import {createCompanyService, getAllCompaniesService, updateCompanyService} from "@/services/companyService";
 import {NextResponse} from "next/server";
 import {createCompanySchema} from "@/dto/company/create-company.dto";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function GET() {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
+
     const allCompanies = await getAllCompaniesService();
 
     return NextResponse.json(allCompanies, { status: 200 });
 }
 
 export async function POST(req){
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
 
     try {
         const body = await req.json();
@@ -66,6 +76,11 @@ export async function POST(req){
 
 
 export async function PUT(req) {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
+
     try {
         const body = await req.json();
 

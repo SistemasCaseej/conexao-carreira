@@ -4,9 +4,14 @@ import { NextResponse } from 'next/server'
 import {cpfAlreadyExists, createPendingUser, getAllPendingUsers, hasExistingEmail} from "@/services/userService";
 import {createPendingUserSchema} from "@/dto/users/userDto";
 import {cpf} from "cpf-cnpj-validator";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function GET() {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
 
     const users = await getAllPendingUsers();
 
@@ -14,6 +19,11 @@ export async function GET() {
 }
 
 export async function POST(req) {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
+
     try {
         const body = await req.json();
 

@@ -1,14 +1,15 @@
 import {addDoc, collection, deleteDoc, doc, getDocs, query, where} from "firebase/firestore";
 import {db} from "@/firebase/config";
 
-export async function CreateTableSession(userId, expiresAt) {
+export async function CreateTableSession(userId, expiresAt, role) {
 
     try{
         const sessionUsersRef = collection(db, "sessions");
 
         const docRef = await addDoc(sessionUsersRef, {
             userId,
-            expiresAt
+            expiresAt,
+            role
         })
 
         return docRef.id;

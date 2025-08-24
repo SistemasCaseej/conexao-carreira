@@ -1,7 +1,10 @@
 import ClientTable from "@/components/ClientTable";
 import { getAllAdminUsers } from "@/services/userService";
+import {requireAuth} from "@/utils/requireAuth";
 
 export default async function PageUsersAdmins() {
+
+    await requireAuth(["Admin"], "/dashboard");
 
     const data = await getAllAdminUsers();
 
@@ -13,3 +16,4 @@ export default async function PageUsersAdmins() {
         </div>
     )
 }
+

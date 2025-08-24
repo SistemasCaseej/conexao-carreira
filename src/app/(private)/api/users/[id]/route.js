@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import {deleteUserById, getUserByDocumentId} from "@/services/userService";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function GET(_request, {params}) {
+
+    const { ok, response } = await requireAdmin()
+
+    if (!ok) return response
 
     const { id } = await params
 
@@ -16,7 +21,6 @@ export async function GET(_request, {params}) {
     try{
 
         const user = await getUserByDocumentId(id);
-
 
         return NextResponse.json(
             { success: true, message: "User found" , data: { user } },
@@ -34,6 +38,10 @@ export async function GET(_request, {params}) {
 }
 
 export async function DELETE(_request, {params}) {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
 
     const { id } = await params;
 

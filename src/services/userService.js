@@ -40,6 +40,10 @@ export async function getUserByDocumentId(documentId){
     return await userRepository.getUserByDocumentId(documentId);
 }
 
+export async function getUserByUserId(userId){
+    return await userRepository.getUserByUserId(userId);
+}
+
 export async function getUserInfoSession(session){
     return await userRepository.getUserInfoSession(session);
 }

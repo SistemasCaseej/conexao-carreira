@@ -1,11 +1,10 @@
 import { NextResponse} from 'next/server';
-import {jwtVerify} from "jose";
 
 
     const publicRoutes = [
      { path : '/candidate-login', whenAuthenticated: 'redirect' },
      { path : '/candidate-registration', whenAuthenticated: 'redirect' },
-        { path : '/', whenAuthenticated: 'next' },
+        { path : '/', whenAuthenticated: 'redirect' },
 
  ]
 
@@ -40,7 +39,6 @@ export async function middleware(request) {
     }
 
     if (authToken && !publicRoute)   {
-
         return NextResponse.next();
     }
 

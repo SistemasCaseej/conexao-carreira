@@ -2,6 +2,7 @@ import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from "next/headers";
 import {CreateTableSession, deleteUserSession} from "@/repositories/auth/createTableSession";
+import {getUserByUserId} from "@/services/userService";
 
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
@@ -26,11 +27,15 @@ export async function decrypt(session) {
 }
 
 export async function createSession(userId) {
+
+    const { role } = await getUserByUserId(userId);
+    console.log(role)
+
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    const session = await encrypt({ userId, expiresAt })
+    const session = await encrypt({ userId, expiresAt, role })
     const cookieStore = await cookies()
 
-    const tableSession = await CreateTableSession(userId, expiresAt);
+    const tableSession = await CreateTableSession(userId, expiresAt, role);
 
     cookieStore.set('session', session, {
         httpOnly: true,
