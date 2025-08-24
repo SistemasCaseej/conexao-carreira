@@ -1,7 +1,12 @@
 import {NextResponse} from "next/server";
 import {getJobByCompanyIdService} from "@/services/jobService";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 export async function GET(_request, {params}) {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
 
     const {id} = await params;
 

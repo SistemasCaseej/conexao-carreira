@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import { approveUserById } from "@/services/userService";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function POST(_request){
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
 
     const body = await _request.json();
     const { userId, email } = body;

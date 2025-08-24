@@ -6,15 +6,16 @@ import { cache } from "react";
 
 export const verifySession = cache(async () => {
     const cookie = (await cookies()).get('session')?.value
-    const session = await decrypt(cookie)
 
     if (!cookie) {
-        return { isAuth: false, userId: null };
+        return { isAuth: false, userId: null, role: null };
     }
 
-    // if (!session?.userId) {
-    //     redirect('/candidate-login')
-    // }
+    const session = await decrypt(cookie)
 
-    return { isAuth: true, userId: session.userId }
+    if (!session?.userId && !session.role) {
+        return { isAuth: false, userId: null, role: null };
+    }
+
+    return { isAuth: true, userId: session.userId, role: session.role}
 })

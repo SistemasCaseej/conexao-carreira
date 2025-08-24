@@ -1,8 +1,11 @@
 import ClientTable from "@/components/ClientTable";
 import {getUsersWithCompany} from "@/services/userService";
+import {requireAuth} from "@/utils/requireAuth";
 
 
 export default async function CompanyUsersPage(){
+
+    await requireAuth(["Admin"], "/dashboard");
 
     const data = await getUsersWithCompany();
 

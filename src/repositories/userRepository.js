@@ -203,6 +203,22 @@ export async function getUserByDocumentId(documentId) {
     return docSnap.data();
 }
 
+export async function getUserByUserId(userId) {
+
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where ("userId", "==", userId));
+
+    const querySnapshot = await getDocs(q);
+
+    if(querySnapshot.empty) {
+        throw new Error("Usuário não encontrado")
+    }
+
+    const userDoc = querySnapshot.docs[0];
+
+    return userDoc.data();
+}
+
 export async function createUserCompany(name, email, cpf, phoneNumber, linkedIn, city, companyId) {
 
     const temporaryPassword = generateSecurePassword();

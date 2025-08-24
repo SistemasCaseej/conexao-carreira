@@ -1,15 +1,25 @@
 import {NextResponse} from "next/server";
 import {createJobSchema} from "@/dto/job/job.dto";
 import {createJobService, getAllJobsService} from "@/services/jobService";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function GET() {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
+
     const jobs = await getAllJobsService()
 
     return NextResponse.json(jobs)
 }
 
 export async function POST(req) {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
 
     const body = await req.json();
 

@@ -1,9 +1,11 @@
 import { getAllPendingUsers } from "@/services/userService";
 import ClientTable from "@/components/ClientTable";
+import {requireAuth} from "@/utils/requireAuth";
 
 
 export default async function PageCandidates() {
 
+    await requireAuth(["Admin"], "/dashboard")
     const data = await getAllPendingUsers();
 
     return (

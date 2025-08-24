@@ -1,8 +1,10 @@
-import {SectionCards} from "@/components/section-cards";
 import ClientTable from "@/components/ClientTable";
 import {getAllApprovedUsers} from "@/services/userService";
+import {requireAuth} from "@/utils/requireAuth";
 
 export default async function PageUsers() {
+
+    await requireAuth(["Admin"], "/dashboard");
 
     const data = await getAllApprovedUsers();
 

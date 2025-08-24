@@ -1,15 +1,14 @@
 import {NextResponse} from "next/server";
 import {createApplicationService, getAllApplicationsService} from "@/services/applicationService";
 import {verifySession} from "@/dal/session/dal";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function GET(){
 
-    const session = await verifySession();
+    const { ok, session, response } = await requireAdmin()
 
-    if (session.isAuth === false) {
-        return new Response(null, { status: 401 })
-    }
+    if (!ok) return response
 
     const allApplications = await getAllApplicationsService();
 
@@ -17,6 +16,10 @@ export async function GET(){
 }
 
 export async function POST(req) {
+
+    const { ok, session, response } = await requireAdmin()
+
+    if (!ok) return response
 
     try{
         const body = await req.json();
