@@ -1,4 +1,5 @@
 import { NextResponse} from 'next/server';
+import {verifySession} from "@/dal/session/dal";
 
 
     const publicRoutes = [
@@ -16,30 +17,42 @@ export async function middleware(request) {
     const path = request.nextUrl.pathname;
     const publicRoute = publicRoutes.find(route => route.path === path);
 
-    const authToken = request.cookies.get('session')?.value;
+    const session = await verifySession();
+    const isAuth = session?.isAuth;
 
-    if (!authToken && publicRoute) {
+    const jobRoutes = ["/dashboard/new-job", "/dashboard/jobs"];
+
+    if(publicRoute){
+        if(isAuth && publicRoute.whenAuthenticated === 'redirect'){
+            const redirectUrl = request.nextUrl.clone()
+            redirectUrl.pathname = '/dashboard';
+
+            return NextResponse.redirect(redirectUrl);
+        }
         return NextResponse.next();
     }
 
-    if (!authToken && !publicRoute) {
+    if(!isAuth){
         const redirectUrl = request.nextUrl.clone()
-
         redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
 
         return NextResponse.redirect(redirectUrl);
     }
 
-    if (authToken && publicRoute && publicRoute.whenAuthenticated === 'redirect') {
+    if(isAuth){
+        if(request.nextUrl.pathname === "/admin/manage-companies" && session.role !== 'Admin'){
+            const redirectUrl = request.nextUrl.clone();
 
-        const redirectUrl = request.nextUrl.clone()
-        redirectUrl.pathname = '/dashboard';
+            redirectUrl.pathname = '/dashboard';
+            return NextResponse.redirect(redirectUrl)
+        }
 
-        return NextResponse.redirect(redirectUrl);
-    }
+        if (jobRoutes.includes(request.nextUrl.pathname) && !["Admin", "Employee"].includes(session.role)) {
+            const redirectUrl = request.nextUrl.clone();
+            redirectUrl.pathname = "/dashboard";
+            return NextResponse.redirect(redirectUrl);
+        }
 
-    if (authToken && !publicRoute)   {
-        return NextResponse.next();
     }
 
     return NextResponse.next()

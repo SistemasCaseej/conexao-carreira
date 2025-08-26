@@ -1,21 +1,27 @@
 import 'server-only'
 
 import { cookies } from 'next/headers'
-import { decrypt } from "@/app/actions/auth/session";
 import { cache } from "react";
+import {jwtVerify} from "jose";
+
+const secret = new TextEncoder().encode(process.env.SESSION_SECRET);
 
 export const verifySession = cache(async () => {
     const cookie = (await cookies()).get('session')?.value
 
     if (!cookie) {
-        return { isAuth: false, userId: null, role: null };
+        return {isAuth: false, userId: null, role: null};
     }
 
-    const session = await decrypt(cookie)
+    try {
+        const {payload} = await jwtVerify(cookie, secret);
 
-    if (!session?.userId && !session.role) {
-        return { isAuth: false, userId: null, role: null };
+        if (!payload?.userId || !payload?.role) {
+            return {isAuth: false, userId: null, role: null};
+        }
+
+        return {isAuth: true, userId: payload.userId, role: payload.role};
+    } catch (err) {
+        return {isAuth: false, userId: null, role: null, error: err.message};
     }
-
-    return { isAuth: true, userId: session.userId, role: session.role}
 })

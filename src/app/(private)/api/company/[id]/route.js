@@ -1,8 +1,14 @@
 import {NextResponse} from "next/server";
 import { getCompanyByIdService } from "@/services/companyService";
+import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function GET(_request, {params}) {
+
+    const { ok, session, response } = await requireAdmin(["Admin", "Employee"])
+
+    if (!ok) return response
+
 
     const { id } = await params;
 

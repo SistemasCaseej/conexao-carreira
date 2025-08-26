@@ -14,8 +14,8 @@ export async function CreateTableSession(userId, expiresAt, role) {
 
         return docRef.id;
     }catch(error){
-        console.error("Erro ao criar a sessão do usuário", error);
-        throw new Error("Falha ao criar sessão do usuário");
+        console.error("Erro ao criar a sessão do usuário:", error);
+        throw error;
     }
 }
 
