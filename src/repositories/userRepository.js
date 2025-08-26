@@ -126,7 +126,7 @@ export async function getAllApprovedUsers() {
 
     const usersRef = collection(db, "users");
 
-    const q = query(usersRef, where ("status", "==", "Aprovado"));
+    const q = query(usersRef, where ("status", "==", "Aprovado"),  where("role", "==", "Candidate") );
 
     const querySnapshot = await getDocs(q);
 

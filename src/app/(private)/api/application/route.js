@@ -6,7 +6,7 @@ import {requireAdmin} from "@/utils/requireAdmin";
 
 export async function GET(){
 
-    const { ok, session, response } = await requireAdmin()
+    const { ok, session, response } = await requireAdmin(["Admin"])
 
     if (!ok) return response
 
@@ -17,7 +17,7 @@ export async function GET(){
 
 export async function POST(req) {
 
-    const { ok, session, response } = await requireAdmin()
+    const { ok, session, response } = await requireAdmin(["Admin", "Candidate"])
 
     if (!ok) return response
 

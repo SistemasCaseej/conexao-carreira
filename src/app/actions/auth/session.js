@@ -1,19 +1,13 @@
 import 'server-only'
-import { SignJWT, jwtVerify } from 'jose'
-import { cookies } from "next/headers";
+import {jwtVerify, SignJWT} from 'jose'
+import {cookies} from "next/headers";
 import {CreateTableSession, deleteUserSession} from "@/repositories/auth/createTableSession";
 import {getUserByUserId} from "@/services/userService";
+import { Timestamp } from "firebase/firestore";
+
 
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
-
-export async function encrypt(payload) {
-    return new SignJWT(payload)
-        .setProtectedHeader({ alg: 'HS256' })
-        .setIssuedAt()
-        .setExpirationTime('7d')
-        .sign(encodedKey)
-}
 
 export async function decrypt(session) {
     try {
@@ -29,21 +23,26 @@ export async function decrypt(session) {
 export async function createSession(userId) {
 
     const { role } = await getUserByUserId(userId);
-    console.log(role)
 
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    const session = await encrypt({ userId, expiresAt, role })
+    const session = await new SignJWT({userId, role})
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setExpirationTime('1d')
+        .sign(encodedKey)
+
     const cookieStore = await cookies()
-
-    const tableSession = await CreateTableSession(userId, expiresAt, role);
 
     cookieStore.set('session', session, {
         httpOnly: true,
         secure: true,
-        expires: expiresAt,
         sameSite: 'lax',
         path: '/',
+        maxAge: 60 * 60 * 24 * 7,
     })
+
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    const tableSession = await CreateTableSession(userId, expiresAt, role);
 
     return tableSession;
 }

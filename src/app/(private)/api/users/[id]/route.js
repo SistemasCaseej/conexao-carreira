@@ -5,7 +5,7 @@ import {requireAdmin} from "@/utils/requireAdmin";
 
 export async function GET(_request, {params}) {
 
-    const { ok, response } = await requireAdmin()
+    const { ok, response } = await requireAdmin(["Admin"])
 
     if (!ok) return response
 
@@ -39,7 +39,7 @@ export async function GET(_request, {params}) {
 
 export async function DELETE(_request, {params}) {
 
-    const { ok, session, response } = await requireAdmin()
+    const { ok, response } = await requireAdmin(["Admin"])
 
     if (!ok) return response
 

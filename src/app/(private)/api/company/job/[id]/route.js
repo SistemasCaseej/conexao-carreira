@@ -4,7 +4,7 @@ import {requireAdmin} from "@/utils/requireAdmin";
 
 export async function GET(_request, {params}) {
 
-    const { ok, session, response } = await requireAdmin()
+    const { ok, session, response } = await requireAdmin(["Admin", "Employee"]);
 
     if (!ok) return response
 
