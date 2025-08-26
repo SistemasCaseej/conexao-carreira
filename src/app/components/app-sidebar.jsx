@@ -6,90 +6,91 @@ import { NavMain } from "@/components/nav-main";
 import { BriefcaseBusiness, Home, Users, Building2 } from "lucide-react";
 import Image from "next/image"
 
-const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
-    navMain: [
-        {
-            title: "Home",
-            url: "/dashboard",
-            icon: Home,
-            roles: ["Admin", "Candidate", "Employee"]
-        },
-        {
-            title: "Usuários",
-            url: "",
-            icon: Users,
-            roles: ["Admin"],
-            items: [
-                {
-                    title: "Usuários aprovados",
-                    url: "/admin/approved-users",
-                    roles : ["Admin"]
-                },
-                {
-                    title: "Usuários pendentes",
-                    url: "/admin/pending-users",
-                    roles: ["Admin"]
-                },
-                {
-                    title: "Usuários administradores",
-                    url: "/admin/admin-users",
-                    roles: ["Admin"]
-                },
-            ],
-        },
-        {
-            title: "Empresa",
-            url: "",
-            icon: Building2,
-            roles: ["Admin", "Employee"],
-            items: [
-                {
-                    title: "Dados da empresa",
-                    url: "admin/",
-                    roles: ["Admin", "Employee"]
-                },
-                {
-                    title: "Gerenciar empresas",
-                    url: "/admin/manage-companies",
-                    roles: ["Admin"]
-                },
-                {
-                    title: "Gerenciar usuários",
-                    url: "/admin/company/users",
-                    roles: ["Admin"],
-                },
-            ],
-        },
-        {
-            title: "Vagas",
-            url: "",
-            icon: BriefcaseBusiness,
-            roles: ["Admin", "Employee"],
-            items: [
-                {
-                    title: "Nova vaga",
-                    url: "/dashboard/new-job",
-                    roles: ["Admin", "Employee"]
-                },
-                {
-                    title: "Vagas publicadas",
-                    url: "/dashboard/jobs",
-                    roles: ["Admin", "Employee"]
-                },
-            ],
-        },
-
-    ],
-}
 
 export function AppSidebar({user}) {
 
     const { openMobile} = useSidebar()
+
+    const data = {
+        user: {
+            name: "shadcn",
+            email: "m@example.com",
+            avatar: "/avatars/shadcn.jpg",
+        },
+        navMain: [
+            {
+                title: "Home",
+                url: "/dashboard",
+                icon: Home,
+                roles: ["Admin", "Candidate", "Employee"]
+            },
+            {
+                title: "Usuários",
+                url: "",
+                icon: Users,
+                roles: ["Admin"],
+                items: [
+                    {
+                        title: "Usuários aprovados",
+                        url: "/admin/approved-users",
+                        roles : ["Admin"]
+                    },
+                    {
+                        title: "Usuários pendentes",
+                        url: "/admin/pending-users",
+                        roles: ["Admin"]
+                    },
+                    {
+                        title: "Usuários administradores",
+                        url: "/admin/admin-users",
+                        roles: ["Admin"]
+                    },
+                ],
+            },
+            {
+                title: "Empresa",
+                url: "",
+                icon: Building2,
+                roles: ["Admin", "Employee"],
+                items: [
+                    {
+                        title: "Dados da empresa",
+                        url: `/dashboard/${user.companyId}`,
+                        roles: ["Admin", "Employee"]
+                    },
+                    {
+                        title: "Gerenciar empresas",
+                        url: "/admin/manage-companies",
+                        roles: ["Admin"]
+                    },
+                    {
+                        title: "Gerenciar usuários",
+                        url: "/admin/company/users",
+                        roles: ["Admin"],
+                    },
+                ],
+            },
+            {
+                title: "Vagas",
+                url: "",
+                icon: BriefcaseBusiness,
+                roles: ["Admin", "Employee"],
+                items: [
+                    {
+                        title: "Nova vaga",
+                        url: "/dashboard/new-job",
+                        roles: ["Admin", "Employee"]
+                    },
+                    {
+                        title: "Vagas publicadas",
+                        url: "/dashboard/jobs",
+                        roles: ["Admin", "Employee"]
+                    },
+                ],
+            },
+
+        ],
+    }
 
     return (
         <Sidebar open={openMobile} className="">

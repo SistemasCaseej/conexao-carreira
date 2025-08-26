@@ -1,22 +1,19 @@
 import {z} from "zod";
 
-export const createJobSchema = z.object({
-    title: z.string()
-        .min(1, "Title is required")
-        .max(50, "Title is required"),
-    description: z.string()
-        .min(1, "Description is required")
-        .max(100, "Description is required"),
-    requirements: z.array(z.string()),
-    responsibilities: z.array(z.string()).optional(),
-    location: z.string().optional(),
-    employmentType: z.enum(["Tempo integral", "Meio período", "Estágio", "Freelance"]).optional(),
-    seniority: z.enum(["Junior", "Mid-level", "Senior", "Trainee"]).optional(),
-    salaryRange: z.object().optional(),
-    postedAt: z.date().optional(),
-    benefits: z.array(z.string()).optional(),
-    companyId: z.string().min(1, "Company ID is required").optional(),
-    status: z.enum(["Open", "Closed"]).optional()
-
-})
-
+export const jobSchema = z.object({
+    title: z.string().min(1, "Título da vaga é obrigatório"),
+    location: z.string().min(1, "Localização é obrigatória"),
+    requirements: z.array(z.string()).min(1, "Adicione pelo menos um requisito"),
+    benefits: z.array(z.string()).min(1, "Adicione pelo menos um benefício"),
+    description: z.string().min(1, "Descrição é obrigatória"),
+    employmentType: z.string().min(1, "Tipo de contratação é obrigatório"),
+    workModel: z.string().min(1, "Modelo de trabalho é obrigatório"),
+    salaryRange: z.object({
+        minSalary: z.union([z.string(), z.number()]).optional(),
+        maxSalary: z.union([z.string(), z.number()]).optional(),
+        notInformed: z.boolean(),
+    }).refine(
+        (data) => data.notInformed || (data.minSalary && data.maxSalary),
+        "Informe o salário ou marque 'Não informado'"
+    ),
+});

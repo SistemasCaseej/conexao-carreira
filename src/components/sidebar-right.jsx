@@ -103,11 +103,8 @@ export function SidebarRight({button, job,...props}) {
                                             <p className="mt-7">Curriculo</p>
                                         </section>
                                         <section className="flex flew-row gap-5 justify-end outline-none">
-                                            <Button type="button" className="text-md cursor-pointer font-semibold text-[#49257b] rounded-md bg-white shadow-none">
-                                                Cancelar
-                                            </Button>
                                             <Button onClick={handleApplication} type="submit" className="text-md cursor-pointer bg-[#49257b] rounded-sm">
-                                                Concluir
+                                                Enviar
                                             </Button>
                                         </section>
                                     </DialogContent>

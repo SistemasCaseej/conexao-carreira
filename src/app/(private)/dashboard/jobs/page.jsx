@@ -6,9 +6,12 @@ import {SidebarRight} from "@/components/sidebar-right";
 import {toast} from "sonner";
 import {useSidebar} from "@/components/ui/sidebar";
 import { ScrollArea} from "@/components/ui/scroll-area";
+import {useAuth} from "@/app/context/AuthContext";
 
 
 export default function PageJobs(){
+
+    const { user } = useAuth();
 
     const { toggleSidebar, open, openMobile, isMobile } = useSidebar()
     const isSidebarOpen = isMobile ? openMobile : open
@@ -18,7 +21,7 @@ export default function PageJobs(){
 
     useEffect(() => {
         const fetchJobs = async () => {
-            const response = await fetch(`/api/company/job/ZFQSLGuTY6BNPHjpC6Pl`, {
+            const response = await fetch(`/api/company/job/${user.companyId}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             });

@@ -8,12 +8,13 @@ export const metadata = {
     },
 };
 
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body>
-        {children}
-      </body>
-    </html>
-  );
+export default async function RootLayout({children}) {
+
+    return (
+        <html>
+            <body>
+             {children}
+            </body>
+        </html>
+    );
 }

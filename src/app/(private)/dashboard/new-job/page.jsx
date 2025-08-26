@@ -11,12 +11,18 @@ import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {toast} from "sonner";
 import {WorkModel} from "@/components/WorkModel";
+import {useAuth} from "@/app/context/AuthContext";
+import {jobSchema} from "@/dto/job/job.dto";
 
 export default function PageNewJob(){
+
+    const { user } = useAuth();
+
 
     const [formData, setFormData] = useState({
         title: "",
         location: "",
+        companyId: user.companyId,
         requirements: [],
         benefits: [],
         description: "",
@@ -34,31 +40,48 @@ export default function PageNewJob(){
     };
 
     const handleSubmit = async () => {
-        console.log(formData);
-        const response = await fetch("/api/company/job", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-        })
 
-        const data = await response.json();
+        try {
+            jobSchema.parse(formData);
 
-        if(!response.ok) {
-            toast.error(data.message || "Erro ao cadastrar vaga.");
+            const response = await fetch("/api/company/job", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            })
 
-        }else {
-            toast.success(data.message);
-            setFormData({
-                title: "",
-                location: "",
-                requirements: [],
-                benefits: [],
-                description: "",
-                employmentType: "",
-                workModel: "",
-                salaryRange: { minSalary: "", maxSalary: "", notInformed: false },
-            });
+            const data = await response.json();
+
+            if(!response.ok) {
+                toast.error(data.message || "Erro ao cadastrar vaga.");
+
+            }else {
+                toast.success(data.message);
+                setFormData({
+                    title: "",
+                    location: "",
+                    requirements: [],
+                    benefits: [],
+                    description: "",
+                    employmentType: "",
+                    workModel: "",
+                    salaryRange: { minSalary: "", maxSalary: "", notInformed: false },
+                });
+            }
+        }catch(err){
+            if (err.name === "ZodError") {
+                toast.error(err.errors[0].message, {
+                    style: {
+                        background: "#FFA500",
+                        color: "#ffff",
+                        fontWeight: "bold",
+                    },
+                });
+            } else {
+                toast.error("Erro ao cadastrar vaga.");
+            }
         }
+
     };
 
     return (
