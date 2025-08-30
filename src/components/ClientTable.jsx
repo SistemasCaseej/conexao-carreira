@@ -24,7 +24,7 @@ export default function ClientTable({data, actions, approve, customSection}){
                 throw new Error(data.error || "Erro ao aprovar usuário");
             }
 
-            toast.success("Usuário aprovado com sucesso!!");
+            toast.success("Usuário aprovado com sucesso!!", );
             router.refresh();
         } catch (error) {
             toast.error("Erro ao aprovar usuário");

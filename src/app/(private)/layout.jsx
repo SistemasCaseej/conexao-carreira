@@ -11,7 +11,7 @@ export default async function Layout({children}) {
     const user = await getUser();
 
     return (
-        <AuthProvider>
+        <AuthProvider initialState={user}>
             <SidebarProvider>
                 <AppSidebar user={user}/>
                 <main className="flex-1 relative">

@@ -1,20 +1,32 @@
-import {addDoc, collection, doc, getDocs, query, where} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, getDocs, query, updateDoc, where} from "firebase/firestore";
 import {db} from "@/firebase/config";
 
 export async function createApplicationRepository(application) {
 
-    const { userId, jobId, resume} = application;
+    const { userId, jobId, resume, companyId} = application;
 
     const applicationRef = await collection(db, "applications");
 
-    return await addDoc(applicationRef, {
+    const appRef = await addDoc(applicationRef, {
         userId,
         jobId,
+        companyId,
         applied_at: new Date().toLocaleString("pt-BR"),
         status: "Em análise",
         resume: resume
     });
 
+    const jobRef = doc(db, "jobs", jobId)
+    await updateDoc(jobRef, {
+        applications: arrayUnion({
+            applicationId: appRef.id,
+            userId,
+            resume,
+            createdAt: new Date(),
+        }),
+    })
+
+    return applicationRef.id
 }
 
 export async function getApplicationByUserRepository(userId) {

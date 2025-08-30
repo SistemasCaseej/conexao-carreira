@@ -1,12 +1,11 @@
 import {NextResponse} from "next/server";
-import {createJobSchema} from "@/dto/job/job.dto";
 import {createJobService, getAllJobsService} from "@/services/jobService";
 import {requireAdmin} from "@/utils/requireAdmin";
 
 
 export async function GET() {
 
-    const { ok, session, response } = await requireAdmin(["Admin", "Employee", "Candidate"])
+    const { ok, response } = await requireAdmin(["Admin", "Employee", "Candidate"])
 
     if (!ok) return response
 
@@ -17,7 +16,7 @@ export async function GET() {
 
 export async function POST(req) {
 
-    const { ok, session, response } = await requireAdmin(["Admin", "Employee"])
+    const { ok, response } = await requireAdmin(["Admin", "Employee"])
 
     if (!ok) return response
 

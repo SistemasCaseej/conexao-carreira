@@ -6,7 +6,7 @@ import {useFetchDataById} from "@/hooks/useFetchDataById";
 import {useState} from "react";
 
 
-export default function CompanyDetailsClient({ id }) {
+export default function CompanyDetailsClient({ id, canEdit}) {
 
     const { data, setData, loading, error } = useFetchDataById(id, getCompanyByIdService);
     const [ableToEdit, setAbleToEdit] = useState(false);
@@ -57,7 +57,7 @@ export default function CompanyDetailsClient({ id }) {
                 <h1 className="uppercase text-xl">{data?.tradeName}</h1>
             </div>
 
-            <InformationSection name={"Dados da Empresa"} data={data} setData={setData} translationMap={translationMap} handleSave={()=>handleSaveCompany(id, data)} ableToEdit={ableToEdit} setAbleToEdit={setAbleToEdit} initialExcludedKeys={["users", "jobs"]}/>
+            <InformationSection canEdit={canEdit} name={"Dados da Empresa"} data={data} setData={setData} translationMap={translationMap} handleSave={()=>handleSaveCompany(id, data)} ableToEdit={ableToEdit} setAbleToEdit={setAbleToEdit} initialExcludedKeys={["users", "jobs", "logo"]}/>
         </div>
     )
 }

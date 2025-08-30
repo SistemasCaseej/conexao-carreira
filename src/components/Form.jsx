@@ -43,12 +43,17 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
+
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview(reader.result);
             };
             reader.readAsDataURL(file);
+            setUserData((prev) => ({
+                ...prev,
+                logo: file,
+            }))
         }
     };
 
@@ -120,12 +125,12 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
                         <h3 className="mt-10">CADASTRAR EMPRESA</h3>
                         <div className="bg-white w-[80%] flex flex-col justify-center items-center gap-10 p-7">
                             {preview ? (
-                                <Image src={preview} width={150} height={150} alt="Logo preview" className="rounded-md w-[150px] h-[150px] bg-[#f7f7f9] object-fit"/>
+                                <Image src={preview} width={150} height={150} alt="Logo preview" className="rounded-sm w-[150px] h-[150px] bg-[#f7f7f9] object-fit"/>
                             ):(
                                 <Upload height={150} width={150} className="border-1 border-[#ffffff] rounded-lg bg-[#f7f7f9] p-4"/>
                                 )}
 
-                            <Button type="button" onClick={handleImageClick} className="cursor-pointer" size={"lg"}>Adicionar logo</Button>
+                            <Button type="button" onClick={handleImageClick} className="cursor-pointer rounded-sm bg-[#4c1286]" size={"lg"}>Adicionar logo</Button>
                             <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageChange} style={{ display: "none" }}
                             />
                         </div>
@@ -136,10 +141,7 @@ export function GenericForm({ onSubmit, fields = [], initialData = {}, errors = 
                         {fields.map(renderField)}
                     </div>
                     <div className={`gap-5 w-full flex items-end justify-end mt-10 ${logo ? "mt-20" : ""}`}>
-                        <Button type="button" className="cursor-pointer w-[120px]">
-                            Cancelar
-                        </Button>
-                        <Button type="submit" className="cursor-pointer w-[120px]">
+                        <Button type="submit" className="cursor-pointer w-[120px] bg-[#4c1286] rounded-sm">
                             Cadastrar
                         </Button>
                     </div>

@@ -6,7 +6,8 @@ import {IconPlus} from "@tabler/icons-react";
 import {GenericForm} from "@/components/Form";
 import {toast} from "sonner";
 import {useRouter} from "next/navigation";
-
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {storage} from "@/firebase/config";
 
 
 export default function CompanyForm(){
@@ -16,10 +17,20 @@ export default function CompanyForm(){
     const handleSubmit = async (data) => {
 
         try{
+            let imageUrl = null;
+
+            if(data.logo instanceof File){
+                const storageRef = ref(storage, `companies/${data.logo.name}`);
+                const snapshot = await uploadBytes(storageRef, data.logo);
+                imageUrl = await getDownloadURL(snapshot.ref);
+            }
+
+            const payload = { ...data, logo: imageUrl };
+
             const response = await fetch('/api/company', {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(data),
+                body: JSON.stringify(payload),
             })
 
             const responseData = await response.json();
@@ -29,14 +40,14 @@ export default function CompanyForm(){
             }else {
                 toast.success(responseData.message || "Empresa cadastrada com sucesso!", {
                     style: {
-                        border: "1px solid #22c55e", // verde (Tailwind: green-500)
+                        border: "1px solid #22c55e",
                         padding: "16px",
                         color: "#fff",
-                        background: "#16a34a", // verde mais forte (Tailwind: green-600)
+                        background: "#16a34a",
                     },
                     iconTheme: {
-                        primary: "#16a34a",   // ícone verde
-                        secondary: "#fff",    // ícone branco
+                        primary: "#16a34a",
+                        secondary: "#fff",
                     },
                 });
                 router.refresh();

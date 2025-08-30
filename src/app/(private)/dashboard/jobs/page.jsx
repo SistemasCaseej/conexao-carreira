@@ -6,9 +6,12 @@ import {SidebarRight} from "@/components/sidebar-right";
 import {toast} from "sonner";
 import {useSidebar} from "@/components/ui/sidebar";
 import { ScrollArea} from "@/components/ui/scroll-area";
+import {useAuth} from "@/app/context/AuthContext";
 
 
 export default function PageJobs(){
+
+    const { user } = useAuth();
 
     const { toggleSidebar, open, openMobile, isMobile } = useSidebar()
     const isSidebarOpen = isMobile ? openMobile : open
@@ -18,7 +21,7 @@ export default function PageJobs(){
 
     useEffect(() => {
         const fetchJobs = async () => {
-            const response = await fetch(`/api/company/job/ZFQSLGuTY6BNPHjpC6Pl`, {
+            const response = await fetch(`/api/company/job/${user.companyId}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             });
@@ -38,7 +41,18 @@ export default function PageJobs(){
             } else {
                 setJobs(result.data.company);
                 setSelectedJob(result.data.company[0]);
-                toast.success("Vagas encontradas da empresa " + result.data.company[0].company.tradeName);
+                toast.success("Vagas encontradas da empresa " + result.data.company[0].company.tradeName, {
+                    style: {
+                        border: "1px solid #22c55e",
+                        padding: "16px",
+                        color: "#fff",
+                        background: "#16a34a",
+                    },
+                    iconTheme: {
+                        primary: "#16a34a",
+                        secondary: "#fff",
+                    },
+                });
             }
         };
 
@@ -60,6 +74,8 @@ export default function PageJobs(){
                                 salary_range={job.salaryRange}
                                 isSelected={selectedJob?.id === job.id}
                                 on_details={() => setSelectedJob(job)}
+                                logo={job.company.logo}
+
                             />
                         ))}
                     </div>

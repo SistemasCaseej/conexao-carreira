@@ -7,5 +7,5 @@ export default async function CompanyPage({params}) {
 
     const {id} = await params;
 
-    return <CompanyDetailsClient id={id}/>
+    return <CompanyDetailsClient id={id} canEdit={true}/>
 }

@@ -3,13 +3,14 @@ import {verifySession} from "@/dal/session/dal";
 
 
     const publicRoutes = [
-     { path : '/candidate-login', whenAuthenticated: 'redirect' },
+     { path : '/login', whenAuthenticated: 'redirect' },
      { path : '/candidate-registration', whenAuthenticated: 'redirect' },
+        {path: '/company', whenAuthenticated: 'redirect' },
         { path : '/', whenAuthenticated: 'redirect' },
 
  ]
 
- const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/candidate-login'
+ const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/login'
 
 
 export async function middleware(request) {

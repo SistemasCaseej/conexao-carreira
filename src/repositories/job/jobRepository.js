@@ -10,7 +10,7 @@ export async function createJobRepository(job) {
 
     const docRef = await addDoc(companyRef, {
         benefits : benefits ?? null,
-        companyId : doc(db, "companies", companyId),
+        companyId : companyId,
         description,
         employmentType : employmentType ?? null,
         location,
@@ -51,12 +51,12 @@ export async function getAllJobsRepository() {
         querySnapshot.docs.map(async (docSnap) => {
             const job = docSnap.data();
 
-            const companySnap = await getDoc(job.companyId);
+            const companyDocRef = doc(db, "companies", job.companyId);
+            const companySnap = await getDoc(companyDocRef);
 
             return {
                 id: docSnap.id,
                 ...job,
-                companyId: job.companyId.id,
                 company: companySnap.exists() ? companySnap.data() : null,
             };
         })
@@ -70,7 +70,7 @@ export async function getJobByCompanyIdService(companyId) {
     const jobsRef = collection(db, "jobs");
     const companyRef = doc(db, "companies", companyId);
 
-    const q = query(jobsRef, where ("companyId", "==", companyRef));
+    const q = query(jobsRef, where ("companyId", "==", companyId));
     const querySnapshot = await getDocs(q);
 
     const companySnap = await getDoc(companyRef);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function JobTitleInput({ value, onChange }) {
+export default function JobTitleInput({ value, onChange, required }) {
     const [title, setTitle] = useState(value || "");
 
     const handleChange = (e) => {

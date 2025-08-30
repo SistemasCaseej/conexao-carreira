@@ -7,17 +7,39 @@ import { ScrollArea} from "@/components/ui/scroll-area";
 import {Button} from "@/components/ui/button";
 import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import {toast} from "sonner";
+import {useState} from "react";
+import {useAuth} from "@/app/context/AuthContext";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+import {storage} from "@/firebase/config";
 
 
 export function SidebarRight({button, job,...props}) {
 
+    const { user } = useAuth()
+    const [open, setOpen] = useState(false)
+    const [fileName, setFileName] = useState("Nenhum arquivo selecionado")
 
     const handleApplication = async () => {
 
+        if (!fileName) {
+            toast.error("Selecione um currículo antes de enviar")
+            return
+        }
+
         try{
+            const storageRef = ref(storage, `curriculos/${user.companyId}/${user.userId}-${Date.now()}-${fileName.name}`)
+
+            await uploadBytes(storageRef, fileName)
+            const downloadURL = await getDownloadURL(storageRef)
+
             const response = await fetch("/api/application", {
                 method: "POST",
-                body: JSON.stringify({userId: "xBSFjiE1opWCeBtXAUjL", jobId: job.id, resume: "resume",}),
+                body: JSON.stringify({
+                    userId: user.userId,
+                    jobId: job.id,
+                    companyId: job.companyId,
+                    resume: downloadURL,
+                }),
             });
 
             await response.json()
@@ -26,11 +48,53 @@ export function SidebarRight({button, job,...props}) {
                 throw new Error(data.error || "Erro ao enviar candidatura");
             }
 
-            toast.success("Candidatura enviada com sucesso!");
+            toast.success("Candidatura enviada com sucesso!", {
+                style: {
+                    border: "1px solid #22c55e",
+                    padding: "16px",
+                    color: "#fff",
+                    background: "#16a34a",
+                },
+                iconTheme: {
+                    primary: "#16a34a",
+                    secondary: "#fff",
+                },
+            });
+
+            setOpen(false)
         }catch (error){
             toast.error("Erro ao enviar candidatura", error);
         }
 
+    }
+
+    function handleFileChange(event) {
+        const file = event.target.files[0]
+        if (!file) return
+
+        const validTypes = ["application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
+
+        if(!validTypes.includes(file.type)){
+            toast.info("Formato inválido! Envie apenas PDF, DOC ou DOCX.", {
+                style: {
+                    border: "1px solid #ef4444",
+                    padding: "16px",
+                    color: "#fff",
+                    background: "#dc2626",
+                },
+                iconTheme: {
+                    primary: "#dc2626",
+                    secondary: "#fff",
+                },
+            })
+            event.target.value = ""
+            return
+        }
+
+        setFileName(file.name)
+        console.log("Arquivo aceito:", file.name)
     }
 
 
@@ -40,7 +104,7 @@ export function SidebarRight({button, job,...props}) {
                     <section className="flex-col py-4 h-svh">
                         <section data-qa="photo" className="flex flex-col py-4 justify-center items-center">
                             <Image
-                                src="/jose.jpg"
+                                src={job.company.logo}
                                 alt="Imagem"
                                 width="120"
                                 height="120"
@@ -89,7 +153,7 @@ export function SidebarRight({button, job,...props}) {
                         </article>
                         <DropdownMenuSeparator/>
                         {button && (
-                            <Dialog>
+                            <Dialog open={open} onOpenChange={setOpen}>
                                 <section className="sticky bottom-0 w-full py-4 flex justify-center bg-white">
                                     <DialogTrigger asChild>
                                         <Button className="h-12 w-60 text-base bg-[#49257b] hover:bg-[#5d3b94] cursor-pointer font-mona-sans">
@@ -100,14 +164,17 @@ export function SidebarRight({button, job,...props}) {
                                         <section>
                                             <DialogTitle>Candidate-se na {job.company.tradeName}</DialogTitle>
                                             <h3 className="mt-7">Certifique-se de incluir um currículo atualizado</h3>
-                                            <p className="mt-7">Curriculo</p>
+                                            <p className="mt-7 mb-3 font-semibold">Currículo</p>
+                                            <div className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 bg-gray-50 truncate">
+                                                {fileName}
+                                            </div>
+                                            <p className="text-xs text-gray-500 mt-2">Apenas arquivos PDF, DOC ou DOCX.</p>
+                                            <input id="files" className="hidden" type="file"  accept=".pdf,.doc,.docx" onChange={handleFileChange}/>
                                         </section>
-                                        <section className="flex flew-row gap-5 justify-end outline-none">
-                                            <Button type="button" className="text-md cursor-pointer font-semibold text-[#49257b] rounded-md bg-white shadow-none">
-                                                Cancelar
-                                            </Button>
-                                            <Button onClick={handleApplication} type="submit" className="text-md cursor-pointer bg-[#49257b] rounded-sm">
-                                                Concluir
+                                        <section className="flex flew-row gap-5 justify-between outline-none">
+                                            <label htmlFor="files" className="bg-[#4c1286] text-white rounded-sm text-md px-4 py-1">Carregue o currículo</label>
+                                            <Button onClick={handleApplication} type="submit" className="text-md cursor-pointer bg-[#4c1286] rounded-sm">
+                                                Enviar
                                             </Button>
                                         </section>
                                     </DialogContent>

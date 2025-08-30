@@ -6,7 +6,7 @@ import {requireAdmin} from "@/utils/requireAdmin";
 
 export async function GET(){
 
-    const { ok, session, response } = await requireAdmin(["Admin"])
+    const { ok, response } = await requireAdmin(["Admin"])
 
     if (!ok) return response
 
@@ -17,7 +17,7 @@ export async function GET(){
 
 export async function POST(req) {
 
-    const { ok, session, response } = await requireAdmin(["Admin", "Candidate"])
+    const { ok, response } = await requireAdmin(["Admin", "Candidate"])
 
     if (!ok) return response
 
@@ -26,6 +26,7 @@ export async function POST(req) {
 
         const applicationId = await createApplicationService({
             userId: body.userId,
+            companyId: body.companyId,
             jobId: body.jobId,
             resume: body.resume
         });
