@@ -20,7 +20,8 @@ export default function Company(){
                cards={false}
                titleClass={"md:text-4xl"}
                buttonDemostration={"Solicite uma demostração"}
-               imagePath={"/globe.svg"}
+               imagePath={"/img-estagio.webp"}
+               path={'https://wa.me/5522997247140'}
            />
         </div>
     )

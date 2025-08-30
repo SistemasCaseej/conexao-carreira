@@ -5,7 +5,7 @@ import Image from "next/image"
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import {MapPin, Timer, DollarSign} from "lucide-react"
 
-export default function CardJobs({title, company, location, posted_at, salary_range, on_details, isSelected}) {
+export default function CardJobs({title, company, location, posted_at, salary_range, on_details, isSelected, logo}) {
 
     function parseDateBRtoISO(dateStr) {
         const [datePart, timePart] = dateStr.split(", ");
@@ -36,7 +36,7 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
             <section className="flex flex-row gap-9 items-center overflow-y-auto">
                 <div className="w-15 h-15 relative overflow-hidden">
                     <Image
-                        src="/jose.jpg"
+                        src={logo}
                         alt="Imagem"
                         fill
                         className="object-cover rounded-sm"

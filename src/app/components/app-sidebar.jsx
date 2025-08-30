@@ -55,7 +55,7 @@ export function AppSidebar({user}) {
                 items: [
                     {
                         title: "Dados da empresa",
-                        url: `/dashboard/${user.companyId}`,
+                        url: `/dashboard/${user?.companyId}`,
                         roles: ["Admin", "Employee"]
                     },
                     {

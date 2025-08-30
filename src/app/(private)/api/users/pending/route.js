@@ -9,7 +9,7 @@ import {requireAdmin} from "@/utils/requireAdmin";
 
 export async function GET() {
 
-    const { ok, session, response } = await requireAdmin(["Admin"])
+    const { ok, response } = await requireAdmin(["Admin"])
 
     if (!ok) return response
 
@@ -66,6 +66,7 @@ export async function POST(req) {
             userDto.phoneNumber,
             userDto.linkedIn,
             userDto.city,
+            body.enrollmentProof
         );
 
         return NextResponse.json(

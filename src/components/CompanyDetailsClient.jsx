@@ -57,7 +57,7 @@ export default function CompanyDetailsClient({ id, canEdit}) {
                 <h1 className="uppercase text-xl">{data?.tradeName}</h1>
             </div>
 
-            <InformationSection canEdit={canEdit} name={"Dados da Empresa"} data={data} setData={setData} translationMap={translationMap} handleSave={()=>handleSaveCompany(id, data)} ableToEdit={ableToEdit} setAbleToEdit={setAbleToEdit} initialExcludedKeys={["users", "jobs"]}/>
+            <InformationSection canEdit={canEdit} name={"Dados da Empresa"} data={data} setData={setData} translationMap={translationMap} handleSave={()=>handleSaveCompany(id, data)} ableToEdit={ableToEdit} setAbleToEdit={setAbleToEdit} initialExcludedKeys={["users", "jobs", "logo"]}/>
         </div>
     )
 }

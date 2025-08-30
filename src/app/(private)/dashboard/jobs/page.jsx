@@ -41,7 +41,18 @@ export default function PageJobs(){
             } else {
                 setJobs(result.data.company);
                 setSelectedJob(result.data.company[0]);
-                toast.success("Vagas encontradas da empresa " + result.data.company[0].company.tradeName);
+                toast.success("Vagas encontradas da empresa " + result.data.company[0].company.tradeName, {
+                    style: {
+                        border: "1px solid #22c55e",
+                        padding: "16px",
+                        color: "#fff",
+                        background: "#16a34a",
+                    },
+                    iconTheme: {
+                        primary: "#16a34a",
+                        secondary: "#fff",
+                    },
+                });
             }
         };
 
@@ -63,6 +74,8 @@ export default function PageJobs(){
                                 salary_range={job.salaryRange}
                                 isSelected={selectedJob?.id === job.id}
                                 on_details={() => setSelectedJob(job)}
+                                logo={job.company.logo}
+
                             />
                         ))}
                     </div>

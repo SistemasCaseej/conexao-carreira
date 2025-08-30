@@ -6,12 +6,12 @@ import * as userRepository from "../repositories/userRepository";
 //User
 
 //Função para criar um possível usuário do sistema
-export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn, city){
-    return await userRepository.createPendingUser(name, email, cpf, phoneNumber, linkedIn, city);
+export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn, city, enrollmentProof){
+    return await userRepository.createPendingUser(name, email, cpf, phoneNumber, linkedIn, city, enrollmentProof);
 }
 
-export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, city){
-    return await userRepository.createAdminUser(name, email, cpf, phoneNumber, linkedIn, city);
+export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, city, companyId){
+    return await userRepository.createAdminUser(name, email, cpf, phoneNumber, linkedIn, city, companyId);
 }
 
 //Função para pegar todos os usuários que estão aguardando aprovação

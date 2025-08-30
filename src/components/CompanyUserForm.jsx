@@ -28,7 +28,18 @@ export function CompanyUserForm() {
             if(!response.ok) {
                 toast.error(responseData.message || "Erro ao enviar formulário.");
             }else {
-                toast.success(responseData.message || "Administrador cadastrado com sucesso!");
+                toast.success(responseData.message || "Usuário da empresa foi criado com sucesso!", {
+                    style: {
+                        border: "1px solid #22c55e",
+                        padding: "16px",
+                        color: "#fff",
+                        background: "#16a34a",
+                    },
+                    iconTheme: {
+                        primary: "#16a34a",
+                        secondary: "#fff",
+                    },
+                });
                 setOpen(false);
                 router.refresh();
             }

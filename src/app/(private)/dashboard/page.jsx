@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {toast} from "sonner";
 import {useSidebar} from "@/components/ui/sidebar";
 import { ScrollArea} from "@/components/ui/scroll-area";
+import {useAuth} from "@/app/context/AuthContext";
 
 export default function Dashboard() {
 
@@ -13,7 +14,11 @@ export default function Dashboard() {
     const isSidebarOpen = isMobile ? openMobile : open
 
     const [jobs, setJobs] = useState([])
+    const { user } = useAuth();
     const [selectedJob, setSelectedJob] = useState(null)
+
+
+    console.log(user)
 
     useEffect(() => {
         async function fetchJobs() {
@@ -45,7 +50,18 @@ export default function Dashboard() {
 
                 setJobs(result);
                 setSelectedJob(result[0]);
-                toast.success("Todas as vagas de emprego");
+                toast.success("Todas as vagas de emprego", {
+                    style: {
+                        border: "1px solid #22c55e",
+                        padding: "16px",
+                        color: "#fff",
+                        background: "#16a34a",
+                    },
+                    iconTheme: {
+                        primary: "#16a34a",
+                        secondary: "#fff",
+                    },
+                });
             }catch(error){
                 toast.error("Erro ao carregar vagas");
                 console.error(error);
@@ -69,13 +85,14 @@ export default function Dashboard() {
                                     salary_range={job.salaryRange}
                                     isSelected={selectedJob?.id === job.id}
                                     on_details={() => setSelectedJob(job)}
+                                    logo={job.company.logo}
                                 />
                             ))}
                         </div>
                 </div>
                 {selectedJob && (
                     <div className="flex-[1]">
-                        <SidebarRight job={selectedJob} button={true}/>
+                        <SidebarRight job={selectedJob} button={user.role !== "Employee"}/>
                     </div>
                 )}
             </ScrollArea>

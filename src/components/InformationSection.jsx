@@ -50,8 +50,8 @@ export default function InformationSection({name, data, setData, initialExcluded
             </section>
             {ableToEdit && (
                 <section className="w-full p-2 flex flex-row gap-3 justify-end">
-                    <Button className="bg-gray-400 cursor-pointer transition-all duration-200 ease-in-out" onClick={()=> setAbleToEdit(false)}>Cancelar</Button>
-                    <Button className="bg-[#1447e6] cursor-pointer" onClick={handleSave}>Salvar</Button>
+                    <Button className="bg-white text-[#4c1286] cursor-pointer transition-all duration-200 ease-in-out" onClick={()=> setAbleToEdit(false)}>Cancelar</Button>
+                    <Button className="bg-[#4c1286] rounded-sm cursor-pointer" onClick={handleSave}>Salvar</Button>
                 </section>
             )}
         </div>

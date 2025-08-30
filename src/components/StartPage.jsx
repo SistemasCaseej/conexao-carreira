@@ -4,8 +4,10 @@ import {GraduationCap, Laptop, Menu, Rocket, X} from "lucide-react";
 import Image from "next/image";
 import CardPosition from "@/components/CardPosition";
 import {useRouter} from "next/navigation";
+import Link from 'next/link'
 
-export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLogin, buttonOption, cards, titleClass, buttonDemostration, imagePath}){
+
+export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLogin, buttonOption, cards, titleClass, buttonDemostration, imagePath, path}){
 
     const router = useRouter();
 
@@ -19,7 +21,7 @@ export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLo
                         <Button onClick={() => router.push("/candidate-login")}  className="bg-[#4c1286] hover:bg-white rounded-[1px] hover:text-black border font-bold tracking-wide px-5 cursor-pointer">
                             {buttonLogin}
                         </Button>
-                        <Button className="rounded-none bg-emerald-400 border-1 px-5 cursor-pointer font-bold">
+                        <Button onClick={() => router.push(path)} className="rounded-none bg-emerald-400 border-1 px-5 cursor-pointer font-bold">
                             {buttonOption}
                         </Button>
                     </div>
@@ -59,7 +61,12 @@ export default function StartPage({ isOpen, setIsOpen, title, subtitle, buttonLo
                             <p className="font-normal text-justify text-lg">{subtitle}</p>
                             {buttonDemostration && (
                                 <section className="mt-10">
-                                        <Button size={60} className="cursor-pointer px-8 py-4 text-lg bg-[#00d492] hover:bg-[#00b47d]">Solicitar uma demostração</Button>
+                                    <Link href="https://wa.me/5522997247140">
+                                        <Button size={60} className="cursor-pointer px-8 py-4 text-md bg-[#00d492] hover:bg-[#00b47d]">
+                                            Solicitar uma demostração
+                                        </Button>
+                                    </Link>
+
                                 </section>
                             )}
                         </section>

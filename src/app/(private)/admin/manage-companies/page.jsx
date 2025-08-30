@@ -79,21 +79,20 @@ export default function ManageCompanies() {
                 <Input placeholder="Pesquisar Empresas" className="max-w-sm border" value={searchCompany} onChange={(e) => setSearchCompany(e.target.value)} />
                 <CompanyForm/>
             </div>
-            <div className="grid gap-4 mt-5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
+            <div className="grid gap-x-2 gap-y-2 mt-5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))] bg-red-700">
                 {filteredCompanies.map((company, index) => (
-                        <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row max-w-[380px] border-2 ">
+                        <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row items-center justify-between max-w-[330px] border-2">
                             <div>
-                                <Image src="/jose.jpg" alt="eu" width="50" height="50" className="rounded-full w-fit"/>
+                                <Image src={company.logo ?? "/jose.jpg"} alt="image" width="50" height="50" className="rounded-full w-fit border-1"/>
                             </div>
-                            <div className="flex flex-col">
-                                <CardHeader className="mb-5">
+                            <div className="flex flex-col ">
+                                <CardHeader className="mb-5 p-0 min-w-[205px]">
                                     <CardTitle>{company.tradeName}</CardTitle>
                                 </CardHeader>
-                                <CardContent>
+                                <CardContent className="p-0">
                                     <p>{company.cnpj}</p>
                                 </CardContent>
                             </div>
-
                         </Card>
                 ))}
 

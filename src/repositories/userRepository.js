@@ -40,7 +40,7 @@ export async function getAllAdminUsers(){
     }));
 }
 
-export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn, city) {
+export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn, city, enrollmentProof) {
 
     const pendingUsersRef = collection(db, "users");
 
@@ -51,15 +51,16 @@ export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn,
         phoneNumber,
         linkedIn,
         city,
-        company: null,
+        companyId: null,
         status : "Pendente",
-        role : "Candidate"
+        role : "Candidate",
+        enrollmentProof
     })
 
     return docRef.id
 }
 
-export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, city) {
+export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, city, companyId) {
 
     const temporaryPassword = generateSecurePassword();
 
@@ -74,7 +75,7 @@ export async function createAdminUser(name, email, cpf, phoneNumber, linkedIn, c
             phoneNumber,
             linkedIn,
             city,
-            company: "CASE",
+            companyId: companyId,
             status : "Aprovado",
             role : "Admin",
             userId : userCredential.user.uid
@@ -248,7 +249,7 @@ export async function createUserCompany(name, email, cpf, phoneNumber, linkedIn,
 export async function getUsersWithCompany() {
     const usersRef = collection(db, "users");
 
-    const q = query(usersRef, where("companyId", "!=", null));
+    const q = query(usersRef, where("companyId", "!=", null), where("role", "==", "Employee"));
 
     const querySnapshot = await getDocs(q);
     const users = [];

@@ -19,6 +19,7 @@ export default function Home() {
             buttonOption={"Cadastre-se gratuitamente"}
             cards={true}
             imagePath={"/img-estagio.webp"}
+            path={"/candidate-registration"}
         />
       </div>
   );

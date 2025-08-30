@@ -14,9 +14,9 @@ import {WorkModel} from "@/components/WorkModel";
 import {useAuth} from "@/app/context/AuthContext";
 import {jobSchema} from "@/dto/job/job.dto";
 
-export default function PageNewJob(){
+export default function PageNewJob() {
 
-    const { user } = useAuth();
+    const {user} = useAuth();
 
 
     const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ export default function PageNewJob(){
         description: "",
         employmentType: "",
         workModel: "",
-        salaryRange: { minSalary: "", maxSalary: "", notInformed: false },
+        salaryRange: {minSalary: "", maxSalary: "", notInformed: false},
 
     });
 
@@ -46,17 +46,28 @@ export default function PageNewJob(){
 
             const response = await fetch("/api/company/job", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(formData),
             })
 
             const data = await response.json();
 
-            if(!response.ok) {
+            if (!response.ok) {
                 toast.error(data.message || "Erro ao cadastrar vaga.");
 
-            }else {
-                toast.success(data.message);
+            } else {
+                toast.success(data.message, {
+                    style: {
+                        border: "1px solid #22c55e",
+                        padding: "16px",
+                        color: "#fff",
+                        background: "#16a34a",
+                    },
+                    iconTheme: {
+                        primary: "#16a34a",
+                        secondary: "#fff",
+                    },
+                });
                 setFormData({
                     title: "",
                     location: "",
@@ -65,10 +76,10 @@ export default function PageNewJob(){
                     description: "",
                     employmentType: "",
                     workModel: "",
-                    salaryRange: { minSalary: "", maxSalary: "", notInformed: false },
+                    salaryRange: {minSalary: "", maxSalary: "", notInformed: false},
                 });
             }
-        }catch(err){
+        } catch (err) {
             if (err.name === "ZodError") {
                 toast.error(err.errors[0].message, {
                     style: {

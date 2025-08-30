@@ -70,7 +70,7 @@ export function LoginForm({className, ...props}) {
             </div>
           </div>
           <div className="text-center text-sm"> Não possui uma conta?
-            <Link href="/candidate-registration" className="underline underline-offset-4 ml-2 text-left"> Criar Conta</Link>
+            <Link href="/candidate-registration" className="text-left hover:text-[#4c1286]"> Criar Conta</Link>
           </div>
     </form>
   );
