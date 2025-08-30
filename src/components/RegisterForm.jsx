@@ -27,132 +27,89 @@ export function RegisterForm() {
         setUserData({...userData, [e.target.name]: e.target.value})
     }
 
+    const showError = (msg) => {
+        toast.error(msg, {
+            style: {
+                border: "1px solid #ef4444",
+                padding: "16px",
+                color: "#fff",
+                background: "#dc2626",
+            },
+            iconTheme: { primary: "#dc2626", secondary: "#fff" },
+        })
+    }
+
+    const showSuccess = (msg) => {
+        toast.success(msg, {
+            duration: 30000,
+            style: {
+                border: "1px solid #22c55e",
+                padding: "16px",
+                color: "#fff",
+                background: "#16a34a",
+            },
+            iconTheme: { primary: "#16a34a", secondary: "#fff" },
+        })
+    }
+
     async function handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
+
+        if (!enrollmentFile) {
+            showError("Selecione um arquivo de comprovante de matrícula antes de enviar.")
+            return
+        }
+
+        const maxSize = 5 * 1024 * 1024 // 5MB
+        if (enrollmentFile.size > maxSize) {
+            showError("Arquivo muito grande! O tamanho máximo permitido é 5MB.")
+            return
+        }
+
+        const validTypes = ["application/pdf", "image/jpeg", "image/jpg", "image/png"]
+        if (!validTypes.includes(enrollmentFile.type)) {
+            showError("Formato inválido! Envie apenas PDF, JPG ou PNG.")
+            return
+        }
 
         try {
-            let fileURL = null;
-
-            if (enrollmentFile) {
-
-                const maxSize = 5 * 1024 * 1024; // 5MB
-                if (enrollmentFile.size > maxSize) {
-                    toast.error("Arquivo muito grande! O tamanho máximo permitido é 5MB.", {
-                        style: {
-                            border: "1px solid #ef4444",
-                            padding: "16px",
-                            color: "#fff",
-                            background: "#dc2626",
-                        },
-                        iconTheme: { primary: "#dc2626", secondary: "#fff" },
-                    });
-                    e.target.value = "";
-                    return;
-                }
-
-                const validTypes = ["application/pdf", "image/jpeg", "image/jpg", "image/png"];
-                if (!validTypes.includes(enrollmentFile.type)) {
-                    toast.error("Formato inválido! Envie apenas PDF, JPG ou PNG.", {
-                        style: {
-                            border: "1px solid #ef4444",
-                            padding: "16px",
-                            color: "#fff",
-                            background: "#dc2626",
-                        },
-                        iconTheme: {
-                            primary: "#dc2626",
-                            secondary: "#fff",
-                        },
-                    });
-                    return;
-                }
-                const storageRef = ref(storage, `enrollmentProofs/${Date.now()}-${enrollmentFile.name}`);
-                await uploadBytes(storageRef, enrollmentFile);
-                fileURL = await getDownloadURL(storageRef);
-            }else {
-                if (!enrollmentFile) {
-                    toast.error("Selecione um arquivo de comprovante de matrícula antes de enviar.", {
-                        style: {
-                            border: "1px solid #ef4444",
-                            padding: "16px",
-                            color: "#fff",
-                            background: "#dc2626",
-                        },
-                        iconTheme: {
-                            primary: "#dc2626",
-                            secondary: "#fff",
-                        },
-                    });
-                    return;
-                }
-            }
-
-            const payload = {
-                ...userData,
-                enrollmentProof: fileURL,
-            };
-
+            // 1️⃣ Criar usuário pendente
             const res = await fetch("/api/users/pending", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
+                body: JSON.stringify(userData),
             })
+            const data = await res.json()
 
-            const responseData = await res.json();
-
-            if(!res.ok) {
-                if (responseData.errors) {
-                    Object.entries(responseData.errors).forEach(([field, errorObj]) => {
-                        if (errorObj._errors?.length > 0) {
-                            toast.error(`${errorObj._errors[0]}`, {
-                                style: {
-                                    border: "1px solid #ef4444",
-                                    padding: "16px",
-                                    color: "#fff",
-                                    background: "#dc2626",
-                                },
-                                iconTheme: {
-                                    primary: "#dc2626",
-                                    secondary: "#fff",
-                                },
-                            })
-                        }
-                    });
-                } else {
-                    toast.error(responseData.message || "Erro ao enviar formulário.");
+            if (!res.ok) {
+                if (data.errors) {
+                    Object.entries(data.errors).forEach(([_, errorObj]) => {
+                        if (errorObj._errors?.length > 0) showError(errorObj._errors[0])
+                    })
+                    return
                 }
-            }else {
-                setUserData({
-                    name: "",
-                    email: "",
-                    cpf: "",
-                    phoneNumber: "",
-                    linkedIn: "",
-                    city: "",
-                });
-
-                setEnrollmentFile(null);
-
-                toast.success(
-                    "Cadastro enviado com sucesso! Sua candidatura está sendo avaliada. Verifique seu email em alguns dias para atualizações.",
-                    {
-                        duration : 30000,
-                        style: {
-                            border: "1px solid #22c55e",
-                            padding: "16px",
-                            color: "#fff",
-                            background: "#16a34a",
-                        },
-                        iconTheme: {
-                            primary: "#16a34a",
-                            secondary: "#fff",
-                        },
-                    }
-                )
+                showError(data.message || "Erro ao enviar formulário.")
+                return
             }
 
+            // 2️⃣ Upload do arquivo
+            const storageRef = ref(storage, `enrollmentProofs/${data.data.userId}-${enrollmentFile.name}`)
+            await uploadBytes(storageRef, enrollmentFile)
+            const fileURL = await getDownloadURL(storageRef)
+
+            // 3️⃣ Atualizar usuário com URL do arquivo
+            await fetch(`/api/users/pending/${data.data.userId}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ enrollmentProof: fileURL }),
+            })
+
+            showSuccess("Cadastro enviado com sucesso! Sua candidatura está sendo avaliada. Verifique seu email em alguns dias.")
+            setUserData({ name: "", email: "", cpf: "", phoneNumber: "", linkedIn: "", city: "" })
+            setEnrollmentFile(null)
         } catch (err) {
-            console.error(err.message);
+            console.error(err)
+            showError("Ocorreu um erro ao enviar o formulário. Tente novamente.")
         }
     }
 
@@ -225,7 +182,7 @@ export function RegisterForm() {
                 </div>
             </Form>
             <div className="text-center text-sm mt-4"> Já possui uma conta?
-                <Link href="/candidate-login" className="ml-2 text-left hover:text-[#4c1286]">Faça seu Login</Link>
+                <Link href="/login" className="ml-2 text-left hover:text-[#4c1286]">Faça seu Login</Link>
             </div>
 
         </section>

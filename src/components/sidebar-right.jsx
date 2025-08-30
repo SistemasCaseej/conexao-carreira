@@ -11,6 +11,7 @@ import {useState} from "react";
 import {useAuth} from "@/app/context/AuthContext";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "@/firebase/config";
+import {formatCurrency} from "@/utils/formatters/formatters.js";
 
 
 export function SidebarRight({button, job,...props}) {
@@ -27,26 +28,29 @@ export function SidebarRight({button, job,...props}) {
         }
 
         try{
-            const storageRef = ref(storage, `curriculos/${user.companyId}/${user.userId}-${Date.now()}-${fileName.name}`)
-
-            await uploadBytes(storageRef, fileName)
-            const downloadURL = await getDownloadURL(storageRef)
-
             const response = await fetch("/api/application", {
                 method: "POST",
                 body: JSON.stringify({
                     userId: user.userId,
                     jobId: job.id,
                     companyId: job.companyId,
-                    resume: downloadURL,
                 }),
             });
 
-            await response.json()
+            const data = await response.json()
 
             if (!response.ok) {
                 throw new Error(data.error || "Erro ao enviar candidatura");
             }
+
+            const storageRef = ref(storage, `curriculos/${user.companyId}/${user.userId}`)
+            await uploadBytes(storageRef, fileName)
+            const downloadURL = await getDownloadURL(storageRef)
+
+            await fetch(`/api/application/${data.applicationId}`, {
+                method: "PATCH",
+                body: JSON.stringify({ resume: downloadURL }),
+            });
 
             toast.success("Candidatura enviada com sucesso!", {
                 style: {
@@ -123,7 +127,7 @@ export function SidebarRight({button, job,...props}) {
                                 <div>
                                     <p className="font-normal text-gray-600 text-sm">Salário</p>
                                     <h3 className="font-medium">{job?.salaryRange?.minSalary && job?.salaryRange?.maxSalary
-                                        ? `${job.salaryRange.minSalary} - ${job.salaryRange.maxSalary}`
+                                        ? `${formatCurrency(job.salaryRange.minSalary)} - ${formatCurrency(job.salaryRange.maxSalary)}`
                                         : "Não informado"}</h3>
                                 </div>
                             </section>
@@ -163,7 +167,7 @@ export function SidebarRight({button, job,...props}) {
                                     <DialogContent className="sm:min-w-[750px] min-h-[330px] rounded-md font-mona-sans flex flex-col justify-between">
                                         <section>
                                             <DialogTitle>Candidate-se na {job.company.tradeName}</DialogTitle>
-                                            <h3 className="mt-7">Certifique-se de incluir um currículo atualizado</h3>
+                                            <h3 className="mt-4">Certifique-se de incluir um currículo atualizado</h3>
                                             <p className="mt-7 mb-3 font-semibold">Currículo</p>
                                             <div className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 bg-gray-50 truncate">
                                                 {fileName}

@@ -4,8 +4,31 @@ import { Card } from "@/components/ui/card"
 import Image from "next/image"
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import {MapPin, Timer, DollarSign} from "lucide-react"
+import {formatCurrency} from "@/utils/formatters/formatters.js";
+import { useRouter } from 'next/navigation'
+import {toast} from "sonner";
 
-export default function CardJobs({title, company, location, posted_at, salary_range, on_details, isSelected, logo}) {
+export default function CardJobs({title, company, location, posted_at, salary_range, on_details, isSelected, logo, application, jobId}) {
+
+    const router = useRouter();
+
+    const handleViewApplicants = (jobId) => {
+
+        console.log(jobId);
+
+        if(!jobId) {
+            toast.error("Esta vaga ainda não possui candidaturas", {
+                style: {
+                    border: "1px solid #ef4444",
+                    padding: "16px",
+                    color: "#fff",
+                    background: "#dc2626",
+                }
+            })
+            return;
+        }
+        router.push(`/dashboard/jobs/${jobId}/`)
+    };
 
     function parseDateBRtoISO(dateStr) {
         const [datePart, timePart] = dateStr.split(", ");
@@ -48,7 +71,7 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
                 </div>
             </section>
             <DropdownMenuSeparator  className="max-w-full"/>
-            <article className="flex flex-row items-center justify-between">
+            <article className="flex flex-row items-end justify-between">
                 <dl>
                     <div className="flex-row items-center flex mb-2 gap-2">
                         <MapPin size={20}/>
@@ -58,7 +81,7 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
                         <DollarSign size={20}/>
                         {salary_range?.notInformed
                             ? "Não informado"
-                            : `${salary_range?.minSalary} - ${salary_range?.maxSalary}`}
+                            : `${formatCurrency(salary_range?.minSalary)} - ${formatCurrency(salary_range?.maxSalary)}`}
                     </div>
                     <div className="flex-row flex items-center gap-2 mt-2">
                         <Timer size={20}/>
@@ -66,9 +89,12 @@ export default function CardJobs({title, company, location, posted_at, salary_ra
                     </div>
                 </dl>
 
-                <footer>
-                    <button onClick={() => on_details?.()} className="bg-white border-1 cursor-pointer hover:text-white hover:bg-[#49257b] border-[#49257b] w-[100px] h-[40px] rounded-sm text-[#49257b]" aria-label="Ver detalhes da vaga em Jakarta">Detalhes</button>
-                </footer>
+                    <footer className={`${application ? "flex flex-row justify-between w-[220px]" : ""}`}>
+                        <button onClick={() => on_details?.()} className="bg-white border-1 cursor-pointer hover:text-white hover:bg-[#49257b] border-[#49257b] w-[100px] h-[40px] rounded-sm text-[#49257b]" aria-label="Ver detalhes da vaga em Jakarta">Detalhes</button>
+                        {application && (
+                            <button onClick={()=> handleViewApplicants(jobId)} className="bg-white border-1 cursor-pointer hover:text-white hover:bg-[#49257b] border-[#49257b] w-[100px] h-[40px] rounded-sm text-[#49257b]" aria-label="ver inscritos">Inscritos</button>
+                        )}
+                    </footer>
             </article>
 
         </Card>

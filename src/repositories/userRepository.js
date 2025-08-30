@@ -54,7 +54,7 @@ export async function createPendingUser(name, email, cpf, phoneNumber, linkedIn,
         companyId: null,
         status : "Pendente",
         role : "Candidate",
-        enrollmentProof
+        enrollmentProof : enrollmentProof || null,
     })
 
     return docRef.id
@@ -274,4 +274,12 @@ export async function getUsersWithCompany() {
     }
 
     return users;
+}
+
+export async function updatePendingRepository (id, enrollmentProof) {
+    const userRef = doc(db, "users", id);
+
+    await updateDoc(userRef, { enrollmentProof: enrollmentProof });
+
+
 }

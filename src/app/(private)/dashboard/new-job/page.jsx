@@ -18,7 +18,6 @@ export default function PageNewJob() {
 
     const {user} = useAuth();
 
-
     const [formData, setFormData] = useState({
         title: "",
         location: "",
@@ -31,6 +30,7 @@ export default function PageNewJob() {
         salaryRange: {minSalary: "", maxSalary: "", notInformed: false},
 
     });
+
 
     const handleChange = (field, value) => {
         setFormData((prev) => ({

@@ -66,3 +66,7 @@ export async function createUserCompany(name, email, cpf, phoneNumber, linkedIn,
 export async function getUsersWithCompany(){
     return await userRepository.getUsersWithCompany();
 }
+
+export async function updatePendingUserService(id, enrollmentProof){
+    return await userRepository.updatePendingRepository(id, enrollmentProof);
+}

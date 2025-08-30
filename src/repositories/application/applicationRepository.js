@@ -58,3 +58,58 @@ export async function getAllApplicationsRepository() {
         ...doc.data()
     }));
 }
+
+
+function chunkArray(arr, size) {
+    const chunks = [];
+    for (let i = 0; i < arr.length; i += size) {
+        chunks.push(arr.slice(i, i + size));
+    }
+    return chunks;
+}
+
+export async function getApplicationsByJobIdRepository(jobId) {
+    const applicationRef = collection(db, "applications");
+    const q = query(applicationRef, where("jobId", "==", jobId));
+
+    const querySnapshot = await getDocs(q);
+
+    const applications = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+
+    const userIds = [...new Set(applications.map(app => app.userId))].filter(Boolean);
+    if (userIds.length === 0) return applications;
+
+    const chunks = chunkArray(userIds, 10);
+
+    const usersRef = collection(db, "users");
+    const userSnapshotsPromises = chunks.map(async (chunk) => {
+        const q = query(usersRef, where("userId", "in", chunk));
+        return getDocs(q);
+    });
+
+    const snapshots = await Promise.all(userSnapshotsPromises);
+
+    const users = snapshots.flatMap(snap =>
+        snap.docs.map(doc => {
+            const data = doc.data();
+            return {
+                name: data.name,
+                email: data.email,
+                linkedIn: data.linkedIn,
+                phoneNumber: data.phoneNumber,
+                userId: data.userId,
+            }
+        }));
+
+    return applications.map(app => {
+        const userData = users.find(u => u.userId === app.userId);
+        return {...app, user: userData};
+    });
+
+}
+
+export async function updateApplicationRepository(id, resume){
+    const appRef = doc(db, "applications", id);
+
+    return await updateDoc(appRef, { resume });
+}

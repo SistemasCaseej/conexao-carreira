@@ -27,7 +27,6 @@ export default function SalaryInput({ value = { minSalary: "", maxSalary: "", no
         }
     }
     const handleMaxChange = (e) => {
-
         const newMax = e.target.value.replace(/\D/g, "");
         setMaxSalary(newMax);
 
