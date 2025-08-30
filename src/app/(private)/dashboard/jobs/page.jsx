@@ -19,6 +19,8 @@ export default function PageJobs(){
     const [selectedJob, setSelectedJob] = useState(null)
     const [jobs, setJobs] = useState([]);
 
+
+    console.log(jobs);
     useEffect(() => {
         const fetchJobs = async () => {
             const response = await fetch(`/api/company/job/${user.companyId}`, {
@@ -75,6 +77,8 @@ export default function PageJobs(){
                                 isSelected={selectedJob?.id === job.id}
                                 on_details={() => setSelectedJob(job)}
                                 logo={job.company.logo}
+                                application={true}
+                                jobId={job.id}
 
                             />
                         ))}

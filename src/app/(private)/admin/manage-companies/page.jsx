@@ -79,7 +79,7 @@ export default function ManageCompanies() {
                 <Input placeholder="Pesquisar Empresas" className="max-w-sm border" value={searchCompany} onChange={(e) => setSearchCompany(e.target.value)} />
                 <CompanyForm/>
             </div>
-            <div className="grid gap-x-2 gap-y-2 mt-5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))] bg-red-700">
+            <div className="grid gap-x-2 gap-y-2 mt-5 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
                 {filteredCompanies.map((company, index) => (
                         <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row items-center justify-between max-w-[330px] border-2">
                             <div>

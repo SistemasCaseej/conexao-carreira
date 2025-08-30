@@ -1,17 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
     content: [
         "./src/**/*.{js,jsx,ts,tsx,html}",
     ],
     theme: {
         extend: {
-            fontFamily : {
+            fontFamily: {
                 epilogue: ['"Epilogue"', "sans-serif"],
-            }
+            },
         },
-        screens : {
+        screens: {
             xs: "600px",
-        }
+        },
     },
     plugins: [],
-}
+};
+
+export default config;
