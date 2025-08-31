@@ -17,9 +17,6 @@ export default function Dashboard() {
     const { user } = useAuth();
     const [selectedJob, setSelectedJob] = useState(null)
 
-
-    console.log(user)
-
     useEffect(() => {
         async function fetchJobs() {
 

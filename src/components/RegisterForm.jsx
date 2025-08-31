@@ -60,7 +60,7 @@ export function RegisterForm() {
             return
         }
 
-        const maxSize = 5 * 1024 * 1024 // 5MB
+        const maxSize = 5 * 1024 * 1024 
         if (enrollmentFile.size > maxSize) {
             showError("Arquivo muito grande! O tamanho máximo permitido é 5MB.")
             return
@@ -73,7 +73,6 @@ export function RegisterForm() {
         }
 
         try {
-            // 1️⃣ Criar usuário pendente
             const res = await fetch("/api/users/pending", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -92,12 +91,11 @@ export function RegisterForm() {
                 return
             }
 
-            // 2️⃣ Upload do arquivo
             const storageRef = ref(storage, `enrollmentProofs/${data.data.userId}-${enrollmentFile.name}`)
             await uploadBytes(storageRef, enrollmentFile)
             const fileURL = await getDownloadURL(storageRef)
 
-            // 3️⃣ Atualizar usuário com URL do arquivo
+
             await fetch(`/api/users/pending/${data.data.userId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },

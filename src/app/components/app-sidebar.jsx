@@ -5,6 +5,7 @@ import { NavUser } from "@/components/NavUser";
 import { NavMain } from "@/components/nav-main";
 import { BriefcaseBusiness, Home, Users, Building2 } from "lucide-react";
 import Image from "next/image"
+import Link from "next/link";
 
 
 export function AppSidebar({user}) {
@@ -98,7 +99,7 @@ export function AppSidebar({user}) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <a href="/dashboard">
+                            <Link href="/dashboard">
                                 <div className="size-8 items-center justify-center rounded-lg">
                                     <Image src="/logo_case.png" alt="logo_case" width={200} height={200} className="rounded-lg"></Image>
                                 </div>
@@ -106,7 +107,7 @@ export function AppSidebar({user}) {
                                     <span className="font-medium">Conexão Carreira</span>
                                     <span className="">v1.0.0</span>
                                 </div>
-                            </a>
+                            </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
