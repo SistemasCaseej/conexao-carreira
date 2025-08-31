@@ -83,7 +83,7 @@ export default function ManageCompanies() {
                 {filteredCompanies.map((company, index) => (
                         <Card key={index} onClick={()=> handleCompany(company.id)} className="p-4 cursor-pointer flex flex-row items-center justify-between max-w-[330px] border-2">
                             <div>
-                                <Image src={company.logo ?? "/jose.jpg"} alt="image" width="50" height="50" className="rounded-full w-fit border-1"/>
+                                <Image src={company.logo ?? "/jose.jpg"} alt="image" width="50" height="50" className="rounded-sm w-fit border-1"/>
                             </div>
                             <div className="flex flex-col ">
                                 <CardHeader className="mb-5 p-0 min-w-[205px]">

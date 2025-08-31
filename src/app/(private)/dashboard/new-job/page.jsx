@@ -31,6 +31,8 @@ export default function PageNewJob() {
 
     });
 
+    console.log(formData)
+
 
     const handleChange = (field, value) => {
         setFormData((prev) => ({
@@ -69,14 +71,8 @@ export default function PageNewJob() {
                     },
                 });
                 setFormData({
-                    title: "",
-                    location: "",
-                    requirements: [],
-                    benefits: [],
-                    description: "",
-                    employmentType: "",
-                    workModel: "",
-                    salaryRange: {minSalary: "", maxSalary: "", notInformed: false},
+                   ...formData,
+                    companyId: user.companyId,
                 });
             }
         } catch (err) {

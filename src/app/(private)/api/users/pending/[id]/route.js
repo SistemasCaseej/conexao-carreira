@@ -5,12 +5,9 @@ import {NextResponse} from "next/server";
 export async function PATCH(req, {params}) {
 
     try {
-        const {id} = params;
+        const {id} = await params;
 
         const { enrollmentProof } = await req.json();
-
-        console.log(enrollmentProof);
-        console.log(id);
 
         if (!enrollmentProof) {
             return NextResponse.json(
